@@ -1,0 +1,21 @@
+<!--[*  $Id: pages_admin_delete.htm 22818 2007-10-06 19:42:50Z hammerhead $  *]-->
+<!--[include file="ratings_admin_menu.htm"]-->
+<!--[pnml name="_RATINGSDELETE" assign=templatetitle]-->
+<div class="pn-admincontainer">
+<div class="pn-adminpageicon"><!--[pnimg modname=core src=editdelete.gif set=icons/large alt=$templatetitle]--></div>
+<h2><!--[$templatetitle]--></h2>
+<form class="pn-adminform" action="<!--[pnmodurl modname="Ratings" type="admin" func="delete"]-->" method="post" enctype="application/x-www-form-urlencoded">
+<div>
+    <input type="hidden" name="authid" value="<!--[insert name="generateauthkey" module="Ratings"]-->" />
+    <input type="hidden" name="confirmation" value="1" />
+    <input type="hidden" name="rid" value="<!--[$rid|pnvarprepfordisplay]-->" />
+	<div class="pn-adminformrow">
+		<p><!--[pnml name="_RATINGSCONFIRMDELETE"]--></p>
+	</div>
+    <div class="pn-adminformrow pn-adminformbuttons">
+    <!--[pnbutton src=button_ok.gif set=icons/small alt="_CONFIRMDELETE" title="_CONFIRMDELETE"]-->
+    <a href="<!--[pnmodurl modname=Ratings type=admin func=view]-->"><!--[pnimg modname=core src=button_cancel.gif set=icons/small altml=true titleml=true alt="_CANCEL" title="_CANCEL"]--></a>
+    </div>
+</div>
+</form>
+</div>
