@@ -17,8 +17,9 @@
  */
 function ratings_user_main()
 {
+    $dom = ZLanguage::getModuleDomain('Ratings');
     // ratings module cannot be directly accessed
-    return LogUtil::registerError(_MODULENODIRECTACCESS, 403);
+    return LogUtil::registerError(__('Sorry! This module cannot be accessed directly.', $dom), 403);
 }
 
 /**
@@ -31,6 +32,7 @@ function ratings_user_main()
  */
 function ratings_user_display($args)
 {
+    $dom = ZLanguage::getModuleDomain('Ratings');
     extract($args);
 
     if (!isset($style)) {
@@ -141,7 +143,7 @@ function ratings_user_display($args)
         $logip = pnServerGetVar('REMOTE_ADDR');
 
         $where = "($ratingslogcolumn[id] = '" . DataUtil::formatForStore($logid) . "' OR
-                   $ratingslogcolumn[id] = '" . DataUtil::formatForStore($logip) . "' ) AND 
+                   $ratingslogcolumn[id] = '" . DataUtil::formatForStore($logip) . "' ) AND
 		           $ratingslogcolumn[ratingid] = '" . $args['modname'] . $objectid . $style . "'";
         $rating = DBUtil::selectField ('ratingslog', 'id', $where);
         if ($rating) {
@@ -179,6 +181,7 @@ function ratings_user_display($args)
  */
 function ratings_user_rate($args)
 {
+    $dom = ZLanguage::getModuleDomain('Ratings');
     // Get parameters
     $modname    = FormUtil::getPassedValue('modname', null, 'POST');
     $ratingtype = FormUtil::getPassedValue('ratingtype', null, 'POST');
@@ -200,7 +203,7 @@ function ratings_user_rate($args)
 
     if ($newrating) {
         // Success
-        LogUtil::registerStatus (_THANKYOUFORRATING);
+        LogUtil::registerStatus (__('Thank you for rating this item', $dom));
     }
 
     return pnRedirect($returnurl);

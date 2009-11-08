@@ -1,17 +1,17 @@
 <!--[*  $Id: pages_admin_view.htm 21104 2007-01-18 08:07:03Z markwest $  *]-->
 <!--[include file="ratings_admin_menu.htm"]-->
 <div class="pn-admincontainer">
-<div class="pn-adminpageicon"><!--[pnimg modname=core src=windowlist.gif set=icons/large alt=_RATINGSVIEWITEMS altml=true]--></div>
-<h2><!--[pnml name=_RATINGSVIEWITEMS]--></h2>
+<div class="pn-adminpageicon"><!--[pnimg modname='core' src='windowlist.gif' set='icons/large' __alt='View all ratings' ]--></div>
+<h2><!--[gt text="View all ratings"]--></h2>
 <table class="pn-admintable">
   <thead>
   <tr>
-      <th><!--[pnml name="_MODULE"]--></th>
-      <th><!--[pnml name="_RATINGSITEMID"]--></th>
-      <th><!--[pnml name="_RATINGSNUMRATINGS"]--></th>
-      <th><!--[pnml name="_RATINGSRATING"]--></th>
-      <th><!--[pnml name="_RATINGSSCORE"]--></th>
-      <th><!--[pnml name="_OPTIONS"]--></th>
+      <th><!--[gt text="Module"]--></th>
+      <th><!--[gt text="Item ID"]--></th>
+      <th><!--[gt text="Number of votes"]--></th>
+      <th><!--[gt text="Rating"]--></th>
+      <th><!--[gt text="Score"]--></th>
+      <th><!--[gt text="Options"]--></th>
   </tr>
   </thead>
   <tbody>
@@ -25,12 +25,12 @@
       <td>
         <!--[assign var="options" value=$rating.options]-->
         <!--[section name=options loop=$options]-->
-          <a href="<!--[$options[options].url|pnvarprepfordisplay]-->"><!--[pnimg modname=core set=icons/extrasmall src=$options[options].image alt=$options[options].title]--></a>
+          <a href="<!--[$options[options].url|pnvarprepfordisplay]-->"><!--[pnimg modname='core' set='icons/extrasmall' src=$options[options].image __alt=$options[options].title]--></a>
         <!--[/section]-->
       </td>
     </tr>
   <!--[foreachelse]-->
-	<tr class="pn-admintableempty"><td colspan="6"><!--[pnml name=_NOITEMSFOUND]--></td></tr>
+	<tr class="pn-admintableempty"><td colspan="6"><!--[gt text="No items found."]--></td></tr>
   <!--[/foreach]-->
   </tbody>
 </table>

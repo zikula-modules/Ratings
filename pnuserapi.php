@@ -24,10 +24,11 @@
  */
 function ratings_userapi_get($args)
 {
+    $dom = ZLanguage::getModuleDomain('Ratings');
     // Argument check
     if ((!isset($args['modname']) || !isset($args['objectid']))
         && !isset($args['rid'])) {
-        return LogUtil::registerError (_MODARGSERROR);
+        return LogUtil::registerError (__('Error! Could not do what you wanted. Please check your input.', $dom));
     }
 
     if (!isset($args['ratingtype']) || $args['ratingtype'] == 'default') {
@@ -74,6 +75,7 @@ function ratings_userapi_get($args)
  */
 function ratings_userapi_getall($args)
 {
+    $dom = ZLanguage::getModuleDomain('Ratings');
     // default rating type
     if (!isset($args['ratingtype']) || $args['ratingtype'] = 'default') {
         $args['ratingtype'] = pnModGetVar('Ratings', 'defaultstyle');
@@ -133,10 +135,10 @@ function ratings_userapi_getall($args)
 
     // Check for an error with the database code, and if so set an appropriate error message and return
     if ($items === false) {
-        return LogUtil::registerError(_GETFAILED);
+        return LogUtil::registerError(__('Error! Could not load items.', $dom));
     }
 
-    // calculate score 
+    // calculate score
     foreach ($items as $k=>$v) {
         $items[$k]['score'] = round($v['rating']/$v['numratings'], 2);
     }
@@ -166,11 +168,12 @@ function ratings_userapi_countitems($args)
  */
 function ratings_userapi_rate($args)
 {
+    $dom = ZLanguage::getModuleDomain('Ratings');
     // Argument check
     if ((!isset($args['modname'])) ||
         (!isset($args['objectid'])) ||
         (!isset($args['rating']))) {
-        return LogUtil::registerError (_MODARGSERROR);
+        return LogUtil::registerError (__('Error! Could not do what you wanted. Please check your input.', $dom));
     }
 
     if (!isset($args['ratingtype']) || $args['ratingtype'] = 'default') {
@@ -195,8 +198,8 @@ function ratings_userapi_rate($args)
         // get the users ip
         $logip = pnServerGetVar('REMOTE_ADDR');
 
-        $where = "( $ratingslogcolumn[id] = '" . DataUtil::formatForStore($logid) . "' OR 
-                    $ratingslogcolumn[id] = '" . DataUtil::formatForStore($logip) . "' ) AND 
+        $where = "( $ratingslogcolumn[id] = '" . DataUtil::formatForStore($logid) . "' OR
+                    $ratingslogcolumn[id] = '" . DataUtil::formatForStore($logip) . "' ) AND
                     $ratingslogcolumn[ratingid] = '" . $args['modname'] . $args['objectid'] . $args['ratingtype'] . "'";
         $row = DBUtil::selectFieldArray ('ratingslog', 'id', $where, '');
         if ($row) {
@@ -211,16 +214,16 @@ function ratings_userapi_rate($args)
 
     // check our input
     if ($args['rating'] < 0 || $args['rating'] > 100) {
-        return LogUtil::registerError (_MODARGSERROR);
+        return LogUtil::registerError (__('Error! Could not do what you wanted. Please check your input.', $dom));
     }
 
-    $where = " $ratingscolumn[module] = '" . DataUtil::formatForStore($args['modname']) . "' AND 
-               $ratingscolumn[itemid] = '" . DataUtil::formatForStore($args['objectid']) . "' AND 
+    $where = " $ratingscolumn[module] = '" . DataUtil::formatForStore($args['modname']) . "' AND
+               $ratingscolumn[itemid] = '" . DataUtil::formatForStore($args['objectid']) . "' AND
                $ratingscolumn[ratingtype] = '" . DataUtil::formatForStore($args['ratingtype']) . "'";
     $rating = DBUtil::selectObject ('ratings', $where);
     // Check for an error with the database code, and if so set an appropriate error message and return
     if ($rating === false) {
-        return LogUtil::registerError (_GETFAILED);
+        return LogUtil::registerError (__('Error! Could not load items.', $dom));
     }
 
     if ($rating) {
@@ -230,7 +233,7 @@ function ratings_userapi_rate($args)
         $res = DBUtil::updateObject ($rating, 'ratings', '', 'rid');
 
         if ($res === false) {
-            return LogUtil::registerError (_UPDATEFAILED);
+            return LogUtil::registerError (__('Error! Update attempt failed.', $dom));
         }
     } else {
         $rating = array();

@@ -10,10 +10,12 @@
  * @subpackage Ratings
  */
 
+$dom = ZLanguage::getModuleDomain('Ratings');
 $modversion['name']           = 'Ratings';
-$modversion['displayname']    = _RATING_DISPLAYNAME;
-$modversion['description']    = _RATING_DESCRIPTION;
-$modversion['version'] = '2.0';
+$modversion['displayname']    = __('Ratings', $dom);
+$modversion['description']    = __('Rate Zikula items.', $dom);
+$modversion['url'] = __('ratings', $dom);
+$modversion['version'] = '2.1';
 $modversion['credits'] = 'pndocs/credits.txt';
 $modversion['help'] = 'pndocs/help.txt';
 $modversion['changelog'] = 'pndocs/changelog.txt';

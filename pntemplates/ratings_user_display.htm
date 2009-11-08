@@ -7,20 +7,20 @@
 	<!--[pnpageaddvar name=stylesheet value="modules/Ratings/pnstyle/star_rating.css"]-->
 <!--[/if]-->
 
-<h3><!--[pnml name="_RATING"]--></h3>
+<h3><!--[gt text="Rating"]--></h3>
 
 <!--[if $showrating eq false]-->
-<p><!--[pnml name=_RATING_BETHEFIRST]--></p>
+<p><!--[gt text="No one has rated this item yet - be the first!"]--></p>
 <!--[/if]-->
 <!--[if $showrating or ($usefancycontrols eq true and ($style eq 'outoffivestars' or $style eq 'outoftenstars'))]-->
 
 	<!--[if $style eq 'percentage']-->
 		<!--[$rating|pnvarprepfordisplay]-->%
-	<!--[ elseif $style eq 'outoffive']-->
+	<!--[elseif $style eq 'outoffive']-->
 		<!--[$rating|pnvarprepfordisplay]-->/5
-	<!--[ elseif $style eq 'outoften']-->
+	<!--[elseif $style eq 'outoften']-->
 		<!--[$rating|pnvarprepfordisplay]-->/10
-	<!--[ elseif $style eq 'outoffivestars']-->
+	<!--[elseif $style eq 'outoffivestars']-->
 		<!--[if $usefancycontrols]-->
 			<ul class="star-rating star-rating-fivestars">
 			<li class="current-rating" style="width:<!--[$rawrating|string_format:"%.0f"|default:0]-->%;">Currently <!--[$rating]-->/5 Stars.</li>
@@ -34,13 +34,13 @@
 			</ul>
 		<!--[else]-->
 			<!--[section name=fullstars loop=$rating]-->
-				<!--[pnimg modname=Ratings src="star.gif"]-->
+				<!--[pnimg modname='Ratings' src="star.gif"]-->
 			<!--[/section]-->
 			<!--[if $fracrating gte 5]-->
-				<!--[pnimg modname=Ratings src="halfstar.gif"]-->
+				<!--[pnimg modname='Ratings' src="halfstar.gif"]-->
 			<!--[/if]-->
 		<!--[/if]-->
-	<!--[ elseif $style eq 'outoftenstars']-->
+	<!--[elseif $style eq 'outoftenstars']-->
 		<!--[if $usefancycontrols]-->
 			<ul class="star-rating star-rating-tenstars">
 			<li class="current-rating" style="width:<!--[$rawrating|string_format:"%.0f"|default:0]-->%;">Currently <!--[$rating]-->/10 Stars.</li>
@@ -59,10 +59,10 @@
 			</ul>
 		<!--[else]-->
 			<!--[section name=fullstars loop=$rating]-->
-				<!--[pnimg modname=Ratings src="star.gif"]-->
+				<!--[pnimg modname='Ratings' src="star.gif"]-->
 			<!--[/section]-->
 			<!--[if $fracrating gte 5]-->
-				<!--[pnimg modname=Ratings src="halfstar.gif"]-->
+				<!--[pnimg modname='Ratings' src="halfstar.gif"]-->
 			<!--[/if]-->
 		<!--[/if]-->
 	<!--[/if]-->
@@ -78,10 +78,10 @@
 		<input type="hidden" name="objectid" value="<!--[$objectid|pnvarprepfordisplay]-->" />
 		<input type="hidden" name="ratingtype" value="<!--[$ratingtype|pnvarprepfordisplay]-->" />
 		<!--[if $usefancycontrols neq true or ($style eq 'percentage' or $style eq 'outoffive' or $style eq 'outoften')]-->
-			<label for="rating"><!--[pnml name="_RATETHISITEM"]--></label>
+			<label for="rating"><!--[gt text="Rate this item"]--></label>
 			<!--[if $style eq 'percentage']-->
 				<input name="rating" type="text" size="3" maxlength="3" id="rating" />%
-			<!--[ elseif $style eq 'outoffive' or $style eq 'outoffivestars']-->
+			<!--[elseif $style eq 'outoffive' or $style eq 'outoffivestars']-->
 				<select name="rating" id="rating">
 					<option value="20">1</option>
 					<option value="40">2</option>
@@ -89,7 +89,7 @@
 					<option value="80">4</option>
 					<option value="100">5</option>
 				</select>
-			<!--[ elseif $style eq 'outoften' or $style eq 'outoftenstars']-->
+			<!--[elseif $style eq 'outoften' or $style eq 'outoftenstars']-->
 				<select name="rating" id="rating">
 					<option value="0" selected="selected">0</option>
 					<option value="10">1</option>
@@ -105,10 +105,10 @@
 				</select>
 			<!--[/if]-->
 			<!--[if $useajax]-->
-				<input id="ajaxrating" style="display: none;" onclick="javascript:ratingsratefromform();" name="submit" type="button" value="<!--[pnml name="_SUBMIT"]-->" />
+				<input id="ajaxrating" style="display: none;" onclick="javascript:ratingsratefromform();" name="submit" type="button" value="<!--[gt text="Submit"]-->" />
 				<noscript>
 			<!--[/if]-->
-				<input name="submit" type="submit" value="<!--[pnml name="_SUBMIT"]-->" />
+				<input name="submit" type="submit" value="<!--[gt text="Submit"]-->" />
 			<!--[if $useajax]-->
 				</noscript>
 			<!--[/if]-->
@@ -118,7 +118,7 @@
 	<!--[if $useajax]-->
 		<div id="ratingmessage">&nbsp;</div>
 		<script type="text/javascript">
-			var recordingvote  = '<!--[pnml name=_RATING_RECORDING]-->';
+			var recordingvote  = '<!--[gt text="Recording rating"]-->';
 			<!--[if $usefancycontrols neq true or ($style eq 'percentage' or $style eq 'outoffive' or $style eq 'outoften')]-->
 				$('ajaxrating').show();
 			<!--[/if]-->

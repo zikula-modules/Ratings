@@ -38,6 +38,7 @@ function ratings_admin_main()
  */
 function ratings_admin_view()
 {
+    $dom = ZLanguage::getModuleDomain('Ratings');
     // Security check
     if (!SecurityUtil::checkPermission('Ratings::', '::', ACCESS_EDIT)) {
         return LogUtil::registerPermissionError();
@@ -69,12 +70,12 @@ function ratings_admin_view()
             if (isset($modulemeta['displayfunc'])) {
                 $options[] = array('url'   => pnModURL($item['module'], 'user', $modulemeta['displayfunc'], array($modulemeta['itemid'] => $item['itemid'])),
                                    'image' => 'demo.gif',
-                                   'title' => _VIEW);
+                                   'title' => __('View', $dom));
             }
             if (SecurityUtil::checkPermission('Ratings::', "$item[module]::$item[rid]", ACCESS_DELETE)) {
                 $options[] = array('url'   => pnModURL('Ratings', 'admin', 'delete', array('rid' => $item['rid'])),
                                    'image' => '14_layer_deletelayer.gif',
-                                   'title' => _DELETE);
+                                   'title' => __('Delete', $dom));
             }
         }
 
@@ -103,6 +104,7 @@ function ratings_admin_view()
  */
 function ratings_admin_delete($args)
 {
+    $dom = ZLanguage::getModuleDomain('Ratings');
     $rid = FormUtil::getPassedValue('rid', isset($args['rid']) ? $args['rid'] : null, 'REQUEST');
     $objectid = FormUtil::getPassedValue('objectid', isset($args['objectid']) ? $args['objectid'] : null, 'REQUEST');
     $confirmation = FormUtil::getPassedValue('confirmation', null, 'POST');
@@ -114,7 +116,7 @@ function ratings_admin_delete($args)
     $item = pnModAPIFunc('Ratings', 'user', 'get', array('rid' => $rid));
 
     if ($item == false) {
-        return LogUtil::registerError (_NOSUCHITEM, 404);
+        return LogUtil::registerError (__('No such item found.', $dom), 404);
     }
 
     // Security check
@@ -145,7 +147,7 @@ function ratings_admin_delete($args)
     // Delete the page
     if (pnModAPIFunc('Ratings', 'admin', 'delete', array('rid' =>$rid))) {
         // Success
-        LogUtil::registerStatus (_DELETESUCCEDED);
+        LogUtil::registerStatus (__('Done! Item deleted.', $dom));
     }
 
     return pnRedirect(pnModURL('Ratings', 'admin', 'view'));
@@ -158,6 +160,7 @@ function ratings_admin_delete($args)
  */
 function ratings_admin_modifyconfig()
 {
+    $dom = ZLanguage::getModuleDomain('Ratings');
     // Security check
     if (!SecurityUtil::checkPermission('Ratings::', '::', ACCESS_ADMIN)) {
         return LogUtil::registerPermissionError();
@@ -167,14 +170,14 @@ function ratings_admin_modifyconfig()
     $pnRender = pnRender::getInstance('Ratings', false);
 
     // assign values for the dropdown
-    $pnRender->assign('defaultstylevalues', array('percentage' => _RATINGSPERCENTAGE,
-                                                  'outoffive' => _RATINGSOUTOFFIVE,
-                                                  'outoffivestars' => _RATINGSOUTOFFIVESTARS,
-                                                  'outoften' => _RATINGSOUTOFTEN,
-                                                  'outoftenstars' => _RATINGSOUTOFTENSTARS));
-    $pnRender->assign('securitylevelvalues', array('low' => _RATINGSSECLOW,
-                                                   'medium' => _RATINGSSECMEDIUM,
-                                                   'high' => _RATINGSSECHIGH));
+    $pnRender->assign('defaultstylevalues', array('percentage' => __('Percentage', $dom),
+                                                  'outoffive' => __('Number out of five', $dom),
+                                                  'outoffivestars' => __('Stars out of five', $dom),
+                                                  'outoften' => __('Number out of ten', $dom),
+                                                  'outoftenstars' => __('Stars out of ten', $dom)));
+    $pnRender->assign('securitylevelvalues', array('low' => __('Low (user can vote multiple times)', $dom),
+                                                   'medium' => __('Medium (user can vote once per session)', $dom),
+                                                   'high' => __('High (user can only vote once)', $dom)));
 
     $pnRender->assign(pnModGetVar('Ratings'));
 
@@ -191,6 +194,7 @@ function ratings_admin_modifyconfig()
  */
 function ratings_admin_updateconfig()
 {
+    $dom = ZLanguage::getModuleDomain('Ratings');
     // Security check
     if (!SecurityUtil::checkPermission('Ratings::', '::', ACCESS_ADMIN)) {
         return LogUtil::registerPermissionError();
@@ -225,7 +229,7 @@ function ratings_admin_updateconfig()
     pnModSetVar('Ratings', 'itemsperpage', $itemsperpage);
 
     // the module configuration has been updated successfuly
-    LogUtil::registerStatus (_CONFIGUPDATED);
+    LogUtil::registerStatus (__('Done! Module configuration updated.', $dom));
 
     return pnRedirect(pnModURL('Ratings', 'admin', 'main'));
 }
