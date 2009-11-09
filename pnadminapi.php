@@ -31,7 +31,7 @@ function ratings_adminapi_delete($args)
 
     // Security check
     if (!SecurityUtil::checkPermission('Ratings::', "$item[module]:$item[ratingtype]:$item[itemid]", ACCESS_DELETE)) {
-        return LogUtil::registerError(__('Sorry! No authorization to access this module.', $dom));
+        return LogUtil::registerPermissionError();
     }
 
     // form the logid entry.
@@ -39,10 +39,10 @@ function ratings_adminapi_delete($args)
 
     // delete the log entries first then the main ratings
     if (!DBUtil::deleteObjectByID('ratingslog', $logid, 'ratingid')) {
-        return LogUtil::registerError(__('Error! Sorry! Deletion attempt failed.', $dom));
+        return LogUtil::registerError(__('Error! Deletion attempt failed.', $dom));
     }
     if (!DBUtil::deleteObjectByID('ratings', $args['rid'], 'rid')) {
-        return LogUtil::registerError(__('Error! Sorry! Deletion attempt failed.', $dom));
+        return LogUtil::registerError(__('Error! Deletion attempt failed.', $dom));
     }
 
     // Let any hooks know that we have deleted an item.

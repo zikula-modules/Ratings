@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Zikula component\n"
+"Project-Id-Version: Zikula 1.2.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-07 12:30-0500\n"
+"POT-Creation-Date: 2009-11-09 09:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,6 +68,22 @@ msgstr ""
 msgid "Done! Module configuration updated."
 msgstr ""
 
+#: pnajax.php:31
+msgid "Sorry! No authorization to access this module."
+msgstr ""
+
+#: pnversion.php:15 pntemplates/ratings_admin_menu.htm:4
+msgid "Ratings"
+msgstr ""
+
+#: pnversion.php:16
+msgid "Rate Zikula items."
+msgstr ""
+
+#: pnversion.php:17
+msgid "ratings"
+msgstr ""
+
 #: pnuserapi.php:31 pnuserapi.php:176 pnuserapi.php:217 pnadminapi.php:23
 msgid "Error! Could not do what you wanted. Please check your input."
 msgstr ""
@@ -85,27 +101,11 @@ msgid "Sorry! This module cannot be accessed directly."
 msgstr ""
 
 #: pnuser.php:206
-msgid "Thank you for rating this item"
-msgstr ""
-
-#: pnversion.php:15 pntemplates/ratings_admin_menu.htm:4
-msgid "Ratings"
-msgstr ""
-
-#: pnversion.php:16
-msgid "Rate Zikula items."
-msgstr ""
-
-#: pnversion.php:17
-msgid "ratings"
-msgstr ""
-
-#: pnajax.php:31 pnadminapi.php:34
-msgid "Sorry! No authorization to access this module."
+msgid "Done! Thank you for rating this item"
 msgstr ""
 
 #: pnadminapi.php:42 pnadminapi.php:45
-msgid "Error! Sorry! Deletion attempt failed."
+msgid "Error! Deletion attempt failed."
 msgstr ""
 
 #: pnadminapi.php:127 pntemplates/ratings_admin_view.htm:4
@@ -113,8 +113,7 @@ msgstr ""
 msgid "View all ratings"
 msgstr ""
 
-#: pnadminapi.php:130 pntemplates/ratings_admin_modifyconfig.htm:4
-#: pntemplates/ratings_admin_modifyconfig.htm:5
+#: pnadminapi.php:130 pntemplates/ratings_admin_modifyconfig.htm:2
 msgid "Settings"
 msgstr ""
 
@@ -122,9 +121,78 @@ msgstr ""
 msgid "Error! Could not deregister hook."
 msgstr ""
 
-#: pntemplates/ratings_user_display.htm:10
+#: pntemplates/ratings_admin_delete.htm:3
+msgid " Delete item's rating"
+msgstr ""
+
+#: pntemplates/ratings_admin_delete.htm:7
+msgid "Do you really want to delete the rating of this item?"
+msgstr ""
+
+#: pntemplates/ratings_admin_delete.htm:14
+msgid "Confirmation prompt"
+msgstr ""
+
+#: pntemplates/ratings_admin_delete.htm:16
+msgid "Confirm deletion?"
+msgstr ""
+
+#: pntemplates/ratings_admin_delete.htm:17
+#: pntemplates/ratings_admin_modifyconfig.htm:40
+msgid "Cancel"
+msgstr ""
+
+#: pntemplates/ratings_admin_view.htm:9
+msgid "Module"
+msgstr ""
+
+#: pntemplates/ratings_admin_view.htm:10
+msgid "Item ID"
+msgstr ""
+
+#: pntemplates/ratings_admin_view.htm:11
+msgid "Number of votes"
+msgstr ""
+
 #: pntemplates/ratings_admin_view.htm:12
+#: pntemplates/ratings_user_display.htm:10
 msgid "Rating"
+msgstr ""
+
+#: pntemplates/ratings_admin_view.htm:13
+msgid "Score"
+msgstr ""
+
+#: pntemplates/ratings_admin_view.htm:14
+msgid "Options"
+msgstr ""
+
+#: pntemplates/ratings_admin_view.htm:33
+msgid "No items found."
+msgstr ""
+
+#: pntemplates/ratings_admin_modifyconfig.htm:13
+msgid "Items per page"
+msgstr ""
+
+#: pntemplates/ratings_admin_modifyconfig.htm:17
+msgid "Default ratings style"
+msgstr ""
+
+#: pntemplates/ratings_admin_modifyconfig.htm:23
+msgid "Use ajax based rating"
+msgstr ""
+
+#: pntemplates/ratings_admin_modifyconfig.htm:27
+msgid "Use fancy voting controls (stars only)"
+msgstr ""
+
+#: pntemplates/ratings_admin_modifyconfig.htm:31
+msgid "Security against rate rigging"
+msgstr ""
+
+#: pntemplates/ratings_admin_modifyconfig.htm:39
+msgid "Update Configuration"
 msgstr ""
 
 #: pntemplates/ratings_user_display.htm:13
@@ -142,69 +210,4 @@ msgstr ""
 
 #: pntemplates/ratings_user_display.htm:121
 msgid "Recording rating"
-msgstr ""
-
-#: pntemplates/ratings_admin_delete.htm:3
-msgid " Delete item's rating"
-msgstr ""
-
-#: pntemplates/ratings_admin_delete.htm:13
-msgid "Do you really want to delete the rating of this item?"
-msgstr ""
-
-#: pntemplates/ratings_admin_delete.htm:16
-msgid "Confirm deletion?"
-msgstr ""
-
-#: pntemplates/ratings_admin_delete.htm:17
-#: pntemplates/ratings_admin_modifyconfig.htm:36
-msgid "Cancel"
-msgstr ""
-
-#: pntemplates/ratings_admin_view.htm:9
-msgid "Module"
-msgstr ""
-
-#: pntemplates/ratings_admin_view.htm:10
-msgid "Item ID"
-msgstr ""
-
-#: pntemplates/ratings_admin_view.htm:11
-msgid "Number of votes"
-msgstr ""
-
-#: pntemplates/ratings_admin_view.htm:13
-msgid "Score"
-msgstr ""
-
-#: pntemplates/ratings_admin_view.htm:14
-msgid "Options"
-msgstr ""
-
-#: pntemplates/ratings_admin_view.htm:33
-msgid "No items found."
-msgstr ""
-
-#: pntemplates/ratings_admin_modifyconfig.htm:10
-msgid "Items per page"
-msgstr ""
-
-#: pntemplates/ratings_admin_modifyconfig.htm:14
-msgid "Default ratings style"
-msgstr ""
-
-#: pntemplates/ratings_admin_modifyconfig.htm:20
-msgid "Use ajax based rating"
-msgstr ""
-
-#: pntemplates/ratings_admin_modifyconfig.htm:24
-msgid "Use fancy voting controls (stars only)"
-msgstr ""
-
-#: pntemplates/ratings_admin_modifyconfig.htm:28
-msgid "Security against rate rigging"
-msgstr ""
-
-#: pntemplates/ratings_admin_modifyconfig.htm:35
-msgid "Update Configuration"
 msgstr ""

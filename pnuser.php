@@ -203,7 +203,7 @@ function ratings_user_rate($args)
 
     if ($newrating) {
         // Success
-        LogUtil::registerStatus (__('Thank you for rating this item', $dom));
+        LogUtil::registerStatus (__('Done! Thank you for rating this item', $dom));
     }
 
     return pnRedirect($returnurl);
