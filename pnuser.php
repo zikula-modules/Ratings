@@ -4,7 +4,7 @@
  *
  * @copyright (c) 2002, Zikula Development Team
  * @link http://www.zikula.org
- * @version $Id: pnuser.php 24756 2008-10-30 11:31:03Z Landseer $
+ * @version $Id$
  * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @package Zikula_Value_Addons
  * @subpackage Ratings

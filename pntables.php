@@ -4,7 +4,7 @@
  *
  * @copyright (c) 2002, Zikula Development Team
  * @link http://www.zikula.org
- * @version $Id: pntables.php 24342 2008-06-06 12:03:14Z markwest $
+ * @version $Id$
  * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @package Zikula_Value_Addons
  * @subpackage Ratings

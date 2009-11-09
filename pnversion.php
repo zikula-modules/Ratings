@@ -4,7 +4,7 @@
  *
  * @copyright (c) 2002, Zikula Development Team
  * @link http://www.zikula.org
- * @version $Id: pnversion.php 24821 2008-11-05 16:01:47Z Guite $
+ * @version $Id$
  * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @package Zikula_Value_Addons
  * @subpackage Ratings

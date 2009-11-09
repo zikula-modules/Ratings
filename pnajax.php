@@ -4,7 +4,7 @@
  *
  * @copyright (c) 2001, Zikula Development Team
  * @link http://www.zikula.org
- * @version $Id: pnajax.php 19262 2006-06-12 14:45:18Z markwest $
+ * @version $Id$
  * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @package Zikula_Value_Addons
  * @subpackage Ratings

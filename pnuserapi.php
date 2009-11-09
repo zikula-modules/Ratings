@@ -4,7 +4,7 @@
  *
  * @copyright (c) 2002, Zikula Development Team
  * @link http://www.zikula.org
- * @version $Id: pnuserapi.php 24625 2008-09-14 11:58:19Z Guite $
+ * @version $Id$
  * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @package Zikula_Value_Addons
  * @subpackage Ratings
