@@ -245,7 +245,7 @@ function ratings_userapi_rate($args)
 
         $res = DBUtil::insertObject ($rating, 'ratings', 'rid');
         if ($res === false) {
-            return LogUtil::registerError (_INSERTFAILED);
+            return LogUtil::registerError (__('Error! Save failed.', $dom));
         }
     }
 
@@ -263,7 +263,7 @@ function ratings_userapi_rate($args)
         $ratinglog['rating']   = $args['rating'];
         $res = DBUtil::insertObject ($ratinglog, 'ratingslog', 'rid');
         if ($res === false) {
-            return LogUtil::registerError (_INSERTFAILED);
+            return LogUtil::registerError (__('Error! Save failed.'));
         }
     } elseif ($seclevel == 'medium') {
         SessionUtil::setVar("Rated" . $args['modname'] . $args['ratingtype'] . $args['objectid'], true);

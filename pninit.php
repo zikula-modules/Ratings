@@ -55,16 +55,12 @@ function ratings_init()
  */
 function ratings_upgrade($oldversion)
 {
-    if (!DBUtil::changeTable('ratings')) {
-        return false;
-    }
-    if (!DBUtil::changeTable('ratingslog')) {
-        return false;
-    }
-
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '1.0':
+            // this upgrade is handled by the generic table alteration
+            // Carry out other upgrades
+
         case '1.1':
             if (!pnModRegisterHook('module', 'remove', 'API', 'Ratings', 'admin', 'removehook')) {
                 return '1.1';
@@ -88,6 +84,13 @@ function ratings_upgrade($oldversion)
             pnModSetVar('Ratings', 'usefancycontrols', false);
             pnModSetVar('Ratings', 'itemsperpage', 25);
 
+        case '2.0':
+            if (!DBUtil::changeTable('ratings')) {
+                return '2.0';
+            }
+            if (!DBUtil::changeTable('ratingslog')) {
+                return '2.0';
+            }
     }
 
     return true;
