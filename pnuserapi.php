@@ -28,7 +28,7 @@ function ratings_userapi_get($args)
     // Argument check
     if ((!isset($args['modname']) || !isset($args['objectid']))
         && !isset($args['rid'])) {
-        return LogUtil::registerError (__('Error! Could not do what you wanted. Please check your input.', $dom));
+        return LogUtil::registerArgsError();
     }
 
     if (!isset($args['ratingtype']) || $args['ratingtype'] == 'default') {
@@ -173,7 +173,7 @@ function ratings_userapi_rate($args)
     if ((!isset($args['modname'])) ||
         (!isset($args['objectid'])) ||
         (!isset($args['rating']))) {
-        return LogUtil::registerError (__('Error! Could not do what you wanted. Please check your input.', $dom));
+        return LogUtil::registerArgsError();
     }
 
     if (!isset($args['ratingtype']) || $args['ratingtype'] = 'default') {
@@ -214,7 +214,7 @@ function ratings_userapi_rate($args)
 
     // check our input
     if ($args['rating'] < 0 || $args['rating'] > 100) {
-        return LogUtil::registerError (__('Error! Could not do what you wanted. Please check your input.', $dom));
+        return LogUtil::registerArgsError();
     }
 
     $where = " $ratingscolumn[module] = '" . DataUtil::formatForStore($args['modname']) . "' AND

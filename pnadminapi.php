@@ -20,7 +20,7 @@ function ratings_adminapi_delete($args)
     $dom = ZLanguage::getModuleDomain('Ratings');
     // Argument check
     if (!isset($args['rid'])) {
-        return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
+        return LogUtil::registerArgsError();
     }
 
     // Check item exists before attempting deletion
