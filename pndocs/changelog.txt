@@ -1,3 +1,6 @@
+Version 2.2 [not yet released]
+   - Update templates
+
 Version 2.0 January 2007
    - Ajax based voting
    - css star scroller interface

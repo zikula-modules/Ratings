@@ -9,7 +9,7 @@
 
     <h3><!--[gt text="Rating" domain="module_ratings"]--></h3>
 
-    <!--[if $showrating eq false]-->
+    <!--[if $showrating eq false and $permission eq true]-->
     <p><!--[gt text="No one has rated this item yet - be the first!" domain="module_ratings"]--></p>
     <!--[/if]-->
     <!--[if $showrating or ($usefancycontrols eq true and ($style eq 'outoffivestars' or $style eq 'outoftenstars'))]-->
@@ -17,9 +17,9 @@
     <!--[if $style eq 'percentage']-->
     <!--[$rating|pnvarprepfordisplay]-->%
     <!--[elseif $style eq 'outoffive']-->
-    <!--[$rating|pnvarprepfordisplay]-->/5
+    &nbsp;&nbsp;<!--[$rating|pnvarprepfordisplay]--> / 5
     <!--[elseif $style eq 'outoften']-->
-    <!--[$rating|pnvarprepfordisplay]-->/10
+    &nbsp;&nbsp;<!--[$rating|pnvarprepfordisplay]--> / 10
     <!--[elseif $style eq 'outoffivestars']-->
     <!--[if $usefancycontrols]-->
     <ul class="star-rating star-rating-fivestars">
@@ -118,7 +118,7 @@
     <!--[if $useajax]-->
     <div id="ratingmessage">&nbsp;</div>
     <script type="text/javascript">
-        var recordingvote  = '<!--[gt text="Recording rating" domain="module_ratings"]-->';
+        var recordingvote  = "<!--[gt text="Recording rating" domain="module_ratings"]-->";
         <!--[if $usefancycontrols neq true or ($style eq 'percentage' or $style eq 'outoffive' or $style eq 'outoften')]-->
         $('ajaxrating').show();
         <!--[/if]-->
