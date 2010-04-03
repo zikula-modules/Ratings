@@ -120,7 +120,7 @@ function ratings_user_display($args)
                 $pnRender->assign('rating', $intrating);
                 $pnRender->assign('fracrating', $fracrating);
                 break;
-            }
+        }
     } else {
         $pnRender->assign('rawrating', 0);
         $pnRender->assign('rating', 0);
