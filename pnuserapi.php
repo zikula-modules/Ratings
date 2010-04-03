@@ -171,7 +171,8 @@ function ratings_userapi_rate($args)
     if ((!isset($args['modname'])) ||
         (!isset($args['objectid'])) ||
         (!isset($args['rating']))) {
-        return LogUtil::registerArgsError();
+        LogUtil::registerArgsError();
+        return false;
     }
 
     if (!isset($args['ratingtype']) || $args['ratingtype'] = 'default') {
@@ -212,7 +213,8 @@ function ratings_userapi_rate($args)
 
     // check our input
     if ($args['rating'] < 0 || $args['rating'] > 100) {
-        return LogUtil::registerArgsError();
+        LogUtil::registerArgsError();
+        return false;
     }
 
     $where = " $ratingscolumn[module] = '" . DataUtil::formatForStore($args['modname']) . "' AND
@@ -221,7 +223,8 @@ function ratings_userapi_rate($args)
     $rating = DBUtil::selectObject ('ratings', $where);
     // Check for an error with the database code, and if so set an appropriate error message and return
     if ($rating === false) {
-        return LogUtil::registerError (__('Error! Could not load items.', $dom));
+        LogUtil::registerError (__('Error! Could not load items.', $dom));
+        return false;
     }
 
     if ($rating) {
@@ -231,7 +234,8 @@ function ratings_userapi_rate($args)
         $res = DBUtil::updateObject ($rating, 'ratings', '', 'rid');
 
         if ($res === false) {
-            return LogUtil::registerError (__('Error! Update attempt failed.', $dom));
+            LogUtil::registerError (__('Error! Update attempt failed.', $dom));
+            return false;
         }
     } else {
         $rating = array();
@@ -243,7 +247,8 @@ function ratings_userapi_rate($args)
 
         $res = DBUtil::insertObject ($rating, 'ratings', 'rid');
         if ($res === false) {
-            return LogUtil::registerError (__('Error! Save failed.', $dom));
+            LogUtil::registerError (__('Error! Save failed.', $dom));
+            return false;
         }
     }
 
@@ -261,7 +266,8 @@ function ratings_userapi_rate($args)
         $ratinglog['rating']   = $args['rating'];
         $res = DBUtil::insertObject ($ratinglog, 'ratingslog', 'rid');
         if ($res === false) {
-            return LogUtil::registerError (__('Error! Save failed.'));
+            LogUtil::registerError (__('Error! Save failed.'));
+            return false;
         }
     } elseif ($seclevel == 'medium') {
         SessionUtil::setVar("Rated" . $args['modname'] . $args['ratingtype'] . $args['objectid'], true);

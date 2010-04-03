@@ -103,6 +103,10 @@ function ratings_user_display($args)
                 $rating = (int)(($rating+10)/20);
                 $pnRender->assign('rating', $rating);
                 break;
+            case 'outoften':
+                $rating = (int)(($rating+5)/10);
+                $pnRender->assign('rating', $rating);
+                break;
             case 'outoffivestars':
                 $rating = (int)($rating/2);
                 $intrating = (int)($rating/10);
@@ -110,17 +114,13 @@ function ratings_user_display($args)
                 $pnRender->assign('rating', $intrating);
                 $pnRender->assign('fracrating', $fracrating);
                 break;
-            case 'outoften':
-                $rating = (int)(($rating+5)/10);
-                $pnRender->assign('rating', $rating);
-                break;
             case 'outoftenstars':
                 $intrating = (int)($rating/10);
                 $fracrating = $rating - (10*$intrating);
                 $pnRender->assign('rating', $intrating);
                 $pnRender->assign('fracrating', $fracrating);
                 break;
-        }
+            }
     } else {
         $pnRender->assign('rawrating', 0);
         $pnRender->assign('rating', 0);
@@ -182,12 +182,13 @@ function ratings_user_display($args)
 function ratings_user_rate($args)
 {
     $dom = ZLanguage::getModuleDomain('Ratings');
+
     // Get parameters
     $modname    = FormUtil::getPassedValue('modname', null, 'POST');
-    $ratingtype = FormUtil::getPassedValue('ratingtype', null, 'POST');
-    $returnurl  = FormUtil::getPassedValue('returnurl', null, 'POST');
-    $rating     = FormUtil::getPassedValue('rating', null, 'POST');
     $objectid   = (int)FormUtil::getPassedValue('objectid', null, 'POST');
+    $ratingtype = FormUtil::getPassedValue('ratingtype', null, 'POST');
+    $rating     = FormUtil::getPassedValue('rating', null, 'POST');
+    $returnurl  = FormUtil::getPassedValue('returnurl', null, 'POST');
 
     // Confirm authorisation code
     if (!SecurityUtil::confirmAuthKey()) {
@@ -201,8 +202,8 @@ function ratings_user_rate($args)
                                     'ratingtype' => $ratingtype,
                                     'rating'     => $rating));
 
+    // Success
     if ($newrating) {
-        // Success
         LogUtil::registerStatus (__('Done! Thank you for rating this item.', $dom));
     }
 

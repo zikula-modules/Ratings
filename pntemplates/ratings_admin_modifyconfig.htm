@@ -2,7 +2,7 @@
 <!--[gt text="Settings" assign=templatetitle]-->
 <!--[include file="ratings_admin_menu.htm"]-->
 <div class="z-admincontainer">
-    <div class="z-adminpageicon"><!--[pnimg modname='core' src='configure.gif' set='icons/large' alt='' ]--></div>
+    <div class="z-adminpageicon"><!--[pnimg modname='core' src='configure.gif' set='icons/large' alt=$templatetitle]--></div>
     <h2><!--[$templatetitle]--></h2>
     <form class="z-form" action="<!--[pnmodurl modname="Ratings" type="admin" func="updateconfig"]-->" method="post" enctype="application/x-www-form-urlencoded">
         <div>
@@ -20,12 +20,14 @@
                     </select>
                 </div>
                 <div class="z-formrow">
-                    <label for="ratings_useajax"><!--[gt text="Use ajax for saving rate (if disabled the standard redirection will be used)"]--></label>
+                    <label for="ratings_useajax"><!--[gt text="Use ajax for saving rate"]--></label>
                     <input id="ratings_useajax" type="checkbox" name="useajax" value="1"<!--[if $useajax]--> checked="checked"<!--[/if]--> />
+                    <em class="z-formnote z-sub"><!--[gt text='If disabled the standard redirection will be used.']--></em>
                 </div>
                 <div class="z-formrow">
-                    <label for="ratings_usefancycontrols"><!--[gt text="Display dynamic stars during the vote (only if stars is set as default ratings style)"]--></label>
+                    <label for="ratings_usefancycontrols"><!--[gt text="Display dynamic stars during the vote"]--></label>
                     <input id="ratings_usefancycontrols" type="checkbox" name="usefancycontrols" value="1"<!--[if $usefancycontrols]--> checked="checked"<!--[/if]--> />
+                    <em class="z-formnote z-sub"><!--[gt text='Only works if stars is set as default ratings style.']--></em>
                 </div>
                 <div class="z-formrow">
                     <label for="ratings_seclevel"><!--[gt text="Security against rate rigging"]--></label>
