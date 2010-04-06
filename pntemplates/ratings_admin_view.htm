@@ -10,7 +10,6 @@
                 <th><!--[gt text="Item ID"]--></th>
                 <th><!--[gt text="Number of votes"]--></th>
                 <th><!--[gt text="Rating"]--></th>
-                <th><!--[gt text="Score"]--></th>
                 <th><!--[gt text="Options"]--></th>
             </tr>
         </thead>
@@ -21,7 +20,6 @@
                 <td><!--[$rating.itemid|pnvarprephtmldisplay]--></td>
                 <td><!--[$rating.numratings|pnvarprephtmldisplay]--></td>
                 <td><!--[$rating.rating|pnvarprephtmldisplay]--></td>
-                <td><!--[$rating.score|pnvarprephtmldisplay]--></td>
                 <td>
                     <!--[assign var="options" value=$rating.options]-->
                     <!--[section name=options loop=$options]-->

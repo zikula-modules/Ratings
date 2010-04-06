@@ -136,11 +136,6 @@ function ratings_userapi_getall($args)
         return LogUtil::registerError(__('Error! Could not load items.', $dom));
     }
 
-    // calculate score
-    foreach ($items as $k=>$v) {
-        $items[$k]['score'] = round($v['rating']/$v['numratings'], 2);
-    }
-
     // Return the items
     return $items;
 }
