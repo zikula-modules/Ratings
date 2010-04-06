@@ -111,14 +111,20 @@ function ratings_user_display($args)
                 $rating = (int)($rating/2);
                 $intrating = (int)($rating/10);
                 $fracrating = $rating - (10*$intrating);
+                $fullStars = ($fracrating > 5) ? $intrating+1 : $intrating;
+                $emptyStars = 5 - $fullStars;
                 $pnRender->assign('rating', $intrating);
                 $pnRender->assign('fracrating', $fracrating);
+                $pnRender->assign('emptyStars', $emptyStars);
                 break;
             case 'outoftenstars':
                 $intrating = (int)($rating/10);
                 $fracrating = $rating - (10*$intrating);
+                $fullStars = ($fracrating > 5) ? $intrating+1 : $intrating;
+                $emptyStars = 10 - $fullStars;
                 $pnRender->assign('rating', $intrating);
                 $pnRender->assign('fracrating', $fracrating);
+                $pnRender->assign('emptyStars', $emptyStars);
                 break;
         }
     } else {

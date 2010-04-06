@@ -9,36 +9,34 @@
  */
 
 /**
- * Initialise the ratings module
+ * Initialisation process
  *
- * @author Jim McDonald
- * @return true if init success, false otherwise
+ * @return boolean true if successful or false
  */
 function ratings_init()
 {
-    if (!DBUtil::createTable('ratings')) {
-        return false;
-    }
-    if (!DBUtil::createTable('ratingslog')) {
-        return false;
+    $dom = ZLanguage::getModuleDomain('Ratings');
+
+    // Creation of the tables into the database
+    if (!DBUtil::createTable('ratings') ||
+        !DBUtil::createTable('ratingslog')) {
+        return LogUtil::registerError(__("Error: Creation of the tables into the database attempt failed.", $dom));
     }
 
     // Set up module variables
-    pnModSetVar('Ratings', 'defaultstyle', 'outoffivestars');
-    pnModSetVar('Ratings', 'useajax', false);
-    pnModSetVar('Ratings', 'usefancycontrols', false);
-    pnModSetVar('Ratings', 'seclevel', 'medium');
-    pnModSetVar('Ratings', 'itemsperpage', 25);
+    if (!pnModSetVar('Ratings', 'defaultstyle', 'outoffivestars') ||
+        !pnModSetVar('Ratings', 'useajax', false)                 ||
+        !pnModSetVar('Ratings', 'usefancycontrols', false)        ||
+        !pnModSetVar('Ratings', 'seclevel', 'medium')             ||
+        !pnModSetVar('Ratings', 'itemsperpage', 25)) {
+        return LogUtil::registerError(__("Error: Set up module variables attempt failed.", $dom));
+    }
 
     // Set up module hooks
-    if (!pnModRegisterHook('item', 'display', 'GUI', 'Ratings', 'user', 'display')) {
-        return false;
-    }
-    if (!pnModRegisterHook('item', 'delete', 'API', 'Ratings', 'admin', 'deletehook')) {
-        return false;
-    }
-    if (!pnModRegisterHook('module', 'remove', 'API', 'Ratings', 'admin', 'removehook')) {
-        return false;
+    if (!pnModRegisterHook('item', 'display', 'GUI', 'Ratings', 'user', 'display')    ||
+        !pnModRegisterHook('item', 'delete', 'API', 'Ratings', 'admin', 'deletehook') ||
+        !pnModRegisterHook('module', 'remove', 'API', 'Ratings', 'admin', 'removehook')) {
+        return LogUtil::registerError(__("Error: Set up module hooks attempt failed.", $dom));
     }
 
     // Initialisation successful
@@ -89,39 +87,34 @@ function ratings_upgrade($oldversion)
             if (!DBUtil::changeTable('ratingslog')) {
                 return '2.0';
             }
+        case '2.1':
+        case '2.2':
+            // Further upgrade routines
     }
 
     return true;
 }
 
 /**
- * delete the ratings module
+ * Deletion process
  *
- * @author Jim McDonald
- * @return true if delete success, false otherwise
+ * @return boolean true if successful or false
  */
 function ratings_delete()
 {
     $dom = ZLanguage::getModuleDomain('Ratings');
+
     // Remove module hooks
-    if (!pnModUnregisterHook('item', 'display', 'GUI', 'Ratings', 'user', 'display')) {
-        LogUtil::registerError (__('Error! Could not deregister hook.', $dom));
-        // return false;
-    }
-    if (!pnModUnRegisterHook('item', 'delete', 'API', 'Ratings', 'admin', 'deletehook')) {
-        LogUtil::registerError (__('Error! Could not deregister hook.', $dom));
-        // return false;
-    }
-    if (!pnModUnregisterHook('module', 'remove', 'API', 'Ratings', 'admin', 'removehook')) {
-        LogUtil::registerError (__('Error! Could not deregister hook.', $dom));
-        // return false;
+    if (!pnModUnregisterHook('item', 'display', 'GUI', 'Ratings', 'user', 'display')    ||
+        !pnModUnRegisterHook('item', 'delete', 'API', 'Ratings', 'admin', 'deletehook') ||
+        !pnModUnregisterHook('module', 'remove', 'API', 'Ratings', 'admin', 'removehook')) {
+        return LogUtil::registerError (__('Error: Could not deregister hook.', $dom));
     }
 
-    if (!DBUtil::dropTable('ratings')) {
-        return false;
-    }
-    if (!DBUtil::dropTable('ratingslog')) {
-        return false;
+    // Drop tables into the database
+    if (!DBUtil::dropTable('ratings')  ||
+        !DBUtil::dropTable('ratingslog')) {
+        return LogUtil::registerError (__('Error: Could not drop database tables.', $dom));
     }
 
     // Delete module variables
