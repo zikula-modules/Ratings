@@ -207,6 +207,10 @@ function ratings_admin_updateconfig()
     pnModSetVar('Ratings', 'usefancycontrols', $usefancycontrols);
 
     // Update security level
+    $displayScoreInfo = (bool)FormUtil::getPassedValue('displayScoreInfo', false, 'POST');
+    pnModSetVar('Ratings', 'displayScoreInfo', $displayScoreInfo);
+
+    // Update security level
     $seclevel = FormUtil::getPassedValue('seclevel', 'medium', 'POST');
     pnModSetVar('Ratings', 'seclevel', $seclevel);
 

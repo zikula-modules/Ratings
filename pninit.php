@@ -27,6 +27,7 @@ function ratings_init()
     if (!pnModSetVar('Ratings', 'defaultstyle', 'outoffivestars') ||
         !pnModSetVar('Ratings', 'useajax', false)                 ||
         !pnModSetVar('Ratings', 'usefancycontrols', false)        ||
+        !pnModSetVar('Ratings', 'displayScoreInfo', false)        ||
         !pnModSetVar('Ratings', 'seclevel', 'medium')             ||
         !pnModSetVar('Ratings', 'itemsperpage', 25)) {
         return LogUtil::registerError(__("Error: Set up module variables attempt failed.", $dom));
@@ -87,7 +88,10 @@ function ratings_upgrade($oldversion)
             if (!DBUtil::changeTable('ratingslog')) {
                 return '2.0';
             }
+
         case '2.1':
+            pnModSetVar('Ratings', 'displayScoreInfo', false);
+
         case '2.2':
             // Further upgrade routines
     }

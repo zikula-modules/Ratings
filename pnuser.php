@@ -39,6 +39,10 @@ function ratings_user_display($args)
         $style = pnModGetVar('Ratings', 'defaultstyle');
     }
 
+    if (!isset($displayScoreInfo)) {
+        $displayScoreInfo = pnModGetVar('Ratings', 'displayScoreInfo');
+    }
+
     // work out the return url
     if (is_array($extrainfo) && isset($extrainfo['returnurl'])) {
         $returnurl = $extrainfo['returnurl'];
@@ -89,6 +93,33 @@ function ratings_user_display($args)
     $pnRender->assign('style', $style);
     $pnRender->assign('useajax', pnModGetVar('Ratings', 'useajax'));
     $pnRender->assign('usefancycontrols', pnModGetVar('Ratings', 'usefancycontrols'));
+
+    // assign type/max score
+    $pnRender->assign('displayScoreInfo', $displayScoreInfo);
+    if ($displayScoreInfo) {
+        switch($style) {
+            case 'percentage':
+                $pnRender->assign('maxScore', '100');
+                $pnRender->assign('typeScore', '%');
+                break;
+            case 'outoffive':
+                $pnRender->assign('maxScore', '5');
+                $pnRender->assign('typeScore', '');
+                break;
+            case 'outoften':
+                $pnRender->assign('maxScore', '10');
+                $pnRender->assign('typeScore', '');
+                break;
+            case 'outoffivestars':
+                $pnRender->assign('maxScore', '5');
+                $pnRender->assign('typeScore', '');
+                break;
+            case 'outoftenstars':
+                $pnRender->assign('maxScore', '10');
+                $pnRender->assign('typeScore', '');
+                break;
+        }
+    }
 
     $showrating = false;
     if (isset($rating)) {

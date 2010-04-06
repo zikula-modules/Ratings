@@ -30,6 +30,11 @@
                     <em class="z-formnote z-sub"><!--[gt text='Only works if stars is set as default ratings style.']--></em>
                 </div>
                 <div class="z-formrow">
+                    <label for="ratings_displayScoreInfo"><!--[gt text="Display an informative message about the score"]--></label>
+                    <input id="ratings_displayScoreInfo" type="checkbox" name="displayScoreInfo" value="1"<!--[if $displayScoreInfo]--> checked="checked"<!--[/if]--> />
+                    <em class="z-formnote z-sub"><!--[gt text='It tells to the user which is the lowest/higher value.']--></em>
+                </div>
+                <div class="z-formrow">
                     <label for="ratings_seclevel"><!--[gt text="Security against rate rigging"]--></label>
                     <select id="ratings_seclevel" name="seclevel">
                         <!--[html_options options=$securitylevelvalues selected=$seclevel]-->
