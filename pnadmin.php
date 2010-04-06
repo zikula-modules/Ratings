@@ -189,9 +189,8 @@ function ratings_admin_updateconfig()
     }
 
     // Confirm authorisation code
-    // TODO check why this return is commented
     if (!SecurityUtil::confirmAuthKey()) {
-        //return LogUtil::registerAuthidError (pnModURL('Ratings', 'admin', 'main'));
+        return LogUtil::registerAuthidError(pnModURL('Ratings', 'admin', 'main'));
     }
 
     // Update default style
