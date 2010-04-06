@@ -1,4 +1,4 @@
-Version 2.2 [not yet released]
+Version 2.2 [6st April 2010]
    - Update templates
    - Display the empty stars when dynamic stars is disabled. #13
    - Remove score value into the administration. #11
