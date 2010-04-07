@@ -1,3 +1,9 @@
+Version 2.3 [not yet released]
+   - Merge all the votes for a same item into the database. #12
+   - Improve templates depending on user's permission. #5
+   - Split the ratings_user_display.htm template. #7
+   - Update the name of some php variable. #9
+
 Version 2.2 [6st April 2010]
    - Update templates
    - Display the empty stars when dynamic stars is disabled. #13
