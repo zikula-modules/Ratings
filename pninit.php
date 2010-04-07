@@ -20,7 +20,7 @@ function ratings_init()
     // Creation of the tables into the database
     if (!DBUtil::createTable('ratings') ||
         !DBUtil::createTable('ratingslog')) {
-        return LogUtil::registerError(__("Error: Creation of the tables into the database attempt failed.", $dom));
+        return LogUtil::registerError(__("Error! Creation attempt of the database tables failed.", $dom));
     }
 
     // Set up module variables
@@ -30,14 +30,14 @@ function ratings_init()
         !pnModSetVar('Ratings', 'displayScoreInfo', false)        ||
         !pnModSetVar('Ratings', 'seclevel', 'medium')             ||
         !pnModSetVar('Ratings', 'itemsperpage', 25)) {
-        return LogUtil::registerError(__("Error: Set up module variables attempt failed.", $dom));
+        return LogUtil::registerError(__("Error! Set up attempt of the module variables failed.", $dom));
     }
 
     // Set up module hooks
     if (!pnModRegisterHook('item', 'display', 'GUI', 'Ratings', 'user', 'display')    ||
         !pnModRegisterHook('item', 'delete', 'API', 'Ratings', 'admin', 'deletehook') ||
         !pnModRegisterHook('module', 'remove', 'API', 'Ratings', 'admin', 'removehook')) {
-        return LogUtil::registerError(__("Error: Set up module hooks attempt failed.", $dom));
+        return LogUtil::registerError(__("Error! Set up attempt of the module hooks failed.", $dom));
     }
 
     // Initialisation successful
@@ -112,13 +112,13 @@ function ratings_delete()
     if (!pnModUnregisterHook('item', 'display', 'GUI', 'Ratings', 'user', 'display')    ||
         !pnModUnRegisterHook('item', 'delete', 'API', 'Ratings', 'admin', 'deletehook') ||
         !pnModUnregisterHook('module', 'remove', 'API', 'Ratings', 'admin', 'removehook')) {
-        return LogUtil::registerError (__('Error: Could not deregister hook.', $dom));
+        return LogUtil::registerError (__('Error! Deregister attempt of the module hooks failed.', $dom));
     }
 
     // Drop tables into the database
     if (!DBUtil::dropTable('ratings')  ||
         !DBUtil::dropTable('ratingslog')) {
-        return LogUtil::registerError (__('Error: Could not drop database tables.', $dom));
+        return LogUtil::registerError (__('Error! Deletion attempt of the database tables failed.', $dom));
     }
 
     // Delete module variables
