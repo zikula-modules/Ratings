@@ -1,13 +1,11 @@
 <?php
 /**
- * Zikula Application Framework
+ * Ratings
  *
  * @copyright (c) 2002, Zikula Development Team
- * @link http://www.zikula.org
- * @version $Id$
- * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * @package Zikula_Value_Addons
- * @subpackage Ratings
+ * @link      http://code.zikula.org/ratings/
+ * @version   $Id$
+ * @license   GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
@@ -67,12 +65,12 @@ function ratings_user_display($args)
 
     // security check
     // first check if the user is allowed to the any ratings for this module/style/objectid
-    if (!SecurityUtil::checkPermission('Ratings::', "$args[modname]:$style:$objectid", ACCESS_READ)) {
+    if (!SecurityUtil::checkPermission('Ratings::', "$args[modname]::$objectid", ACCESS_READ)) {
         return;
     }
     // if we can we then need to check if the user can add thier own rating
     $permission = false;
-    if (SecurityUtil::checkPermission('Ratings::', "$args[modname]:$style:$objectid", ACCESS_COMMENT)) {
+    if (SecurityUtil::checkPermission('Ratings::', "$args[modname]::$objectid", ACCESS_COMMENT)) {
         $permission = true;
     }
 
@@ -179,16 +177,16 @@ function ratings_user_display($args)
         // get the users ip
         $logip = pnServerGetVar('REMOTE_ADDR');
 
-        $where = "($ratingslogcolumn[id] = '" . DataUtil::formatForStore($logid) . "' OR
-                   $ratingslogcolumn[id] = '" . DataUtil::formatForStore($logip) . "' ) AND
-		           $ratingslogcolumn[ratingid] = '" . $args['modname'] . $objectid . $style . "'";
-        $rating = DBUtil::selectField ('ratingslog', 'id', $where);
+        $where = '(' . $ratingslogcolumn['userid'] . ' = "' .DataUtil::formatForStore($logid) . '"'
+                .' OR ' . $ratingslogcolumn['userid'] . ' = "' . DataUtil::formatForStore($logip) . '")'
+                .' AND ' . $ratingslogcolumn['ratingid'] . ' = "' . $args['modname'] . $objectid . '"';
+        $rating = DBUtil::selectField('ratingslog', 'userid', $where);
         if ($rating) {
             return $pnRender->fetch($template);
         }
     } elseif ($seclevel == 'medium') {
         // Check against session to see if user has voted recently
-        if (SessionUtil::getVar("Rated$args[modname]$style$objectid")) {
+        if (SessionUtil::getVar("Rated$args[modname]$objectid")) {
             return $pnRender->fetch($template);
         }
     }
@@ -211,7 +209,6 @@ function ratings_user_display($args)
  * @author Jim McDonald
  * @param $args['modname'] Source module name for which we're rating an oject
  * @param $args['objectid'] ID of object in source module
- * @param $args['ratingtype'] specific type of rating for this item (optional)
  * @param $args['returnurl'] URL to return to if user chooses to rate
  * @param $args['rating'] rating user selected
  * @return bool true if rating sucess, false otherwise
@@ -223,7 +220,6 @@ function ratings_user_rate($args)
     // Get parameters
     $modname    = FormUtil::getPassedValue('modname', null, 'POST');
     $objectid   = (int)FormUtil::getPassedValue('objectid', null, 'POST');
-    $ratingtype = FormUtil::getPassedValue('ratingtype', null, 'POST');
     $rating     = FormUtil::getPassedValue('rating', null, 'POST');
     $returnurl  = FormUtil::getPassedValue('returnurl', null, 'POST');
 
@@ -236,7 +232,6 @@ function ratings_user_rate($args)
     $newrating = pnModAPIFunc('Ratings', 'user', 'rate',
                               array('modname'    => $modname,
                                     'objectid'   => $objectid,
-                                    'ratingtype' => $ratingtype,
                                     'rating'     => $rating));
 
     // Success

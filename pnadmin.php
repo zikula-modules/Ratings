@@ -1,11 +1,11 @@
 <?php
 /**
- * Zikula Application Framework
+ * Ratings
  *
  * @copyright (c) 2002, Zikula Development Team
- * @link http://www.zikula.org
- * @version $Id$
- * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ * @link      http://code.zikula.org/ratings/
+ * @version   $Id$
+ * @license   GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
@@ -223,5 +223,5 @@ function ratings_admin_updateconfig()
     // the module configuration has been updated successfuly
     LogUtil::registerStatus (__('Done! Module configuration updated.', $dom));
 
-    return pnRedirect(pnModURL('Ratings', 'admin', 'main'));
+    return pnRedirect(pnModURL('Ratings', 'admin', 'modifyconfig'));
 }

@@ -1,11 +1,11 @@
 <?php
 /**
- * Zikula Application Framework
+ * Ratings
  *
  * @copyright (c) 2002, Zikula Development Team
- * @link http://www.zikula.org
- * @version $Id$
- * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ * @link      http://code.zikula.org/ratings/
+ * @version   $Id$
+ * @license   GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
@@ -23,26 +23,23 @@ function ratings_pntables()
     $pntable['ratings_column'] = array('rid'        => 'pn_rid',
                                        'module'     => 'pn_module',
                                        'itemid'     => 'pn_itemid',
-                                       'ratingtype' => 'pn_ratingtype',
                                        'rating'     => 'pn_rating',
                                        'numratings' => 'pn_numratings');
     $pntable['ratings_column_def'] = array('rid'        => 'I NOTNULL AUTO PRIMARY',
-                                           'module'     => "C(32)  NOTNULL DEFAULT ''",
-                                           'itemid'     => "C(64)  NOTNULL DEFAULT ''",
-                                           'ratingtype' => "C(64)  NOTNULL DEFAULT ''",
-                                           'rating'     => "F  NOTNULL DEFAULT '0'",
+                                           'module'     => "C(32) NOTNULL DEFAULT ''",
+                                           'itemid'     => "C(32) NOTNULL DEFAULT ''",
+                                           'rating'     => "F NOTNULL DEFAULT '0'",
                                            'numratings' => "I NOTNULL DEFAULT '1'");
     $pntable['ratings_column_idx'] = array ('module' => 'module',
                                             'itemid' => 'itemid');
 
     // Ratings log table
     $pntable['ratingslog'] = DBUtil::getLimitedTablename('ratingslog');
-    $pntable['ratingslog_column'] = array('id'       => 'pn_id',
-                                          'ratingid' => 'pn_ratingid',
-                                          'rating'   => 'pn_rating');
-    $pntable['ratingslog_column_def'] = array('id'       => "C(32) NOTNULL DEFAULT ''",
-                                              'ratingid' => "C(64) NOTNULL DEFAULT ''",
-                                              'rating'   => "I NOTNULL DEFAULT '0'");
+    $pntable['ratingslog_column'] = array('userid'   => 'pn_userid',
+                                          'ratingid' => 'pn_ratingid');
+    $pntable['ratingslog_column_def'] = array('userid'   => "I NOTNULL DEFAULT '1'",
+                                              'ratingid' => "C(64) NOTNULL DEFAULT ''");
+    $pntable['ratingslog_column_idx'] = array ('userid' => 'userid');
 
     // Return table information
     return $pntable;

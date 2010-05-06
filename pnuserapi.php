@@ -1,11 +1,11 @@
 <?php
 /**
- * Zikula Application Framework
+ * Ratings
  *
  * @copyright (c) 2002, Zikula Development Team
- * @link http://www.zikula.org
- * @version $Id$
- * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ * @link      http://code.zikula.org/ratings/
+ * @version   $Id$
+ * @license   GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
@@ -13,7 +13,6 @@
  * @author Jim McDonald
  * @param $args['modname'] name of the module this rating is for
  * @param $args['objectid'] ID of the item this rating is for
- * @param $args['ratingtype'] type of rating (optional)
  * @param $args['rid'] ID of the rating
  *
  * This API requires either (modname and objectid) or rid
@@ -29,14 +28,10 @@ function ratings_userapi_get($args)
         return LogUtil::registerArgsError();
     }
 
-    if (!isset($args['ratingtype']) || $args['ratingtype'] == 'default') {
-        $args['ratingtype'] = pnModGetVar('Ratings', 'defaultstyle');
-    }
-
     $permFilter = array(array('realm'           => 0,
                               'component_left'  => 'Ratings',
                               'instance_left'   => 'module',
-                              'instance_middle' => 'ratingtype',
+                              'instance_middle' => '',
                               'instance_right'  => 'itemid',
                               'level'           => ACCESS_READ));
 
@@ -46,9 +41,8 @@ function ratings_userapi_get($args)
         $ratingscolumn = $pntable['ratings_column'];
 
         // form the where clause
-        $where = "WHERE $ratingscolumn[module] = '" . DataUtil::formatForStore($args['modname']) . "'
-                  AND $ratingscolumn[itemid] = '" . DataUtil::formatForStore($args['objectid']) . "'
-                  AND $ratingscolumn[ratingtype] = '" . DataUtil::formatForStore($args['ratingtype']) . "'";
+        $where = 'WHERE '.$ratingscolumn['module'].' = "'.DataUtil::formatForStore($args['modname']).'"'.
+                 'AND '.$ratingscolumn['itemid'].' = "'.DataUtil::formatForStore($args['objectid']).'"';
 
         $ratings = DBUtil::selectObjectArray('ratings', $where, 'rid', 1, -1, '', $permFilter);
         if (isset($ratings[0])) {
@@ -66,7 +60,6 @@ function ratings_userapi_get($args)
  * get all ratings for a given module
  * @author Mark West
  * @param $args['modname'] name of the module this rating is for
- * @param $args['ratingtype'] type of rating (optional)
  * @param $args['sortby'] column to sort by (optional)
  * @param $args['numitems'] number of items to return (optional)
  * @return mixed array of ratings or false
@@ -74,10 +67,7 @@ function ratings_userapi_get($args)
 function ratings_userapi_getall($args)
 {
     $dom = ZLanguage::getModuleDomain('Ratings');
-    // default rating type
-    if (!isset($args['ratingtype']) || $args['ratingtype'] = 'default') {
-        $args['ratingtype'] = pnModGetVar('Ratings', 'defaultstyle');
-    }
+
     if (!isset($args['modname'])) {
         $args['modname'] = null;
     }
@@ -85,7 +75,7 @@ function ratings_userapi_getall($args)
     $items = array();
 
     // Security check
-    if (!SecurityUtil::checkPermission('Ratings::', "$args[modname]:$args[ratingtype]:", ACCESS_READ)) {
+    if (!SecurityUtil::checkPermission('Ratings::', "$args[modname]::", ACCESS_READ)) {
         return $items;
     }
 
@@ -103,7 +93,6 @@ function ratings_userapi_getall($args)
     if (isset($args['modname'])) {
         $whereargs[] = "$ratingscolumn[module] = '" . DataUtil::formatForStore($args['modname']) . "'";
     }
-    $whereargs[] = "$ratingscolumn[ratingtype] = '" . DataUtil::formatForStore($args['ratingtype']) . "'";
     $where = null;
     if (count($whereargs) > 0) {
         $where = ' WHERE ' . implode(' AND ', $whereargs);
@@ -125,7 +114,7 @@ function ratings_userapi_getall($args)
                           'component_middle' => '',
                           'component_right'  => '',
                           'instance_left'    => 'module',
-                          'instance_middle'  => 'ratingtype',
+                          'instance_middle'  => '',
                           'instance_right'   => 'itemid',
                           'level'            => ACCESS_OVERVIEW);
 
@@ -155,7 +144,6 @@ function ratings_userapi_countitems($args)
  * @author Jim McDonald
  * @param $args['modname'] module name of the item to rate
  * @param $args['id'] ID of the item to rate
- * @param $args['ratingtype'] type of rating (optional)
  * @param $args['rating'] actual rating
  * @return int the new rating for this item
  */
@@ -169,12 +157,8 @@ function ratings_userapi_rate($args)
         return LogUtil::registerArgsError();
     }
 
-    if (!isset($args['ratingtype']) || $args['ratingtype'] = 'default') {
-        $args['ratingtype'] = pnModGetVar('Ratings', 'defaultstyle');
-    }
-
     // Security check
-    if (!SecurityUtil::checkPermission('Ratings::', "$args[modname]:$args[ratingtype]:$args[objectid]", ACCESS_READ)) {
+    if (!SecurityUtil::checkPermission('Ratings::', "$args[modname]::$args[objectid]", ACCESS_READ)) {
         return LogUtil::registerPermissionError();
     }
 
@@ -191,16 +175,16 @@ function ratings_userapi_rate($args)
         // get the users ip
         $logip = pnServerGetVar('REMOTE_ADDR');
 
-        $where = "( $ratingslogcolumn[id] = '" . DataUtil::formatForStore($logid) . "' OR
-                    $ratingslogcolumn[id] = '" . DataUtil::formatForStore($logip) . "' ) AND
-                    $ratingslogcolumn[ratingid] = '" . $args['modname'] . $args['objectid'] . $args['ratingtype'] . "'";
-        $row = DBUtil::selectFieldArray ('ratingslog', 'id', $where, '');
+        $where = '(' . $ratingslogcolumn['userid'] . ' = "' . DataUtil::formatForStore($logid) . '"'
+                .' OR ' . $ratingslogcolumn['userid'] . ' = "' . DataUtil::formatForStore($logip) . '")'
+                .' AND ' . $ratingslogcolumn['ratingid'] . ' = "' . $args['modname'] . $args['objectid'] . '"';
+        $row = DBUtil::selectFieldArray ('ratingslog', 'userid', $where, '');
         if ($row) {
             return false;
         }
     } elseif ($seclevel == 'medium') {
         // Check against session to see if user has voted recently
-        if (SessionUtil::getVar("Rated" . $args['modname'] . $args['ratingtype'] . $args['objectid'])) {
+        if (SessionUtil::getVar("Rated" . $args['modname'] . $args['objectid'])) {
             return false;
         }
     } // No check for low
@@ -210,9 +194,8 @@ function ratings_userapi_rate($args)
         return LogUtil::registerArgsError();
     }
 
-    $where = " $ratingscolumn[module] = '" . DataUtil::formatForStore($args['modname']) . "' AND
-               $ratingscolumn[itemid] = '" . DataUtil::formatForStore($args['objectid']) . "' AND
-               $ratingscolumn[ratingtype] = '" . DataUtil::formatForStore($args['ratingtype']) . "'";
+    $where = $ratingscolumn['module'] . ' = "' . DataUtil::formatForStore($args['modname']) . '"'
+            .' AND ' . $ratingscolumn['itemid'] . ' = "' . DataUtil::formatForStore($args['objectid']) . '"';
     $rating = DBUtil::selectObject ('ratings', $where);
     // Check for an error with the database code, and if so set an appropriate error message and return
     if ($rating === false) {
@@ -232,7 +215,6 @@ function ratings_userapi_rate($args)
         $rating = array();
         $rating['module']     = $args['modname'];
         $rating['itemid']     = $args['objectid'];
-        $rating['ratingtype'] = $args['ratingtype'];
         $rating['rating']     = $args['rating'];
         $rating['numratings'] = 1;
 
@@ -251,15 +233,14 @@ function ratings_userapi_rate($args)
         }
 
         $ratinglog = array();
-        $ratinglog['id']       = $logid;
-        $ratinglog['ratingid'] = $args['modname'] . $args['objectid'] . $args['ratingtype'];
-        $ratinglog['rating']   = $args['rating'];
-        $res = DBUtil::insertObject ($ratinglog, 'ratingslog', 'rid');
+        $ratinglog['userid']   = $logid;
+        $ratinglog['ratingid'] = $args['modname'] . $args['objectid'];
+        $res = DBUtil::insertObject($ratinglog, 'ratingslog', 'rid');
         if ($res === false) {
             return LogUtil::registerError (__('Error! Save attempt failed.'));
         }
     } elseif ($seclevel == 'medium') {
-        SessionUtil::setVar("Rated" . $args['modname'] . $args['ratingtype'] . $args['objectid'], true);
+        SessionUtil::setVar("Rated" . $args['modname'] . $args['objectid'], true);
     }
 
     return $rating['rating'];

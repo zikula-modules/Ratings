@@ -25,4 +25,4 @@ $modversion['official']       = false;
 $modversion['author']         = 'Jim McDonald, Christophe Beaujean';
 $modversion['contact']        = 'http://code.zikula.org/ratings';
 
-$modversion['securityschema'] = array('Ratings::' => 'Module name:Rating type:Item ID');
+$modversion['securityschema'] = array('Ratings::' => 'Module name::Item ID');

@@ -1,12 +1,12 @@
 <?php
 /**
- * Zikula Application Framework
+ * Ratings
  *
- * @copyright (c) 2001, Zikula Development Team
- * @link http://www.zikula.org
- * @version $Id$
- * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
-*/
+ * @copyright (c) 2002, Zikula Development Team
+ * @link      http://code.zikula.org/ratings/
+ * @version   $Id$
+ * @license   GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ */
 
 /**
  * Log a vote and display the results form
@@ -19,13 +19,12 @@
 function ratings_ajax_rate()
 {
     $dom = ZLanguage::getModuleDomain('Ratings');
-    $modname =    DataUtil::convertFromUTF8(FormUtil::getPassedValue('modname', null, 'POST'));
-    $objectid =   DataUtil::convertFromUTF8(FormUtil::getPassedValue('objectid', null, 'POST'));
-    $rating =     DataUtil::convertFromUTF8(FormUtil::getPassedValue('rating', null, 'POST'));
-    $ratingtype = DataUtil::convertFromUTF8(FormUtil::getPassedValue('ratingtype', pnModGetVar('Ratings', 'defaultstyle'), 'POST'));
-    $returnurl =  DataUtil::convertFromUTF8(FormUtil::getPassedValue('returnurl', null, 'POST'));
+    $modname =    FormUtil::getPassedValue('modname', null, 'POST');
+    $objectid =   FormUtil::getPassedValue('objectid', null, 'POST');
+    $rating =     FormUtil::getPassedValue('rating', null, 'POST');
+    $returnurl =  FormUtil::getPassedValue('returnurl', null, 'POST');
 
-    if (!SecurityUtil::checkPermission('Ratings::', "$modname:$ratingtype:$objectid", ACCESS_COMMENT)) {
+    if (!SecurityUtil::checkPermission('Ratings::', "$modname::$objectid", ACCESS_COMMENT)) {
         AjaxUtil::error(__('Sorry! No authorization to access this module.', $dom));
     }
 
@@ -33,7 +32,6 @@ function ratings_ajax_rate()
     $newrating = pnModAPIFunc('Ratings', 'user', 'rate',
                               array('modname'    => $modname,
                                     'objectid'   => $objectid,
-                                    'ratingtype' => $ratingtype,
                                     'rating'     => $rating));
 
     // get the new output

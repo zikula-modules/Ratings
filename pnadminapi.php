@@ -1,11 +1,11 @@
 <?php
 /**
- * Zikula Application Framework
+ * Ratings
  *
  * @copyright (c) 2002, Zikula Development Team
- * @link http://www.zikula.org
- * @version $Id$
- * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ * @link      http://code.zikula.org/ratings/
+ * @version   $Id$
+ * @license   GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
@@ -28,12 +28,12 @@ function ratings_adminapi_delete($args)
     }
 
     // Security check
-    if (!SecurityUtil::checkPermission('Ratings::', "$item[module]:$item[ratingtype]:$item[itemid]", ACCESS_DELETE)) {
+    if (!SecurityUtil::checkPermission('Ratings::', "$item[module]::$item[itemid]", ACCESS_DELETE)) {
         return LogUtil::registerPermissionError();
     }
 
     // form the logid entry.
-    $logid = $item['module'] . $item['itemid'] . $item['ratingtype'];
+    $logid = $item['module'] . $item['itemid'];
 
     // delete the log entries first then the main ratings
     if (!DBUtil::deleteObjectByID('ratingslog', $logid, 'ratingid')) {

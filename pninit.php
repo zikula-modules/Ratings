@@ -1,11 +1,11 @@
 <?php
 /**
- * Zikula Application Framework
+ * Ratings
  *
  * @copyright (c) 2002, Zikula Development Team
- * @link http://www.zikula.org
- * @version $Id$
- * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ * @link      http://code.zikula.org/ratings/
+ * @version   $Id$
+ * @license   GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  */
 
 /**
@@ -93,7 +93,83 @@ function ratings_upgrade($oldversion)
             pnModSetVar('Ratings', 'displayScoreInfo', false);
 
         case '2.2':
-            // Further upgrade routines
+            // drop columns
+            if (!DBUtil::dropColumn('ratings', 'pn_ratingtype') ||
+                !DBUtil::dropColumn('ratingslog', 'pn_rating')) {
+                LogUtil::registerError(__('Error! Drop attempt of the database columns failed.', $dom));
+                return '2.2';
+            }
+
+            // rename column
+            if (!DBUtil::renameColumn('ratingslog', 'pn_id', 'userid')) {
+                LogUtil::registerError(__('Error! Rename attempt of the database columns failed.', $dom));
+                return '2.2';
+            }
+
+            // update the ratings table
+            $ratingsUpdateTable = array();
+            $ratingsNewInsert   = array();
+            $ratingsAll = DBUtil::selectObjectArray('ratings', '', '', -1, -1, 'rid');
+            if (!empty($ratingsAll)) {
+                foreach ($ratingsAll as $curRid => $curRtable) {
+                    $curRitem = $curRtable['itemid'];
+                    if (array_key_exists($curRitem, $ratingsUpdateTable)) {
+                        $ratingsUpdateTable[$curRitem][] = $curRtable;
+                    } else {
+                        $ratingsUpdateTable[$curRitem] = array();
+                        $ratingsUpdateTable[$curRitem][] = $curRtable;
+                    }
+                }
+                foreach ($ratingsUpdateTable as $curRtables) {
+                    $curRtableinsert = array();
+                    $curRtableinsert['rid'] = null;
+                    $curRtableinsert['module'] = $curRtables[0]['module'];
+                    $curRtableinsert['itemid'] = $curRtables[0]['itemid'];
+                    $rating = 0;
+                    $numratings = 0;
+                    $i = 0;
+                    foreach ($curRtables as $curRtable) {
+                        $i++;
+                        $numratings = $numratings + $curRtable['numratings'];
+                        $rating = $rating + $curRtable['rating'];
+                    }
+                    $rating = ($rating/$i);
+                    $curRtableinsert['rating'] = $rating;
+                    $curRtableinsert['numratings'] = $numratings;
+                    $ratingsNewInsert[] = $curRtableinsert;
+                }
+                if (!DBUtil::deleteWhere('ratings', '') ||
+                    !DBUtil::insertObjectArray($ratingsNewInsert, 'ratings')) {
+                    LogUtil::registerError(__('Error! Update attempt of the database tables failed.', $dom));
+                    return '2.2';
+                }
+            }
+
+            // update the ratingslog table
+            $tables = pnDBGetTables();
+            $sqls = array();
+            $sqls[] = "UPDATE `$tables[ratingslog]` SET pn_ratingid = REPLACE(pn_ratingid, 'outoffivestars', '');";
+            $sqls[] = "UPDATE `$tables[ratingslog]` SET pn_ratingid = REPLACE(pn_ratingid, 'outoftenstars', '');";
+            $sqls[] = "UPDATE `$tables[ratingslog]` SET pn_ratingid = REPLACE(pn_ratingid, 'percentage', '');";
+            $sqls[] = "UPDATE `$tables[ratingslog]` SET pn_ratingid = REPLACE(pn_ratingid, 'outoffive', '');";
+            $sqls[] = "UPDATE `$tables[ratingslog]` SET pn_ratingid = REPLACE(pn_ratingid, 'outoften', '');";
+            $sqls[] = "CREATE TEMPORARY TABLE ratingslog_temp(pn_userid VARCHAR(32),pn_ratingid VARCHAR(64)) TYPE=HEAP;
+                       INSERT INTO ratingslog_temp(pn_userid,pn_ratingid) SELECT DISTINCT pn_userid,pn_ratingid FROM `$tables[ratingslog]`;
+                       DELETE FROM `$tables[ratingslog]`;
+                       INSERT INTO `$tables[ratingslog]`(pn_userid,pn_ratingid) SELECT pn_userid,pn_ratingid FROM ratingslog_temp;";
+            foreach ($sqls as $sql) {
+                if (!DBUtil::executeSQL($sql)) {
+                    LogUtil::registerError(__('Error! Update attempt of the database tables failed.', $dom));
+                    return '2.2';
+                }
+            }
+            unset($sqls);
+
+            // update tables definition
+            if (!DBUtil::changeTable('ratings') ||
+                !DBUtil::changeTable('ratingslog')) {
+                return '2.2';
+            }
     }
 
     return true;
