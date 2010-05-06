@@ -82,7 +82,6 @@
             <input type="hidden" name="returnurl" value="<!--[$returnurl|pnvarprepfordisplay]-->" />
             <input type="hidden" name="modname" value="<!--[$modname|pnvarprepfordisplay]-->" />
             <input type="hidden" name="objectid" value="<!--[$objectid|pnvarprepfordisplay]-->" />
-            <input type="hidden" name="ratingtype" value="<!--[$ratingtype|pnvarprepfordisplay]-->" />
             <!--[if $usefancycontrols neq true or ($style eq 'percentage' or $style eq 'outoffive' or $style eq 'outoften')]-->
             <label for="rating"><!--[gt text="Rate this item" domain="module_ratings"]--></label>
             <!--[if $style eq 'percentage']-->
@@ -127,10 +126,10 @@
     <!--[if $useajax]-->
     <div id="ratingmessage">&nbsp;</div>
     <script type="text/javascript">
-        var recordingvote  = "<!--[gt text='Recording rating' domain='module_ratings']-->";
-        <!--[if $usefancycontrols neq true or ($style eq 'percentage' or $style eq 'outoffive' or $style eq 'outoften')]-->
+        var recordingvote  = "{{gt text='Recording rating'}}";
+        {{if $usefancycontrols neq true or ($style eq 'percentage' or $style eq 'outoffive' or $style eq 'outoften')}}
         $('ajaxrating').show();
-        <!--[/if]-->
+        {{/if}}
     </script>
     <!--[/if]-->
     <!--[/if]-->
