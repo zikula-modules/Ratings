@@ -163,51 +163,54 @@ function ratings_userapi_rate($args)
     }
 
     // Database information
-    $pntable = pnDBGetTables();
+    $pntable          = pnDBGetTables();
     $ratingscolumn    = $pntable['ratings_column'];
     $ratingslogcolumn = $pntable['ratingslog_column'];
 
+    // Get the user id an ip
+    $logid = pnUserGetVar('uid');
+    $logip = pnServerGetVar('REMOTE_ADDR');
+
+    // Whether the member has already voted for this item for future check
+    $where = '(' . $ratingslogcolumn['userid'] . ' = "' . DataUtil::formatForStore($logid) . '"'
+            .' OR ' . $ratingslogcolumn['userid'] . ' = "' . DataUtil::formatForStore($logip) . '")'
+            .' AND ' . $ratingslogcolumn['ratingid'] . ' = "' . $args['modname'] . $args['objectid'] . '"';
+    $alreadyReg = DBUtil::selectFieldArray('ratingslog', 'userid', $where, '');
+
     // Multiple rate check
     $seclevel = pnModGetVar('Ratings', 'seclevel');
-    if ($seclevel == 'high') {
-        // get the users user id
-        $logid = pnUserGetVar('uid');
-        // get the users ip
-        $logip = pnServerGetVar('REMOTE_ADDR');
-
-        $where = '(' . $ratingslogcolumn['userid'] . ' = "' . DataUtil::formatForStore($logid) . '"'
-                .' OR ' . $ratingslogcolumn['userid'] . ' = "' . DataUtil::formatForStore($logip) . '")'
-                .' AND ' . $ratingslogcolumn['ratingid'] . ' = "' . $args['modname'] . $args['objectid'] . '"';
-        $row = DBUtil::selectFieldArray ('ratingslog', 'userid', $where, '');
-        if ($row) {
-            return false;
-        }
-    } elseif ($seclevel == 'medium') {
+    if ($seclevel == 'high' && $alreadyReg) {
+        // Check against database to see if user has already voted
+        return false;
+    }
+    elseif ($seclevel == 'medium')
+    {
         // Check against session to see if user has voted recently
         if (SessionUtil::getVar("Rated" . $args['modname'] . $args['objectid'])) {
             return false;
         }
-    } // No check for low
-
-    // check our input
-    if ($args['rating'] < 0 || $args['rating'] > 100) {
-        return LogUtil::registerArgsError();
     }
 
+    // Check our input
+    if ($args['rating'] < 0 || $args['rating'] > 100) {
+        return LogUtil::registerError(__('Error! The rating value is not correct.', $dom));
+    }
+
+    // Get the current values for the current module and itemid into the database
     $where = $ratingscolumn['module'] . ' = "' . DataUtil::formatForStore($args['modname']) . '"'
             .' AND ' . $ratingscolumn['itemid'] . ' = "' . DataUtil::formatForStore($args['objectid']) . '"';
-    $rating = DBUtil::selectObject ('ratings', $where);
-    // Check for an error with the database code, and if so set an appropriate error message and return
+    $rating = DBUtil::selectObject('ratings', $where);
     if ($rating === false) {
-        return LogUtil::registerError (__('Error! Could not load items.', $dom));
+        return LogUtil::registerError(__('Error! Could not load items.', $dom));
     }
 
+    // Save the new rate into the database
     if ($rating) {
         // Calculate new rating
         $rating['numratings']++;
         $rating['rating'] = (int)((($rating['rating']*($rating['numratings'] - 1)) + $args['rating']) / $rating['numratings']);
-        $res = DBUtil::updateObject ($rating, 'ratings', '', 'rid');
 
+        $res = DBUtil::updateObject($rating, 'ratings', '', 'rid');
         if ($res === false) {
             return LogUtil::registerError (__('Error! Update attempt failed.', $dom));
         }
@@ -218,28 +221,26 @@ function ratings_userapi_rate($args)
         $rating['rating']     = $args['rating'];
         $rating['numratings'] = 1;
 
-        $res = DBUtil::insertObject ($rating, 'ratings', 'rid');
+        $res = DBUtil::insertObject($rating, 'ratings', 'rid');
         if ($res === false) {
-            return LogUtil::registerError (__('Error! Save attempt failed.', $dom));
+            return LogUtil::registerError(__('Error! Save attempt failed.', $dom));
         }
     }
 
-    // Set note that user has rated this item if required
-    if ($seclevel == 'high') {
-        if (pnUserLoggedIn()) {
-            $logid = pnUserGetVar('uid');
-        } else {
-            $logid = pnServerGetVar('REMOTE_ADDR');
-        }
-
+    // Set note that user has rated this item
+    if (!$alreadyReg) {
         $ratinglog = array();
-        $ratinglog['userid']   = $logid;
+        $ratinglog['userid']   = (pnUserLoggedIn()) ? $logid : $logip;
         $ratinglog['ratingid'] = $args['modname'] . $args['objectid'];
+
         $res = DBUtil::insertObject($ratinglog, 'ratingslog', 'rid');
         if ($res === false) {
-            return LogUtil::registerError (__('Error! Save attempt failed.'));
+            return LogUtil::registerError (__('Error! Save log attempt failed.'));
         }
-    } elseif ($seclevel == 'medium') {
+    }
+
+    // Set session security against rate rigging for medium level
+    if ($seclevel == 'medium') {
         SessionUtil::setVar("Rated" . $args['modname'] . $args['objectid'], true);
     }
 
