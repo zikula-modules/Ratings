@@ -1,5 +1,5 @@
 <!--[*  $Id$  *]-->
-<div id="ratingsratecontent">
+<div id="ratingsratecontent-<!--[$modname|pnvarprepfordisplay]-->-<!--[$objectid|pnvarprepfordisplay]-->">
     <!--[if $useajax]-->
     <!--[pnajaxheader modname=Ratings filename=ratings.js]-->
     <!--[/if]-->
@@ -76,7 +76,7 @@
 
 
     <!--[if $showratingform eq 1 and $permission eq true]-->
-    <form id="ratingrateform" action="<!--[pnmodurl modname=Ratings type=user func=rate]-->" method="post" enctype="application/x-www-form-urlencoded">
+    <form id="ratingrateform-<!--[$modname|pnvarprepfordisplay]-->-<!--[$objectid|pnvarprepfordisplay]-->" action="<!--[pnmodurl modname=Ratings type=user func=rate]-->" method="post" enctype="application/x-www-form-urlencoded">
         <div>
             <input type="hidden" id="ratingsauthid" name="authid" value="<!--[insert name="generateauthkey" module="Ratings"]-->" />
             <input type="hidden" name="returnurl" value="<!--[$returnurl|pnvarprepfordisplay]-->" />
@@ -109,7 +109,7 @@
             </select>
             <!--[/if]-->
             <!--[if $useajax]-->
-            <input id="ajaxrating" style="display: none;" onclick="javascript:ratingsratefromform();" name="submit" type="button" value="<!--[gt text="Submit" domain="module_ratings"]-->" />
+            <input id="ajaxrating-<!--[$modname|pnvarprepfordisplay]-->-<!--[$objectid|pnvarprepfordisplay]-->" style="display: none;" onclick="javascript:ratingsratefromform('<!--[$modname]-->', '<!--[$objectid]-->');" name="submit" type="button" value="<!--[gt text="Submit" domain="module_ratings"]-->" />
             <noscript>
             <!--[/if]-->
                 <input name="submit" type="submit" value="<!--[gt text="Submit" domain="module_ratings"]-->" />
@@ -124,11 +124,11 @@
         </div>
     </form>
     <!--[if $useajax]-->
-    <div id="ratingmessage">&nbsp;</div>
+    <div id="ratingmessage-<!--[$modname|pnvarprepfordisplay]-->-<!--[$objectid|pnvarprepfordisplay]-->">&nbsp;</div>
     <script type="text/javascript">
         var recordingvote  = "{{gt text='Recording rating'}}";
         {{if $usefancycontrols neq true or ($style eq 'percentage' or $style eq 'outoffive' or $style eq 'outoften')}}
-        $('ajaxrating').show();
+        $('ajaxrating-{{$modname}}-{{$objectid}}').show();
         {{/if}}
     </script>
     <!--[/if]-->

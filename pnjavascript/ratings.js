@@ -1,13 +1,12 @@
 /**
- * Zikula Application Framework
+ * Ratings
  *
  * @copyright (c) 2002, Zikula Development Team
- * @link http://www.zikula.com
- * @version $Id$
- * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * @package Zikula_Value_Addons
- * @subpackage Ratings
-*/
+ * @link      http://code.zikula.org/ratings/
+ * @version   $Id$
+ * @license   GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ */
+
 
 /**
  * Record a users rating for an item
@@ -18,7 +17,7 @@
  */
 function ratingsratefromslider(modname, objectid, rating)
 {
-    Element.update('ratingmessage', recordingvote);
+    Element.update('ratingmessage-' + modname + '-' + objectid, recordingvote);
     var pars = "module=Ratings&func=rate&modname=" + modname + "&objectid=" + objectid + "&rating=" + rating;
     var myAjax = new Ajax.Request(
         document.location.pnbaseURL + 'ajax.php',
@@ -29,7 +28,6 @@ function ratingsratefromslider(modname, objectid, rating)
         }); 
 }
 
-
 /**
  * Record a users rating for an item
  *
@@ -37,11 +35,11 @@ function ratingsratefromslider(modname, objectid, rating)
  * @return none;
  * @author Mark West
  */
-function ratingsratefromform()
+function ratingsratefromform(modname, objectid)
 {
-    Element.update('ratingmessage', recordingvote);
+    Element.update('ratingmessage-' + modname + '-' + objectid, recordingvote);
     var pars = "module=Ratings&func=rate&"
-               + Form.serialize('ratingrateform');
+               + Form.serialize('ratingrateform-' + modname + '-' + objectid);
     var myAjax = new Ajax.Request(
         document.location.pnbaseURL + 'ajax.php',
         {
@@ -66,6 +64,9 @@ function ratingsrate_response(req)
     }
 
     var json = pndejsonize(req.responseText);
-
-    Element.update('ratingsratecontent', json.result);
+    if (json.objectid == '' || json.modname == '-1') {
+        pnshowajaxerror("Oops something went wrong! " + json.alerttext + "response: " + json.response);
+    } else {
+        Element.update('ratingsratecontent-' + json.modname + '-' + json.objectid, json.result);
+    }
 }

@@ -42,5 +42,9 @@ function ratings_ajax_rate()
 
 
     // return the new content for the block
-    return array('result' => $result);
+    $output             = array();
+    $output['result']   = $result;
+    $output['objectid'] = $objectid;
+    $output['modname']  = $modname;
+    return AjaxUtil::output($output);
 }
