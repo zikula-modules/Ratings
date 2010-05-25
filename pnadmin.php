@@ -193,19 +193,23 @@ function ratings_admin_updateconfig()
         return LogUtil::registerAuthidError(pnModURL('Ratings', 'admin', 'main'));
     }
 
-    // Update default style
+    // Update default ratings style
     $defaultstyle = FormUtil::getPassedValue('defaultstyle', 'outoffivestars', 'POST');
     pnModSetVar('Ratings', 'defaultstyle', $defaultstyle);
 
-    // Update default style
-    $useajax = (bool)FormUtil::getPassedValue('useajax', false, 'POST');
-    pnModSetVar('Ratings', 'useajax', $useajax);
-
-    // Update default style
+    // Update stars dynamically using ajax
     $usefancycontrols = (bool)FormUtil::getPassedValue('usefancycontrols', false, 'POST');
     pnModSetVar('Ratings', 'usefancycontrols', $usefancycontrols);
 
-    // Update security level
+    // Update ajax for saving rate
+    $useajax = (bool)FormUtil::getPassedValue('useajax', false, 'POST');
+    if($useajax === false && $usefancycontrols === true) {
+        LogUtil::registerError(__('Error! To display the stars dynamically using ajax you must enable the use of ajax for saving rate.', $dom));
+        pnModSetVar('Ratings', 'usefancycontrols', false);
+    }
+    pnModSetVar('Ratings', 'useajax', $useajax);
+
+    // Update informative message about the score
     $displayScoreInfo = (bool)FormUtil::getPassedValue('displayScoreInfo', false, 'POST');
     pnModSetVar('Ratings', 'displayScoreInfo', $displayScoreInfo);
 

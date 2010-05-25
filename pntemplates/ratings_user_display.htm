@@ -25,11 +25,11 @@
     <ul class="star-rating star-rating-fivestars">
         <li class="current-rating" style="width:<!--[$rawrating|string_format:"%.0f"|default:0]-->%;">Currently <!--[$rating]--> / 5 Stars.</li>
         <!--[if $showratingform eq 1 and $permission eq true]-->
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',20);" title="1 star out of 5" class="one-star">1</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',40);" title="2 stars out of 5" class="two-stars">2</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',60);" title="3 stars out of 5" class="three-stars">3</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',80);" title="4 stars out of 5" class="four-stars">4</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',100);" title="5 stars out of 5" class="five-stars">5</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',20);" title="<!--[gt text="1 star out of 5" domain="module_ratings"]-->" class="one-star">1</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',40);" title="<!--[gt text="2 stars out of 5" domain="module_ratings"]-->" class="two-stars">2</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',60);" title="<!--[gt text="3 stars out of 5" domain="module_ratings"]-->" class="three-stars">3</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',80);" title="<!--[gt text="4 stars out of 5" domain="module_ratings"]-->" class="four-stars">4</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',100);" title="<!--[gt text="5 stars out of 5" domain="module_ratings"]-->" class="five-stars">5</a></li>
         <!--[/if]-->
     </ul>
     <!--[else]-->
@@ -48,16 +48,16 @@
     <ul class="star-rating star-rating-tenstars">
         <li class="current-rating" style="width:<!--[$rawrating|string_format:"%.0f"|default:0]-->%;">Currently <!--[$rating]--> / 10 Stars.</li>
         <!--[if $showratingform eq 1 and $permission eq true]-->
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',10);" title="1 star out of 10" class="one-star">1</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',20);" title="2 star out of 10" class="two-stars">2</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',30);" title="3 star out of 10" class="three-stars">3</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',40);" title="4 stars out of 10" class="four-stars">4</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',50);" title="5 star out of 10" class="five-stars">5</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',60);" title="6 stars out of 10" class="six-stars">6</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',70);" title="7 star out of 10" class="seven-stars">7</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',80);" title="8 stars out of 10" class="eight-stars">8</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',90);" title="9 star out of 10" class="nine-stars">9</a></li>
-        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',100);" title="10 stars out of 10" class="ten-stars">10</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',10);" title="<!--[gt text="1 star out of 10" domain="module_ratings"]-->" class="one-star">1</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',20);" title="<!--[gt text="2 stars out of 10" domain="module_ratings"]-->" class="two-stars">2</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',30);" title="<!--[gt text="3 stars out of 10" domain="module_ratings"]-->" class="three-stars">3</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',40);" title="<!--[gt text="4 stars out of 10" domain="module_ratings"]-->" class="four-stars">4</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',50);" title="<!--[gt text="5 stars out of 10" domain="module_ratings"]-->" class="five-stars">5</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',60);" title="<!--[gt text="6 stars out of 10" domain="module_ratings"]-->" class="six-stars">6</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',70);" title="<!--[gt text="7 stars out of 10" domain="module_ratings"]-->" class="seven-stars">7</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',80);" title="<!--[gt text="8 stars out of 10" domain="module_ratings"]-->" class="eight-stars">8</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',90);" title="<!--[gt text="9 stars out of 10" domain="module_ratings"]-->" class="nine-stars">9</a></li>
+        <li><a href="javascript:ratingsratefromslider('<!--[$modname]-->','<!--[$objectid]-->',100);" title="<!--[gt text="10 stars out of 10" domain="module_ratings"]-->" class="ten-stars">10</a></li>
         <!--[/if]-->
     </ul>
     <!--[else]-->
