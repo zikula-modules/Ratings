@@ -28,26 +28,8 @@ class Ratings_Version extends Zikula_AbstractVersion {
 
     protected function setupHookBundles() {
         $bundle = new Zikula_HookManager_ProviderBundle($this->name, 'provider.ratings.ui_hooks.ratings', 'ui_hooks', $this->__('Ratings rating Hooks'));
-        $bundle->addServiceHandler('display_view', 'Ratings_HookHandlers', 'uiView', 'ratings.hooks.ratings');
-//        $bundle->addServiceHandler('process_edit', 'EZComments_HookHandlers', 'processEdit', 'ezcomments.hooks.comments');
-//        $bundle->addServiceHandler('process_delete', 'EZComments_HookHandlers', 'processDelete', 'ezcomments.hooks.comments');
+        //$bundle->addServiceHandler('display_view', 'Ratings_HookHandlers', 'uiView', 'ratings.hooks.ratings');
         $this->registerHookProviderBundle($bundle);
-
-//        $bundle = new Zikula_HookManager_SubscriberBundle($this->name, 'subscriber.ratings.ui_hooks.ratings', 'ui_hooks', $this->__('Ratings ratings Hooks'));
-//        $bundle->addEvent('ui_view', 'ratings.ui_hooks.ratings.ui_view');
-        /*
-        $bundle->addEvent('ui_edit', 'ezcomments.ui_hooks.comments.ui_edit');
-        $bundle->addEvent('validate_edit', 'ezcomments.ui_hooks.comments.validate_edit');
-        $bundle->addEvent('validate_delete', 'ezcomments.ui_hooks.comments.validate_delete');
-        $bundle->addEvent('process_edit', 'ezcomments.ui_hooks.comments.process_edit');
-        $bundle->addEvent('process_delete', 'ezcomments.ui_hooks.comments.process_delete');
-         * 
-         */
-//        $this->registerHookSubscriberBundle($bundle);
-
-//        $bundle = new Zikula_HookManager_SubscriberBundle($this->name, 'subscriber.ratings.filter_hooks.ratings', 'filter_hooks', $this->__('Ratings ratings Filter'));
-//        $bundle->addEvent('filter', 'ratings.filter_hooks.ratings.filter');
-//        $this->registerHookSubscriberBundle($bundle);
     }
 
 }

@@ -22,6 +22,7 @@ class Ratings_Installer extends Zikula_AbstractInstaller {
 
         // register the module delete hook
         EventUtil::registerPersistentModuleHandler('Ratings', 'installer.module.uninstalled', array('Ratings_EventHandlers', 'moduleDelete'));
+        EventUtil::registerPersistentModuleHandler('Ratings', 'installer.subscriberarea.uninstalled', array('Ratings_EventHandlers', 'hookAreaDelete'));
 
         // Creation of the tables into the database
         if (!DBUtil::createTable('ratings') ||
@@ -105,30 +106,19 @@ class Ratings_Installer extends Zikula_AbstractInstaller {
      * @return boolean true if successful or false
      */
     public function uninstall() {
-        /*
-          // Remove module hooks
-          if (!ModUtil::unregisterHook('item', 'display', 'GUI', 'Ratings', 'user', 'display') ||
-          !ModUtil::unregisterHook('item', 'delete', 'API', 'Ratings', 'admin', 'deletehook') ||
-          !ModUtil::unregisterHook('module', 'remove', 'API', 'Ratings', 'admin', 'removehook')) {
-          return LogUtil::registerError($this->__('Error! Deregister attempt of the module hooks failed.'));
-          }
-         */
-
         // Drop tables into the database
         if (!DBUtil::dropTable('ratings') ||
                 !DBUtil::dropTable('ratingslog')) {
             return LogUtil::registerError($this->__('Error! Deletion attempt of the database tables failed.'));
         }
 
-
         // delete all module vars for the ezcomments module
         $this->delVars();
 
         HookUtil::unregisterProviderBundles($this->version->getHookProviderBundles());
-        HookUtil::unregisterSubscriberBundles($this->version->getHookSubscriberBundles());
         EventUtil::unregisterPersistentModuleHandler('Ratings', 'installer.module.uninstalled', array('Ratings_EventHandlers', 'moduleDelete'));
         EventUtil::unregisterPersistentModuleHandler('Ratings', 'installer.subscriberarea.uninstalled', array('Ratings_EventHandlers', 'hookAreaDelete'));
-
+        
         // Deletion successful
         return true;
     }
