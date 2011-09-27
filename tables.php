@@ -13,7 +13,7 @@
  * @author Jim McDonald
  * @return array
  */
-function ratings_pntables()
+function ratings_tables()
 {
     // Initialise table array
     $pntable = array();

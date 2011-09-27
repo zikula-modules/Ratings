@@ -22,7 +22,7 @@ function ratings_ajax_rate()
     $modname =    DataUtil::convertFromUTF8(FormUtil::getPassedValue('modname', null, 'POST'));
     $objectid =   DataUtil::convertFromUTF8(FormUtil::getPassedValue('objectid', null, 'POST'));
     $rating =     DataUtil::convertFromUTF8(FormUtil::getPassedValue('rating', null, 'POST'));
-    $ratingtype = DataUtil::convertFromUTF8(FormUtil::getPassedValue('ratingtype', pnModGetVar('Ratings', 'defaultstyle'), 'POST'));
+    $ratingtype = DataUtil::convertFromUTF8(FormUtil::getPassedValue('ratingtype', ModUtil::getVar('Ratings', 'defaultstyle'), 'POST'));
     $returnurl =  DataUtil::convertFromUTF8(FormUtil::getPassedValue('returnurl', null, 'POST'));
 
     if (!SecurityUtil::checkPermission('Ratings::', "$modname:$ratingtype:$objectid", ACCESS_COMMENT)) {
@@ -30,14 +30,14 @@ function ratings_ajax_rate()
     }
 
     // log rating of item
-    $newrating = pnModAPIFunc('Ratings', 'user', 'rate',
+    $newrating = ModUtil::apiFunc('Ratings', 'user', 'rate',
                               array('modname'    => $modname,
                                     'objectid'   => $objectid,
                                     'ratingtype' => $ratingtype,
                                     'rating'     => $rating));
 
     // get the new output
-    $result = pnModFunc('Ratings', 'user', 'display',
+    $result = ModUtil::func('Ratings', 'user', 'display',
                         array('objectid'  => $objectid,
                               'extrainfo' => array('module'     => $modname,
                                                    'returnurl'  => $returnurl)));
