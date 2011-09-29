@@ -4,13 +4,13 @@
     {ajaxheader modname=Ratings filename=ratings.js}
     {/if}
     {if $usefancycontrols eq true and ($style eq 'outoffivestars' or $style eq 'outoftenstars')}
-    {pageaddvar name=stylesheet value="modules/Ratings/pnstyle/star_rating.css"}
+    {pageaddvar name=stylesheet value="modules/Ratings/style/star_rating.css"}
     {/if}
 
-    <h3>{gt text="Rating" domain="module_ratings"}</h3>
+    <h3>{gt text="Rating"}</h3>
 
     {if $showrating eq false and $permission eq true}
-    <p>{gt text="No one has rated this item yet - be the first!" domain="module_ratings"}</p>
+    <p>{gt text="No one has rated this item yet - be the first!"}</p>
     {/if}
     {if $showrating or ($usefancycontrols eq true and ($style eq 'outoffivestars' or $style eq 'outoftenstars'))}
 
@@ -84,7 +84,7 @@
             <input type="hidden" name="objectid" value="{$objectid|safetext}" />
             <input type="hidden" name="ratingtype" value="{$ratingtype|safetext}" />
             {if $usefancycontrols neq true or ($style eq 'percentage' or $style eq 'outoffive' or $style eq 'outoften')}
-            <label for="rating">{gt text="Rate this item" domain="module_ratings"}</label>
+            <label for="rating">{gt text="Rate this item"}</label>
             {if $style eq 'percentage'}
             <input name="rating" type="text" size="3" maxlength="3" id="rating" />%
             {elseif $style eq 'outoffive' or $style eq 'outoffivestars'}
@@ -110,24 +110,24 @@
             </select>
             {/if}
             {if $useajax}
-            <input id="ajaxrating" style="display: none;" onclick="javascript:ratingsratefromform();" name="submit" type="button" value="{gt text="Submit" domain="module_ratings"}" />
+            <input id="ajaxrating" style="display: none;" onclick="javascript:ratingsratefromform();" name="submit" type="button" value="{gt text="Submit"}" />
             <noscript>
             {/if}
-                <input name="submit" type="submit" value="{gt text="Submit" domain="module_ratings"}" />
+                <input name="submit" type="submit" value="{gt text="Submit"}" />
             {if $useajax}
             </noscript>
             {/if}
             {/if}
 
             {if $displayScoreInfo}
-            <p style="font-style: italic;">{gt text='%1$s%3$s is the lowest and %2$s%3$s the higher score.' tag1="1" tag2=$maxScore tag3=$typeScore domain="module_ratings"}</p>
+            <p style="font-style: italic;">{gt text='%1$s%3$s is the lowest and %2$s%3$s the higher score.' tag1="1" tag2=$maxScore tag3=$typeScore}</p>
             {/if}
         </div>
     </form>
     {if $useajax}
     <div id="ratingmessage">&nbsp;</div>
     <script type="text/javascript">
-        var recordingvote  = "{{gt text='Recording rating' domain='module_ratings'}}";
+        var recordingvote  = "{{gt text='Recording rating'}}";
         {{if $usefancycontrols neq true or ($style eq 'percentage' or $style eq 'outoffive' or $style eq 'outoften')}}
         $('ajaxrating').show();
         {{/if}}

@@ -43,8 +43,8 @@ class Ratings_Api_User extends Zikula_AbstractApi {
 
         if (isset($args['modname']) && isset($args['objectid'])) {
             // Database information
-            $pntable = DBUtil::getTables();
-            $ratingscolumn = $pntable['ratings_column'];
+            $table = DBUtil::getTables();
+            $ratingscolumn = $table['ratings_column'];
 
             // form the where clause
             $where = "WHERE $ratingscolumn[module] = '" . DataUtil::formatForStore($args['modname']) . "'
@@ -89,8 +89,8 @@ class Ratings_Api_User extends Zikula_AbstractApi {
         }
 
         // Database information
-        $pntable = DBUtil::getTables();
-        $ratingscolumn = $pntable['ratings_column'];
+        $table = DBUtil::getTables();
+        $ratingscolumn = $table['ratings_column'];
 
         // set a default for the collateral clause
         if (!isset($args['cclause']) || is_numeric($args['cclause']) || $args['cclause'] != 'ASC') {
@@ -176,9 +176,9 @@ class Ratings_Api_User extends Zikula_AbstractApi {
         }
 
         // Database information
-        $pntable = DBUtil::getTables();
-        $ratingscolumn = $pntable['ratings_column'];
-        $ratingslogcolumn = $pntable['ratingslog_column'];
+        $table = DBUtil::getTables();
+        $ratingscolumn = $table['ratings_column'];
+        $ratingslogcolumn = $table['ratingslog_column'];
 
         // Multiple rate check
         $seclevel = ModUtil::getVar('Ratings', 'seclevel');

@@ -74,13 +74,14 @@ class Ratings_Controller_User extends Zikula_AbstractController {
         if (SecurityUtil::checkPermission('Ratings::', "$args[modname]:$style:$objectid", ACCESS_COMMENT)) {
             $permission = true;
         }
-
+ 
         // Run API function
         $fullrating = ModUtil::apiFunc('Ratings', 'user', 'get', $args);
         $rating = $fullrating['rating'];
 
         // Create output object
         $view = Zikula_View::getInstance('Ratings', false);
+        $view->assign('permission', $permission);
 
         // RNG: determine if override template is valid
         if ($view->template_exists(DataUtil::formatForOS($tplOverride . '/' . $template))) {
@@ -168,8 +169,8 @@ class Ratings_Controller_User extends Zikula_AbstractController {
 
         if ($seclevel == 'high') {
             // Database information
-            $pntable = DBUtil::getTables();
-            $ratingslogcolumn = $pntable['ratingslog_column'];
+            $table = DBUtil::getTables();
+            $ratingslogcolumn = $table['ratingslog_column'];
 
             // Check against table to see if user has already voted
             // we need to check against both ip and id
@@ -190,6 +191,7 @@ class Ratings_Controller_User extends Zikula_AbstractController {
                 return $view->fetch($template);
             }
         }
+
         // No check for low
         // This user hasn't rated this yet, ask them
         $view->assign('showratingform', 1);
@@ -197,7 +199,6 @@ class Ratings_Controller_User extends Zikula_AbstractController {
         $view->assign('modname', $args['modname']);
         $view->assign('objectid', $objectid);
         $view->assign('ratingtype', $style);
-        $view->assign('permission', $permission);
 
         return $view->fetch($template);
     }

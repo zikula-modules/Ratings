@@ -18,7 +18,6 @@
  */
 function ratings_ajax_rate()
 {
-    $dom = ZLanguage::getModuleDomain('Ratings');
     $modname =    DataUtil::convertFromUTF8(FormUtil::getPassedValue('modname', null, 'POST'));
     $objectid =   DataUtil::convertFromUTF8(FormUtil::getPassedValue('objectid', null, 'POST'));
     $rating =     DataUtil::convertFromUTF8(FormUtil::getPassedValue('rating', null, 'POST'));
@@ -26,7 +25,7 @@ function ratings_ajax_rate()
     $returnurl =  DataUtil::convertFromUTF8(FormUtil::getPassedValue('returnurl', null, 'POST'));
 
     if (!SecurityUtil::checkPermission('Ratings::', "$modname:$ratingtype:$objectid", ACCESS_COMMENT)) {
-        AjaxUtil::error(__('Sorry! No authorization to access this module.', $dom));
+        AjaxUtil::error($this->__('Sorry! No authorization to access this module.'));
     }
 
     // log rating of item

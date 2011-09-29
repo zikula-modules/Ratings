@@ -40,8 +40,8 @@ class Ratings_HookHandlers extends Zikula_Hook_AbstractHandler {
 
         // get the new output
         $result = ModUtil::func('Ratings', 'user', 'display', array('objectid' => $objectid,
-                    'extrainfo' => array('module' => $mod,
-                        'returnurl' => $returnurl)));
+                    'modname' => $mod,
+                    'extrainfo' => array('returnurl' => $returnurl)));
 
         // Create output object
         $view = Zikula_View::getInstance('Ratings', false);
