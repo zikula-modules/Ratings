@@ -16,7 +16,8 @@ class Ratings_Version extends Zikula_AbstractVersion {
         $meta['description'] = $this->__("Rate Zikula items.");
         $meta['url'] = $this->__("ratings");
         $meta['version'] = '2.3.0';
-        $meta['core_min'] = '1.3.0';
+        $meta['core_min'] = '1.3.0'; // Fixed to 1.3.x range
+        $meta['core_max'] = '1.3.99'; // Fixed to 1.3.x range
         $meta['securityschema'] = array('Ratings::' => 'Module name:Rating type:Item ID');
         $meta['capabilities'] = array();
         $meta['capabilities'][HookUtil::PROVIDER_CAPABLE] = array('enabled' => true);
