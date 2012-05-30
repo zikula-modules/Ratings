@@ -92,6 +92,14 @@ class Ratings_Installer extends Zikula_AbstractInstaller {
                 $this->setVar('displayScoreInfo', false);
 
             case '2.2':
+                // remove column prefixes and add new areaid column
+                if (!DBUtil::changeTable('ratings')) {
+                    return '2.2';
+                }
+                // remove column prefixes
+                if (!DBUtil::changeTable('ratingslog')) {
+                    return '2.2';
+                }
 
             case '2.3.0':
             // Further upgrade routines
