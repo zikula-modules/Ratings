@@ -34,7 +34,7 @@ class Ratings_EventHandlers
         $columns = $tables['ratings_column'];
 
         // Get items
-        $where = "WHERE $columns[modname] = '" . DataUtil::formatForStore($mod) . "'";
+        $where = "WHERE $columns[module] = '" . DataUtil::formatForStore($mod) . "'";
 
         DBUtil::deleteWhere('Ratings', $where);
 
