@@ -43,7 +43,8 @@ class Ratings_Controller_Ajax extends Zikula_Controller_AbstractAjax
                                                            'returnurl'  => $returnUrl)));
 
 
-        // return the new content for the block
-        return array('result' => $result);
+        // return the new rating content
+        $output = array('result' => $result);
+        return new Zikula_Response_Ajax($output);
     }
 }
