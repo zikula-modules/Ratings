@@ -11,17 +11,23 @@
 class Ratings_Controller_Ajax extends Zikula_Controller_AbstractAjax
 {
     /**
-     * Log a vote and display the results form
+     * Log a rating and display the results.
      *
      * @author Mark West
-     * @param pollid the poll to vote on
-     * @param voteid the option to vote on
-     * @return string updated display for the block
+     * @param string    modname    the module name
+     * @param string    objectid   the current object id
+     * @param integer   areaid     the current hook area id
+     * @param float     rating     the rating to be persisted
+     * @param string    ratingtype the type of this rating
+     * @param returnurl string     the url to return to
+     *
+     * @return string output for updated rating display.
      */
     public function rate()
     {
         $modName    = $this->request->request->get('modname', null);
         $objectid   = $this->request->request->get('objectid', null);
+        $areaid     = $this->request->request->get('areaid', null);
         $rating     = $this->request->request->get('rating', null);
         $ratingType = $this->request->request->get('ratingtype', $this->getVar('defaultstyle'));
         $returnUrl  = $this->request->request->get('returnurl', null);
@@ -33,6 +39,7 @@ class Ratings_Controller_Ajax extends Zikula_Controller_AbstractAjax
         $newRating = ModUtil::apiFunc($this->name, 'user', 'rate',
                                 array('modname'    => $modName,
                                       'objectid'   => $objectid,
+                                      'areaid'     => $areaid,
                                       'ratingtype' => $ratingType,
                                       'rating'     => $rating));
 

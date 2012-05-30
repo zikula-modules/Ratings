@@ -151,8 +151,10 @@ class Ratings_Api_User extends Zikula_AbstractApi {
     /**
      * Rate an item
      * @author Jim McDonald
-     * @param $args['modname'] module name of the item to rate
-     * @param $args['id'] ID of the item to rate
+     * @param $args['modname']    module name of the item to rate
+     * @param $args['objectid']   ID of the item to create a rating for
+     * @param $args['areaid']     hook areaID of the item to create a rating for
+     * @param $args['id']         ID of the item to rate
      * @param $args['ratingtype'] type of rating (optional)
      * @param $args['rating'] actual rating
      * @return int the new rating for this item
@@ -162,6 +164,7 @@ class Ratings_Api_User extends Zikula_AbstractApi {
         // Argument check
         if ((!isset($args['modname'])) ||
                 (!isset($args['objectid'])) ||
+                (!isset($args['areaid'])) ||
                 (!isset($args['rating']))) {
             return LogUtil::registerArgsError();
         }
@@ -208,6 +211,7 @@ class Ratings_Api_User extends Zikula_AbstractApi {
 
         $where = " $ratingscolumn[module] = '" . DataUtil::formatForStore($args['modname']) . "' AND
                $ratingscolumn[itemid] = '" . DataUtil::formatForStore($args['objectid']) . "' AND
+               $ratingscolumn[areaid] = '" . DataUtil::formatForStore($args['areaid']) . "' AND
                $ratingscolumn[ratingtype] = '" . DataUtil::formatForStore($args['ratingtype']) . "'";
         $rating = DBUtil::selectObject('ratings', $where);
         // Check for an error with the database code, and if so set an appropriate error message and return
@@ -228,6 +232,7 @@ class Ratings_Api_User extends Zikula_AbstractApi {
             $rating = array();
             $rating['module'] = $args['modname'];
             $rating['itemid'] = $args['objectid'];
+            $rating['areaid'] = $args['areaid'];
             $rating['ratingtype'] = $args['ratingtype'];
             $rating['rating'] = $args['rating'];
             $rating['numratings'] = 1;
