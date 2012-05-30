@@ -13,36 +13,38 @@
  * @author Jim McDonald
  * @return array
  */
-function ratings_tables()
+function Ratings_tables()
 {
     // Initialise table array
     $table = array();
 
     // Main ratings table
     $table['ratings'] = DBUtil::getLimitedTablename('ratings');
-    $table['ratings_column'] = array('rid'        => 'pn_rid',
-                                       'module'     => 'pn_module',
-                                       'itemid'     => 'pn_itemid',
-                                       'ratingtype' => 'pn_ratingtype',
-                                       'rating'     => 'pn_rating',
-                                       'numratings' => 'pn_numratings');
+    $table['ratings_column'] = array('rid'        => 'rid',
+                                     'module'     => 'module',
+                                     'itemid'     => 'itemid',
+                                     'areaid'     => 'areaid',
+                                     'ratingtype' => 'ratingtype',
+                                     'rating'     => 'rating',
+                                     'numratings' => 'numratings');
     $table['ratings_column_def'] = array('rid'        => 'I NOTNULL AUTO PRIMARY',
-                                           'module'     => "C(32)  NOTNULL DEFAULT ''",
-                                           'itemid'     => "C(64)  NOTNULL DEFAULT ''",
-                                           'ratingtype' => "C(64)  NOTNULL DEFAULT ''",
-                                           'rating'     => "F  NOTNULL DEFAULT '0'",
-                                           'numratings' => "I NOTNULL DEFAULT '1'");
+                                         'module'     => "C(32)  NOTNULL DEFAULT ''",
+                                         'itemid'     => "C(64)  NOTNULL DEFAULT ''",
+                                         'areaid'     => "I NOTNULL DEFAULT 0",
+                                         'ratingtype' => "C(64)  NOTNULL DEFAULT ''",
+                                         'rating'     => "F  NOTNULL DEFAULT '0'",
+                                         'numratings' => "I NOTNULL DEFAULT '1'");
     $table['ratings_column_idx'] = array ('module' => 'module',
-                                            'itemid' => 'itemid');
+                                          'itemid' => 'itemid');
 
     // Ratings log table
     $table['ratingslog'] = DBUtil::getLimitedTablename('ratingslog');
-    $table['ratingslog_column'] = array('id'       => 'pn_id',
-                                          'ratingid' => 'pn_ratingid',
-                                          'rating'   => 'pn_rating');
+    $table['ratingslog_column'] = array('id'       => 'id',
+                                        'ratingid' => 'ratingid',
+                                        'rating'   => 'rating');
     $table['ratingslog_column_def'] = array('id'       => "C(32) NOTNULL DEFAULT ''",
-                                              'ratingid' => "C(64) NOTNULL DEFAULT ''",
-                                              'rating'   => "I NOTNULL DEFAULT '0'");
+                                            'ratingid' => "C(64) NOTNULL DEFAULT ''",
+                                            'rating'   => "I NOTNULL DEFAULT '0'");
 
     // Return table information
     return $table;
