@@ -10,62 +10,63 @@
 */
 
 /**
- * Record a users rating for an item
+ * Record a users rating for an item.
  *
- * @params none;
- * @return none;
+ * @return void
  * @author Mark West
  */
-function ratingsratefromslider(modname, objectid, rating)
-{
-    Element.update('ratingmessage', recordingvote);
-    var pars = "module=Ratings&func=rate&modname=" + modname + "&objectid=" + objectid + "&rating=" + rating;
-    var myAjax = new Ajax.Request(
-        document.location.pnbaseURL + 'ajax.php',
+function ratingsratefromslider(modname, objectid, rating) {
+    var pars, request;
+
+    $('ratingmessage').update(recordingvote);
+    pars = 'module=Ratings&func=rate&modname=' + modname + '&objectid=' + objectid + '&rating=' + rating;
+    request = new Ajax.Request(
+        Zikula.Config.baseURL + 'ajax.php',
         {
             method: 'post', 
             parameters: pars, 
             onComplete: ratingsrate_response
-        }); 
+        }
+    ); 
 }
 
 
 /**
- * Record a users rating for an item
+ * Record a users rating for an item.
  *
- * @params none;
- * @return none;
+ * @return void
  * @author Mark West
  */
-function ratingsratefromform()
-{
-    Element.update('ratingmessage', recordingvote);
-    var pars = "module=Ratings&func=rate&"
-               + Form.serialize('ratingrateform');
-    var myAjax = new Ajax.Request(
-        document.location.pnbaseURL + 'ajax.php',
+function ratingsratefromform() {
+    var pars, request;
+
+    $('ratingmessage').update(recordingvote);
+    pars = 'module=Ratings&func=rate&' + Form.serialize('ratingrateform');
+    request = new Ajax.Request(
+        Zikula.Config.baseURL + 'ajax.php',
         {
             method: 'post', 
             parameters: pars, 
             onComplete: ratingsrate_response
-        }); 
+        }
+    ); 
 }
 
 /**
- * Ajax response function for the rating: show the result
+ * Ajax response function for the rating: show the result.
  *
- * @params none;
- * @return none;
+ * @return void
  * @author Mark West
  */
-function ratingsrate_response(req)
-{
-    if(req.status != 200 ) { 
-        pnshowajaxerror(req.responseText);
+function ratingsrate_response(req) {
+    var json;
+
+    $('ratingmessage').update('');
+    if (req.status != 200) { 
+        alert(req.responseText);
         return;
     }
 
-    var json = pndejsonize(req.responseText);
-
-    Element.update('ratingsratecontent', json.result);
+    json = req.getData();
+    $('ratingsratecontent').update(json.result);
 }
