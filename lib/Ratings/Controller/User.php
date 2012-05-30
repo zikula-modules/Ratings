@@ -29,9 +29,10 @@ class Ratings_Controller_User extends Zikula_AbstractController {
      * Display rating for a specific item, and request rating.
      *
      * @author Jim McDonald
-     * @param $args['objectid'] ID of the item this rating is for
-     * @param $args['extrainfo'] URL to return to if user chooses to rate
-     * @param $args['style'] style to display this rating in (optional)
+     * @param string  $args['objectid']  ID of the item this rating is for
+     * @param integer $args['areaid']    ID of the hook area
+     * @param mixed   $args['extrainfo'] URL to return to if user chooses to rate
+     * @param string  $args['style']     style to display this rating in (optional)
      *
      * @return string output with rating information
      */
@@ -197,6 +198,7 @@ class Ratings_Controller_User extends Zikula_AbstractController {
                    ->assign('returnurl', $returnurl)
                    ->assign('modname', $args['modname'])
                    ->assign('objectid', $objectid)
+                   ->assign('areaid', $areaid)
                    ->assign('ratingtype', $style);
 
         return $this->view->fetch($template);
