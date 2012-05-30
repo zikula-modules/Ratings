@@ -15,11 +15,11 @@
  * @return void
  * @author Mark West
  */
-function ratingsratefromslider(modname, objectid, rating) {
+function ratingsratefromslider(modname, objectid, areaid, rating) {
     var pars, request;
 
     $('ratingmessage').update(recordingvote);
-    pars = 'module=Ratings&func=rate&modname=' + modname + '&objectid=' + objectid + '&rating=' + rating;
+    pars = 'module=Ratings&func=rate&modname=' + modname + '&objectid=' + objectid + '&areaid=' + areaid + '&rating=' + rating;
     request = new Ajax.Request(
         Zikula.Config.baseURL + 'ajax.php',
         {

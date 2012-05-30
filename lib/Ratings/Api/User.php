@@ -11,12 +11,15 @@
 class Ratings_Api_User extends Zikula_AbstractApi {
 
     /**
-     * Get a rating for a specific item
+     * Get a rating for a specific item.
+     *
      * @author Jim McDonald
-     * @param $args['modname'] name of the module this rating is for
-     * @param $args['objectid'] ID of the item this rating is for
-     * @param $args['ratingtype'] type of rating (optional)
-     * @param $args['rid'] ID of the rating
+     *
+     * @param string  $args['modname']    name of the module this rating is for
+     * @param string  $args['objectid']   ID of the item this rating is for
+     * @param integer $args['areaid']     ID of the hook area
+     * @param string  $args['ratingtype'] type of rating (optional)
+     * @param integer $args['rid']        ID of the rating
      *
      * This API requires either (modname and objectid) or rid
      *
@@ -50,6 +53,9 @@ class Ratings_Api_User extends Zikula_AbstractApi {
             $where = "WHERE $ratingscolumn[module] = '" . DataUtil::formatForStore($args['modname']) . "'
                   AND $ratingscolumn[itemid] = '" . DataUtil::formatForStore($args['objectid']) . "'
                   AND $ratingscolumn[ratingtype] = '" . DataUtil::formatForStore($args['ratingtype']) . "'";
+            if (isset($args['areaid']) && $args['areaid'] != '') {
+                $where .= " AND $ratingscolumn[areaid] = '" . DataUtil::formatForStore($args['areaid']) . "'";
+            }
 
             $ratings = DBUtil::selectObjectArray('ratings', $where, 'rid', 1, -1, '', $permFilter);
             if (isset($ratings[0])) {
@@ -63,12 +69,14 @@ class Ratings_Api_User extends Zikula_AbstractApi {
     }
 
     /**
-     * get all ratings for a given module
+     * Get all ratings for a given module.
+     *
      * @author Mark West
-     * @param $args['modname'] name of the module this rating is for
-     * @param $args['ratingtype'] type of rating (optional)
-     * @param $args['sortby'] column to sort by (optional)
-     * @param $args['numitems'] number of items to return (optional)
+     * @param string  $args['modname']    name of the module this rating is for
+     * @param string  $args['ratingtype'] type of rating (optional)
+     * @param string  $args['sortby']     column to sort by (optional)
+     * @param integer $args['numitems']   number of items to return (optional)
+     *
      * @return mixed array of ratings or false
      */
     public function getall($args) {
@@ -149,14 +157,16 @@ class Ratings_Api_User extends Zikula_AbstractApi {
     }
 
     /**
-     * Rate an item
+     * Rate an item.
+     *
      * @author Jim McDonald
-     * @param $args['modname']    module name of the item to rate
-     * @param $args['objectid']   ID of the item to create a rating for
-     * @param $args['areaid']     hook areaID of the item to create a rating for
-     * @param $args['id']         ID of the item to rate
-     * @param $args['ratingtype'] type of rating (optional)
-     * @param $args['rating'] actual rating
+     * @param string  $args['modname']    module name of the item to rate
+     * @param string  $args['objectid']   ID of the item to create a rating for
+     * @param integer $args['areaid']     hook areaID of the item to create a rating for
+     * @param integer $args['id']         ID of the item to rate
+     * @param string  $args['ratingtype'] type of rating (optional)
+     * @param float   $args['rating']     actual rating
+     *
      * @return int the new rating for this item
      */
     public function rate($args) {

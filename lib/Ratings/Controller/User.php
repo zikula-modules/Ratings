@@ -21,8 +21,7 @@ class Ratings_Controller_User extends Zikula_AbstractController {
      */
     public function main()
     {
-
-        // ratings module cannot be directly accessed
+        // The Ratings module cannot be directly accessed
         return LogUtil::registerError($this->__('Sorry! This module cannot be accessed directly.'), 403);
     }
 
@@ -98,28 +97,26 @@ class Ratings_Controller_User extends Zikula_AbstractController {
                    ->assign('displayScoreInfo', $displayScoreInfo);
 
         if ($displayScoreInfo) {
+            $typeScore = '';
             switch ($style) {
                 case 'percentage':
-                    $this->view->assign('maxScore', '100')
-                               ->assign('typeScore', '%');
+                    $this->view->assign('maxScore', '100');
+                    $typeScore = '%';
                     break;
                 case 'outoffive':
-                    $this->view->assign('maxScore', '5')
-                               ->assign('typeScore', '');
+                    $this->view->assign('maxScore', '5');
                     break;
                 case 'outoften':
-                    $this->view->assign('maxScore', '10')
-                               ->assign('typeScore', '');
+                    $this->view->assign('maxScore', '10');
                     break;
                 case 'outoffivestars':
-                    $this->view->assign('maxScore', '5')
-                               ->assign('typeScore', '');
+                    $this->view->assign('maxScore', '5');
                     break;
                 case 'outoftenstars':
-                    $this->view->assign('maxScore', '10')
-                               ->assign('typeScore', '');
+                    $this->view->assign('maxScore', '10');
                     break;
             }
+            $this->view->assign('typeScore', $typeScore);
         }
 
         $showrating = false;
@@ -225,6 +222,7 @@ class Ratings_Controller_User extends Zikula_AbstractController {
         // Get parameters
         $modName = $this->request->request->get('modname', null);
         $objectid = (int) $this->request->request->get('objectid', null);
+        $areaid = $this->request->request->get('areaid', null);
         $ratingtype = $this->request->request->get('ratingtype', null);
         $rating = $this->request->request->get('rating', null);
         $returnurl = $this->request->request->get('returnurl', null);
@@ -234,6 +232,7 @@ class Ratings_Controller_User extends Zikula_AbstractController {
         // Pass to API
         $rateArgs = array('modname' => $modname,
                           'objectid' => $objectid,
+                          'areaid' => $areaid,
                           'ratingtype' => $ratingtype,
                           'rating' => $rating);
         $newRating = ModUtil::apiFunc($this->name, 'user', 'rate', $rateArgs);
