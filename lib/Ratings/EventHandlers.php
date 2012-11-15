@@ -34,9 +34,9 @@ class Ratings_EventHandlers
         $columns = $tables['ratings_column'];
 
         // Get items
-        $where = "WHERE $columns[modname] = '" . DataUtil::formatForStore($mod) . "'";
+        $where = "WHERE $columns[module] = '" . DataUtil::formatForStore($mod) . "'";
 
-        DBUtil::deleteWhere('Ratings', $where);
+        DBUtil::deleteWhere('ratings', $where);
 
     }
 
@@ -59,6 +59,6 @@ class Ratings_EventHandlers
         // Get items
         $where = "WHERE $columns[areaid] = '" . DataUtil::formatForStore($areaId) . "'";
 
-        DBUtil::deleteWhere('Ratings', $where);
+        DBUtil::deleteWhere('ratings', $where);
     }
 }

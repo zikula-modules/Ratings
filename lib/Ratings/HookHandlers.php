@@ -32,26 +32,25 @@ class Ratings_HookHandlers extends Zikula_Hook_AbstractHandler {
 
         $mod = $hook->getCaller();
         $objectid = $hook->getId();
+        $areaid = $hook->getAreaId();
 
         $modUrl = $hook->getUrl();
         $returnurl = (!is_null($modUrl)) ? $modUrl->getUrl() : '';
 
-        $template = 'ratings_hook_display.tpl';
-
-        // get the new output
+        // Get the new output
         $result = ModUtil::func('Ratings', 'user', 'display', array('objectid' => $objectid,
+                    'areaid' => $areaid,
                     'modname' => $mod,
                     'extrainfo' => array('returnurl' => $returnurl)));
 
         // Create output object
-        $view = Zikula_View::getInstance('Ratings', false);
+        $view = Zikula_View::getInstance('Ratings', false, null, true);
 
-        // assign the rating style
-        $view->assign('result', $result);
+        $view->assign('areaid', $areaid)
+             ->assign('result', $result);
 
-
+        $template = 'ratings_hook_display.tpl';
         PageUtil::addVar('stylesheet', 'modules/Ratings/style/star_rating.css');
-
         $hook->setResponse(new Zikula_Response_DisplayHook('provider.ratings.ui_hooks.ratings', $view, $template));
     }
 
