@@ -46,6 +46,7 @@ class Ratings_Controller_Ajax extends Zikula_Controller_AbstractAjax
         // get the new output
         $result = ModUtil::func($this->name, 'user', 'display',
                                 array('objectid'  => $objectid,
+                                      'areaid'    => $areaid,
                                       'extrainfo' => array('module'     => $modName,
                                                            'returnurl'  => $returnUrl)));
 
