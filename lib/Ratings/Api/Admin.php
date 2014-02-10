@@ -43,9 +43,6 @@ class Ratings_Api_Admin extends Zikula_AbstractApi {
             return LogUtil::registerError($this->__('Error! Deletion attempt failed.'));
         }
 
-        // Let any hooks know that we have deleted an item.
-        ModUtil::callHooks('item', 'delete', $args['rid'], array('module' => 'Ratings'));
-
         return true;
     }
 
