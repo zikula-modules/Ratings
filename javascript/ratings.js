@@ -19,7 +19,7 @@ function ratingsratefromslider(modname, objectid, areaid, rating) {
     var pars, request;
 
     $('ratingmessage').update(recordingvote);
-    pars = 'module=Ratings&func=rate&modname=' + modname + '&objectid=' + objectid + '&areaid=' + areaid + '&rating=' + rating;
+    pars = 'module=Ratings&type=ajax&func=rate&modname=' + modname + '&objectid=' + objectid + '&areaid=' + areaid + '&rating=' + rating;
     request = new Ajax.Request(
         Zikula.Config.baseURL + 'ajax.php',
         {
@@ -41,7 +41,7 @@ function ratingsratefromform() {
     var pars, request;
 
     $('ratingmessage').update(recordingvote);
-    pars = 'module=Ratings&func=rate&' + Form.serialize('ratingrateform');
+    pars = 'module=Ratings&type=ajax&func=rate&' + Form.serialize('ratingrateform');
     request = new Ajax.Request(
         Zikula.Config.baseURL + 'ajax.php',
         {
