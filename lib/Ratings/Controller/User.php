@@ -222,7 +222,7 @@ class Ratings_Controller_User extends Zikula_AbstractController {
     public function rate($args)
     {
         // Get parameters
-        $modName = $this->request->request->get('modname', null);
+        $modname = $this->request->request->get('modname', null);
         $objectid = (int) $this->request->request->get('objectid', null);
         $areaid = $this->request->request->get('areaid', null);
         $ratingtype = $this->request->request->get('ratingtype', null);
