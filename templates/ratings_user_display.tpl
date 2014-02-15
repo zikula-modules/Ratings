@@ -2,10 +2,10 @@
 {pageaddvar name='javascript' value='jquery'}
 <div id="ratingsratecontent">
     {if $useajax}
-    {ajaxheader modname='Ratings' filename='ratings.js'}
+    {pageaddvar name='javascript' value='modules/Ratings/javascript/ratings.js'}
     {/if}
     {if $usefancycontrols eq true and ($style eq 'outoffivestars' or $style eq 'outoftenstars')}
-    {pageaddvar name=stylesheet value="modules/Ratings/style/star_rating.css"}
+    {pageaddvar name='stylesheet' value="modules/Ratings/style/star_rating.css"}
     {/if}
 
     <h3>{gt text="Rating"}</h3>
