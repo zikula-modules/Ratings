@@ -1,7 +1,8 @@
 {*  $Id$  *}
+{pageaddvar name='javascript' value='jquery'}
 <div id="ratingsratecontent">
     {if $useajax}
-    {ajaxheader modname=Ratings filename=ratings.js}
+    {ajaxheader modname='Ratings' filename='ratings.js'}
     {/if}
     {if $usefancycontrols eq true and ($style eq 'outoffivestars' or $style eq 'outoftenstars')}
     {pageaddvar name=stylesheet value="modules/Ratings/style/star_rating.css"}
@@ -111,7 +112,7 @@
             </select>
             {/if}
             {if $useajax}
-            <input id="ajaxrating" style="display: none;" onclick="javascript:ratingsratefromform();" name="submit" type="button" value="{gt text="Submit"}" />
+            <input id="ajaxrating" class="hidden" onclick="javascript:ratingsratefromform();" name="submit" type="button" value="{gt text="Submit"}" />
             <noscript>
             {/if}
                 <input name="submit" type="submit" value="{gt text="Submit"}" />
@@ -126,11 +127,13 @@
         </div>
     </form>
     {if $useajax}
-    <div id="ratingmessage">&nbsp;</div>
+    <div id="ratingmessage" class="hidden">{img set='ajax' src='zktimer_48px_white.gif' modname='core' width='20px' height='20px'} {gt text='Recording rating'}</div>
     <script type="text/javascript">
-        var recordingvote  = "{{gt text='Recording rating'}}";
+        var ratingsAjaxErrorMessage = "{{gt text='Something went wrong!'}}";
         {{if $usefancycontrols neq true or ($style eq 'percentage' or $style eq 'outoffive' or $style eq 'outoften')}}
-        $('ajaxrating').show();
+        (function($) {
+            $('#ajaxrating').removeClass('hidden');
+        })(jQuery);
         {{/if}}
     </script>
     {/if}
