@@ -1,72 +1,75 @@
 /**
  * Zikula Application Framework
  *
- * @copyright (c) 2002, Zikula Development Team
- * @link http://www.zikula.com
- * @version $Id$
+ * @copyright (c) 2014, Zikula Development Team
+ * @link http://www.zikula.org
  * @license GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * @package Zikula_Value_Addons
- * @subpackage Ratings
 */
 
-/**
- * Record a users rating for an item.
- *
- * @return void
- * @author Mark West
- */
-function ratingsratefromslider(modname, objectid, areaid, rating) {
-    var pars, request;
+(function($) {
+    /**
+     * Determines whether or not an ajax request is currently in progress.
+     *
+     * @type {boolean}
+     */
+    var waitForAjax = false;
 
-    $('ratingmessage').update(recordingvote);
-    pars = 'module=Ratings&type=ajax&func=rate&modname=' + modname + '&objectid=' + objectid + '&areaid=' + areaid + '&rating=' + rating;
-    request = new Ajax.Request(
-        Zikula.Config.baseURL + 'ajax.php',
-        {
-            method: 'post', 
-            parameters: pars, 
-            onComplete: ratingsrate_response
+    /**
+     * Record a users rating for an item.
+     *
+     * @return void
+     */
+    window.ratingsratefromslider = function(modname, objectid, areaid, rating) {
+        var pars;
+        pars = 'module=Ratings&type=ajax&func=rate&modname=' + modname + '&objectid=' + objectid + '&areaid=' + areaid + '&rating=' + rating;
+        handleRate(pars);
+    };
+
+    /**
+     * Record a users rating for an item.
+     *
+     * @return void
+     */
+    window.ratingsratefromform = function() {
+        var pars;
+        pars = 'module=Ratings1&type=ajax&func=rate&' + $('#ratingrateform').serialize();
+        handleRate(pars);
+    };
+
+    /**
+     * Handle a new rating by creating the ajax request.
+     *
+     * @param pars The parameters to pass via POST.
+     */
+    function handleRate(pars) {
+        if (waitForAjax) {
+            // Rating is already in progress.
+            return;
         }
-    ); 
-}
+        waitForAjax = true;
+        $('#ratingmessage').hide().removeClass('hidden').fadeIn();
 
-
-/**
- * Record a users rating for an item.
- *
- * @return void
- * @author Mark West
- */
-function ratingsratefromform() {
-    var pars, request;
-
-    $('ratingmessage').update(recordingvote);
-    pars = 'module=Ratings&type=ajax&func=rate&' + Form.serialize('ratingrateform');
-    request = new Ajax.Request(
-        Zikula.Config.baseURL + 'ajax.php',
-        {
-            method: 'post', 
-            parameters: pars, 
-            onComplete: ratingsrate_response
-        }
-    ); 
-}
-
-/**
- * Ajax response function for the rating: show the result.
- *
- * @return void
- * @author Mark West
- */
-function ratingsrate_response(req) {
-    var json;
-
-    $('ratingmessage').update('');
-    if (req.status != 200) { 
-        alert(req.responseText);
-        return;
+        $.ajax({
+            type: "POST",
+            url: Zikula.Config.baseURL + 'ajax.php',
+            data: pars
+        }).always(handleResponse);
     }
 
-    json = req.getData();
-    $('ratingsratecontent').update(json.result);
-}
+    /**
+     * Ajax response function for the rating: show the result.
+     *
+     * @return void
+     */
+    function handleResponse(response) {
+        $('#ratingmessage').fadeOut(400, function() {
+            waitForAjax = false;
+            if (response.data == null) {
+                alert(ratingsAjaxErrorMessage);
+                return;
+            }
+
+            $('#ratingsratecontent').html(response.data.result);
+        });
+    }
+})(jQuery);
