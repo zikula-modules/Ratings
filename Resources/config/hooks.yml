@@ -1,0 +1,12 @@
+services:
+    paustian_ratings_module.hook_provider.ui_hooks.ratings:
+        class: Paustian\RatingsModule\HookProvider\RatingUiHooksProvider
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@paustian_ratings_module.entity_factory"
+            - "@twig"
+            - "@zikula_users_module.current_user"
+        tags:
+            - { name: zikula.hook_provider, areaName: 'provider.paustianratingsmodule.ui_hooks.ratings' }
+

@@ -1,0 +1,9 @@
+{# purpose of this template: rating systems index view #}
+{% extends routeArea == 'admin' ? 'PaustianRatingsModule::adminBase.html.twig' : 'PaustianRatingsModule::base.html.twig' %}
+{% block title __('Rating systems') %}
+{% block admin_page_icon 'home' %}
+{% block content %}
+    <div class="paustianratingsmodule-ratingsystem paustianratingsmodule-index">
+        <p>{{ __('Welcome to the rating system section of the Ratings application.') }}</p>
+    </div>
+{% endblock %}

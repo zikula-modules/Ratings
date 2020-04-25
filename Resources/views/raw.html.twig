@@ -1,0 +1,49 @@
+{# purpose of this template: Display pages without the theme #}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ app.request.locale }}" lang="{{ app.request.locale }}">
+<head>
+    <title>{{ block('pageTitle')|default(block('title')) }}</title>
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-theme.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('jquery-ui/themes/base/jquery-ui.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/core/css/core.css') }}" />
+    <link rel="stylesheet" href="{{ zasset('@PaustianRatingsModule:css/style.css') }}" />
+    <link rel="stylesheet" href="{{ zasset('@PaustianRatingsModule:css/custom.css') }}" />
+</head>
+<body>
+    <h2>{{ block('title') }}</h2>
+    {% block content %}{% endblock %}
+    <script>
+        /* <![CDATA[ */
+            if (typeof(Zikula) == 'undefined') {var Zikula = {};}
+            Zikula.Config = {'entrypoint': '{{ getSystemVar('entrypoint', 'index.php') }}', 'baseURL': '{{ app.request.schemeAndHttpHost ~ '/' }}', 'baseURI': '{{ app.request.basePath }}'};
+        /* ]]> */
+    </script>
+    <script src="{{ asset('jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ asset('js/fos_js_routes.js') }}"></script>
+    <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+    <script src="{{ asset('bundles/core/js/Zikula.Translator.js') }}"></script>
+    <script src="{{ zasset('@PaustianRatingsModule:js/PaustianRatingsModule.js') }}"></script>
+    {% if 'edit' in app.request.get('_route') %}
+        {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.Validation.js'), 98) }}
+        {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.EditFunctions.js'), 99) }}
+        {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.InlineEditing.js'), 99) }}
+        {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.AutoCompletion.js'), 99) }}
+    {% endif %}
+    {% if 'edit' in app.request.get('_route') or 'config' in app.request.get('_route') %}
+        {{ polyfill(['forms', 'forms-ext']) }}
+    {% endif %}
+    <script>
+    /* <![CDATA[ */
+        ( function($) {
+            $(document).ready(function() {
+                $('.dropdown-toggle').addClass('hidden');
+            });
+        })(jQuery);
+    /* ]]> */
+    </script>
+</body>
+</html>

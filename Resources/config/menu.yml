@@ -1,0 +1,22 @@
+services:
+    paustian_ratings_module.link_container:
+        class: Paustian\RatingsModule\Container\LinkContainer
+        arguments:
+            - "@translator.default"
+            - "@router"
+            - "@zikula_extensions_module.api.variable"
+            - "@paustian_ratings_module.controller_helper"
+            - "@paustian_ratings_module.permission_helper"
+        tags: ['zikula.link_container']
+    paustian_ratings_module.menu_builder:
+        class: Paustian\RatingsModule\Menu\MenuBuilder
+        arguments:
+            - "@translator.default"
+            - "@knp_menu.factory"
+            - "@event_dispatcher"
+            - "@request_stack"
+            - "@paustian_ratings_module.permission_helper"
+            - "@paustian_ratings_module.entity_display_helper"
+            - "@zikula_users_module.current_user"
+        tags:
+            - { name: knp_menu.menu_builder, method: createItemActionsMenu, alias: paustianRatingsMenuItemActions }

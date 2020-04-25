@@ -1,0 +1,9 @@
+{# purpose of this template: ratings view csv view #}
+{% spaceless %}"{{ __('Module name') }}";"{{ __('Object id') }}";"{{ __('Rating') }}";"{{ __('User id') }}";"{{ __('Rating system') }}"
+{% endspaceless %}
+{% for rating in items %}
+
+{% spaceless %}
+    "{{ rating.moduleName }}";"{{ rating.objectId }}";"{{ rating.rating }}";"{{ rating.userId.getUname() }}";"{{ rating.ratingSystem }}"
+{% endspaceless %}
+{% endfor %}

@@ -1,0 +1,7 @@
+{# purpose of this template: rating systems view json view #}
+[
+{% for ratingSystem in items %}
+    {% if not loop.first %},{% endif %}
+    {{ ratingSystem.toArray()|json_encode()|raw }}
+{% endfor %}
+]

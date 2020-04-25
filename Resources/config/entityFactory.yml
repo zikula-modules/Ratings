@@ -1,0 +1,12 @@
+services:
+    # Entity factory
+    paustian_ratings_module.entity_factory:
+        class: Paustian\RatingsModule\Entity\Factory\EntityFactory
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+            - "@paustian_ratings_module.entity_initialiser"
+            - "@paustian_ratings_module.collection_filter_helper"
+    
+    # Entity initialiser
+    paustian_ratings_module.entity_initialiser:
+        class: Paustian\RatingsModule\Entity\Factory\EntityInitialiser
