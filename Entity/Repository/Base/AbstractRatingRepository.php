@@ -636,6 +636,7 @@ abstract class AbstractRatingRepository extends EntityRepository
             // but for the slim version we select only the basic fields, and no joins
     
             $selection = 'tbl.id';
+            $selection .= ', tbl.id';
             $selection .= ', tbl.moduleName';
             $selection .= ', tbl.objectId';
             $selection .= ', tbl.rating';

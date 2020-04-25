@@ -16,13 +16,13 @@ application "Ratings" {
     generatePendingContentSupport false
     generateExternalControllerAndFinder false
     generateScribitePlugins false
-    skipFiles "HookProvider/RatingUiHooksProvider.php, \nEntity/Repository/RatingRepository.php, \nEntity/RatingEntity.php"
-    markFiles "Controller/RatingController.php\n"
+    skipFiles "HookProvider/RatingUiHooksProvider.php, \nEntity/Repository/RatingRepository.php, \nEntity/RatingEntity.php\nEntity/RatingSystemEntity.php"
+    markFiles "Controller/RatingController.php,\nResources/views/RatingSystem/view.html.twig,\nController/Base/AbstractRatingSystemController.php\n"
     entities {
         entity "ratingSystem" {
             documentation "The rating system to use for the specified rating. Only one rating system can be used per interface"
             nameMultiple "ratingSystems"
-            displayPattern "#scaleDim#, #iconUrl#, #iconFa#"
+            displayPattern "#id#, #scaleDim#, #iconUrl#, #iconFa#"
             skipHookSubscribers true
             fields {
                 integer "scaleDim" {
@@ -48,7 +48,7 @@ application "Ratings" {
         entity "rating" leading {
             documentation "A list of ratings for various hooked modules."
             nameMultiple "ratings"
-            displayPattern "#moduleName#, #objectId#, #rating#, #ratingSystem#"
+            displayPattern "#id#, #moduleName#, #objectId#, #rating#, #ratingSystem#"
             skipHookSubscribers true
             uiHooksProvider ENABLED
             fields {

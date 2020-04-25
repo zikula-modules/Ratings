@@ -14,7 +14,6 @@ namespace Paustian\RatingsModule\Entity;
 
 use Paustian\RatingsModule\Entity\Base\AbstractRatingEntity as BaseEntity;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Entity class that defines the entity structure and behaviours.
@@ -26,12 +25,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *         @ORM\Index(name="workflowstateindex", columns={"workflowState"})
  *     }
  * )
- * @UniqueEntity(fields="userId", ignoreNull="false")
  */
 class RatingEntity extends BaseEntity
 {
     // feel free to add your own methods here
-    public function supportsHookSubscribers(){
-        return false;
-    }
 }

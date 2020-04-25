@@ -74,7 +74,8 @@ abstract class AbstractEntityDisplayHelper
      */
     protected function formatRatingSystem(RatingSystemEntity $entity)
     {
-        return $this->translator->__f('%scaleDim%, %iconUrl%, %iconFa%', [
+        return $this->translator->__f('%id%, %scaleDim%, %iconUrl%, %iconFa%', [
+            '%id%' => $entity->getId(),
             '%scaleDim%' => $entity->getScaleDim(),
             '%iconUrl%' => $entity->getIconUrl(),
             '%iconFa%' => $entity->getIconFa()
@@ -90,7 +91,8 @@ abstract class AbstractEntityDisplayHelper
      */
     protected function formatRating(RatingEntity $entity)
     {
-        return $this->translator->__f('%moduleName%, %objectId%, %rating%, %ratingSystem%', [
+        return $this->translator->__f('%id%, %moduleName%, %objectId%, %rating%, %ratingSystem%', [
+            '%id%' => $entity->getId(),
             '%moduleName%' => $entity->getModuleName(),
             '%objectId%' => $entity->getObjectId(),
             '%rating%' => $entity->getRating(),

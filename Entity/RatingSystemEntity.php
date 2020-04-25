@@ -29,7 +29,4 @@ use Doctrine\ORM\Mapping as ORM;
 class RatingSystemEntity extends BaseEntity
 {
     // feel free to add your own methods here
-    public function supportsHookSubscribers(){
-        return false;
-    }
 }
