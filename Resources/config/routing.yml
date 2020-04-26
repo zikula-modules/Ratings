@@ -1,0 +1,5 @@
+paustianratingsmodule:
+    # define routing support for these controllers
+    resource: "@PaustianRatingsModule/Controller"
+    # enable support for defining routes by annotations
+    type: annotation

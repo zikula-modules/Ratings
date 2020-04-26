@@ -1,0 +1,46 @@
+{# purpose of this template: rating systems view filter form #}
+{% import _self as helper %}
+{% macro renderQuickNavEntry(quickNavForm, fieldName, isVisible) %}
+    {% if attribute(quickNavForm, fieldName) is defined and attribute(quickNavForm, fieldName) is not null %}
+        {% if not isVisible %}
+            <div class="hidden">
+        {% endif %}
+            {{ form_row(attribute(quickNavForm, fieldName)) }}
+        {% if not isVisible %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+{% if permissionHelper.mayUseQuickNav('ratingSystem') %}
+    {% form_theme quickNavForm with [
+        'bootstrap_3_layout.html.twig'
+    ] %}
+    {{ form_start(quickNavForm, {attr: {id: 'paustianRatingsModuleRatingSystemQuickNavForm', class: 'paustianratingsmodule-quicknav navbar-form', role: 'navigation'}}) }}
+    {{ form_errors(quickNavForm) }}
+    <a href="#collapseRatingSystemQuickNav" role="button" data-toggle="collapse" class="btn btn-default" aria-expanded="false" aria-controls="collapseRatingSystemQuickNav">
+        <i class="fa fa-filter" aria-hidden="true"></i> {{ __('Filter') }}
+    </a>
+    <div id="collapseRatingSystemQuickNav" class="collapse">
+        <fieldset>
+            <h3>{{ __('Quick navigation') }}</h3>
+            {{ helper.renderQuickNavEntry(quickNavForm, 'workflowState', workflowStateFilter is not defined or workflowStateFilter == true) }}
+            {{ helper.renderQuickNavEntry(quickNavForm, 'q', searchFilter is not defined or searchFilter == true) }}
+            {% if quickNavForm.sort is defined and quickNavForm.sort is not null %}
+                {% if sorting is defined and sorting != true %}
+                    <div class="hidden">
+                {% endif %}
+                    {{ form_row(quickNavForm.sort) }}
+                    {% if quickNavForm.sortdir is defined and quickNavForm.sortdir is not null %}
+                        {{ form_row(quickNavForm.sortdir) }}
+                    {% endif %}
+                {% if sorting is defined and sorting != true %}
+                    </div>
+                {% endif %}
+            {% endif %}
+            {{ helper.renderQuickNavEntry(quickNavForm, 'num', pageSizeSelector is not defined or pageSizeSelector == true) }}
+            {{ form_widget(quickNavForm.updateview) }}
+            <a href="{{ path('paustianratingsmodule_ratingsystem_' ~ routeArea|default ~ 'view', {tpl: app.request.query.get('tpl', ''), all: app.request.query.get('all', '')}) }}" title="{{ __('Back to default view') }}" class="btn btn-default btn-sm">{{ __('Reset') }}</a>
+        </fieldset>
+    </div>
+    {{ form_end(quickNavForm) }}
+{% endif %}

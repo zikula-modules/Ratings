@@ -1,0 +1,86 @@
+{# purpose of this template: module configuration page #}
+{% extends 'PaustianRatingsModule::adminBase.html.twig' %}
+{% block title __('Settings') %}
+{% block admin_page_icon 'wrench' %}
+{% block content %}
+    <div class="paustianratingsmodule-config">
+        {% form_theme form with [
+            '@PaustianRatingsModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(form) }}
+        <div class="zikula-bootstrap-tab-container">
+            <ul class="nav nav-tabs" role="tablist">
+                {% set tabTitle = __('List views') %}
+                <li role="presentation" class="active">
+                    <a id="vars1Tab" href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+                </li>
+                {% set tabTitle = __('Moderation') %}
+                <li role="presentation">
+                    <a id="vars2Tab" href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+                </li>
+                {% set tabTitle = __('Workflows') %}
+                <li role="presentation">
+                    <a id="workflowsTab" href="#tabWorkflows" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+                </li>
+            </ul>
+
+            {{ form_errors(form) }}
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="tab1" aria-labelledby="vars1Tab">
+                    {% set tabTitle = __('List views') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                        <p class="alert alert-info">{{ __('Here you can configure parameters for list views.') }}</p>
+                        
+                        {{ form_row(form.ratingSystemEntriesPerPage) }}
+                        {{ form_row(form.linkOwnRatingSystemsOnAccountPage) }}
+                        {{ form_row(form.ratingEntriesPerPage) }}
+                        {{ form_row(form.linkOwnRatingsOnAccountPage) }}
+                        {{ form_row(form.showOnlyOwnEntries) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tab2" aria-labelledby="vars2Tab">
+                    {% set tabTitle = __('Moderation') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                        <p class="alert alert-info">{{ __('Here you can define moderation-related settings.') }}</p>
+                        
+                        {{ form_row(form.allowModerationSpecificCreatorForRatingSystem) }}
+                        {{ form_row(form.allowModerationSpecificCreationDateForRatingSystem) }}
+                        {{ form_row(form.allowModerationSpecificCreatorForRating) }}
+                        {{ form_row(form.allowModerationSpecificCreationDateForRating) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabWorkflows" aria-labelledby="workflowsTab">
+                    {% set tabTitle = __('Workflows') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        <p class="alert alert-info">{{ __('Here you can inspect and amend the existing workflows.') }}</p>
+                
+                        <h4>{{ __('Rating systems') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'paustianratingsmodule_none'}) }}" title="{{ __('Edit workflow for rating systems')|e('html_attr') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit rating systems workflow') }}</a>
+                        <h4>{{ __('Ratings') }}</h4>
+                        <p><a href="{{ path('zikula_workflow_editor_index', {workflow: 'paustianratingsmodule_none'}) }}" title="{{ __('Edit workflow for ratings')|e('html_attr') }}" target="_blank"><i class="fa fa-cubes"></i> {{ __('Edit ratings workflow') }}</a>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group form-buttons">
+            <div class="col-sm-offset-3 col-sm-9">
+                {{ form_widget(form.save) }}
+                {{ form_widget(form.reset) }}
+                {{ form_widget(form.cancel) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.EditFunctions.js'), 99) }}
+    <div id="formEditingDefinition" data-mode="edit" data-entityid="1"></div>
+{% endblock %}

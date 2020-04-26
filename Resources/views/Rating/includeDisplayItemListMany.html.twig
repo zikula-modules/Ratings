@@ -1,0 +1,82 @@
+{# purpose of this template: inclusion template for display of related ratings or hook assignments #}
+{#
+    You can use the context variable to check for the context of this list:
+        - 'display': list of related ratings included in a display template
+        - 'hookDisplayView': list of ratings assigned using an UI hook (display/view template)
+        - 'hookDisplayEdit': list of ratings assigned using an UI hook (edit template)
+        - 'hookDisplayDelete': list of ratings assigned using an UI hook (delete template)
+#}
+{% set hasAdminPermission = permissionHelper.hasComponentPermission('rating', constant('ACCESS_EDIT')) %}
+{% set hasEditPermission = permissionHelper.hasComponentPermission('rating', constant('ACCESS_EDIT')) %}
+{% if context != 'display' %}
+    <h3>{{ __('Assigned ratings', 'paustianratingsmodule') }}</h3>
+    {{ pageAddAsset('stylesheet', zasset('@PaustianRatingsModule:css/style.css')) }}
+    {{ pageAddAsset('stylesheet', zasset('@PaustianRatingsModule:css/custom.css'), 120) }}
+    {{ pageAddAsset('stylesheet', asset('jquery-ui/themes/base/jquery-ui.min.css')) }}
+    {{ pageAddAsset('javascript', asset('jquery-ui/jquery-ui.min.js')) }}
+    {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.js'), 99) }}
+    {% if context == 'hookDisplayView' and hasEditPermission %}
+        {% set entityNameTranslated = __('rating', 'paustianratingsmodule') %}
+        {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.HookAssignment.js'), 99) }}
+        {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.EditFunctions.js'), 99) }}
+        {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.InlineEditing.js'), 99) }}
+        {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.AutoCompletion.js'), 99) }}
+    {% endif %}
+{% endif %}
+{% if noLink is not defined %}
+    {% set noLink = false %}
+{% endif %}
+{% if items|default and items|length > 0 %}
+<ul class="list-group paustianratingsmodule-related-item-list rating">
+{% for item in items %}
+    {% if hasAdminPermission or (item.workflowState == 'approved' and permissionHelper.mayRead(item)) %}
+    <li class="list-group-item">
+<h4 class="list-group-item-heading">
+{% spaceless %}
+{% if not noLink %}
+    <a href="{{ path('paustianratingsmodule_rating_' ~ routeArea ~ 'display', {'id': item.getId()}) }}" title="{{ item|paustianratingsmodule_formattedTitle|e('html_attr') }}">
+{% endif %}
+    {{ item|paustianratingsmodule_formattedTitle }}
+{% if not noLink %}
+    </a>
+    <a id="ratingItem{{ item.getKey() }}Display" href="{{ path('paustianratingsmodule_rating_' ~ routeArea ~ 'display', {'id': item.getId(), raw: 1}) }}" title="{{ __('Open quick view window', 'paustianratingsmodule') }}" class="paustianratings-inline-window hidden" data-modal-title="{{ item|paustianratingsmodule_formattedTitle|e('html_attr') }}"><i class="fa fa-id-card-o"></i></a>
+{% endif %}
+{% endspaceless %}
+</h4>
+{% if context == 'hookDisplayView' and hasEditPermission %}
+    {% set assignmentId = '' %}
+    {% for assignment in assignments if assignment.getAssignedId() == item.getKey() %}
+        {% set assignmentId = assignment.getId() %}
+    {% endfor %}
+    <p class="list-group-item-text">
+        {% set removeLinkText = __f('Detach %name%', {'%name%': entityNameTranslated}, 'paustianratingsmodule') %}
+        <a href="javascript:void(0);" title="{{ removeLinkText|e('html_attr') }}" class="detach-paustianratingsmodule-object hidden" data-assignment-id="{{ assignmentId|e('html_attr') }}"><i class="fa fa-chain-broken"></i> {{ removeLinkText }}</a>
+    </p>
+{% endif %}
+    </li>
+    {% endif %}
+{% endfor %}
+</ul>
+{% endif %}
+{% if context == 'hookDisplayView' and hasEditPermission %}
+    {% set idPrefix = 'hookAssignmentRating' %}
+    {% set addLinkText = __f('Attach %name%', {'%name%': entityNameTranslated}, 'paustianratingsmodule') %}
+    {% set findLinkText = __f('Find %name%', {'%name%': entityNameTranslated}, 'paustianratingsmodule') %}
+    {% set searchLinkText = __f('Search %name%', {'%name%': entityNameTranslated}, 'paustianratingsmodule') %}
+    {% set createNewLinkText = __f('Create new %name%', {'%name%': entityNameTranslated}, 'paustianratingsmodule') %}
+    <div id="{{ idPrefix }}LiveSearch" class="paustianratingsmodule-add-hook-assignment">
+        <a id="{{ idPrefix }}AddLink" href="javascript:void(0);" title="{{ addLinkText|e('html_attr') }}" class="attach-paustianratingsmodule-object hidden" data-owner="{{ subscriberOwner|e('html_attr') }}" data-area-id="{{ subscriberAreaId|e('html_attr') }}" data-object-id="{{ subscriberObjectId|e('html_attr') }}" data-url="{{ subscriberUrl|e('html_attr') }}" data-assigned-entity="rating"><i class="fa fa-link"></i> {{ addLinkText }}</a>
+        <div id="{{ idPrefix }}AddFields" class="paustianratingsmodule-autocomplete">
+            <label for="{{ idPrefix }}Selector">{{ findLinkText }}</label>
+            <br />
+            <i class="fa fa-search" title="{{ searchLinkText|e('html_attr') }}"></i>
+            <input type="hidden" name="{{ idPrefix }}" id="{{ idPrefix }}" value="{% for assignment in assignments %}{% if not loop.first %},{% endif %}{{ assignment.getAssignedId() }}{% endfor %}" />
+            <input type="hidden" name="{{ idPrefix }}Multiple" id="{{ idPrefix }}Multiple" value="0" />
+            <input type="text" id="{{ idPrefix }}Selector" name="{{ idPrefix }}Selector" autocomplete="off" />
+            <input type="button" id="{{ idPrefix }}SelectorDoCancel" name="{{ idPrefix }}SelectorDoCancel" value="{{ __('Cancel', 'paustianratingsmodule') }}" class="btn btn-default paustianratingsmodule-inline-button" />
+            <a id="{{ idPrefix }}SelectorDoNew" href="{{ path('paustianratingsmodule_rating_' ~ routeArea ~ 'edit') }}" title="{{ createNewLinkText|e('html_attr') }}" class="btn btn-default paustianratingsmodule-inline-button"><i class="fa fa-plus"></i> {{ __('Create', 'paustianratingsmodule') }}</a>
+            <noscript><p>{{ __('This function requires JavaScript activated!') }}</p></noscript>
+        </div>
+    </div>
+    <div class="relation-editing-definition" data-object-type="rating" data-alias="{{ idPrefix|e('html_attr') }}" data-prefix="{{ idPrefix|e('html_attr') }}SelectorDoNew" data-inline-prefix="{{ idPrefix|e('html_attr') }}SelectorDoNew" data-module-name="PaustianRatingsModule" data-include-editing="1" data-input-type="autocomplete" data-create-url="{{ path('paustianratingsmodule_rating_' ~ routeArea ~ 'edit')|e('html_attr') }}"></div>
+{% endif %}

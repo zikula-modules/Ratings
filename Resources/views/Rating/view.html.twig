@@ -1,0 +1,121 @@
+{# purpose of this template: ratings list view #}
+{% extends routeArea == 'admin' ? 'PaustianRatingsModule::adminBase.html.twig' : 'PaustianRatingsModule::base.html.twig' %}
+{% block title own ? __('My ratings') : __('Ratings list') %}
+{% block admin_page_icon 'list-alt' %}
+{% block content %}
+    <div class="paustianratingsmodule-rating paustianratingsmodule-view">
+        <p class="alert alert-info">{{ __('A list of ratings for various hooked modules.') }}</p>
+        
+        {% set viewActions = knp_menu_get('paustianRatingsMenuViewActions', [], {objectType: 'rating', area: routeArea}) %}
+        {{ knp_menu_render(viewActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
+        
+        {{ include('@PaustianRatingsModule/Rating/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
+
+        {% if routeArea == 'admin' %}
+        <form action="{{ path('paustianratingsmodule_rating_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="ratingsViewForm" class="form-horizontal" role="form">
+            <div>
+        {% endif %}
+            <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover{% if routeArea == 'admin' %} table-condensed{% endif %}">
+                <colgroup>
+                    {% if routeArea == 'admin' %}
+                        <col id="cSelect" />
+                    {% endif %}
+                    <col id="cItemActionsStart" />
+                    <col id="cModuleName" />
+                    <col id="cObjectId" />
+                    <col id="cRating" />
+                    <col id="cUserId" />
+                    <col id="cRatingSystem" />
+                </colgroup>
+                <thead>
+                <tr>
+                    {% if routeArea == 'admin' %}
+                        <th id="hSelect" scope="col" class="text-center z-w02">
+                            <input type="checkbox" class="paustianratings-mass-toggle" />
+                        </th>
+                    {% endif %}
+                    <th id="hItemActionsStart" scope="col" class=" z-w02">{{ __('Actions') }}</th>
+                    <th id="hModuleName" scope="col" class="text-left">
+                        <a href="{{ sort.moduleName.url }}" title="{{ __f('Sort by %s', {'%s': 'module name'})|e('html_attr') }}" class="{{ sort.moduleName.class }}">{{ __('Module name') }}</a>
+                    </th>
+                    <th id="hObjectId" scope="col" class="text-right">
+                        <a href="{{ sort.objectId.url }}" title="{{ __f('Sort by %s', {'%s': 'object id'})|e('html_attr') }}" class="{{ sort.objectId.class }}">{{ __('Object id') }}</a>
+                    </th>
+                    <th id="hRating" scope="col" class="text-right">
+                        <a href="{{ sort.rating.url }}" title="{{ __f('Sort by %s', {'%s': 'rating'})|e('html_attr') }}" class="{{ sort.rating.class }}">{{ __('Rating') }}</a>
+                    </th>
+                    <th id="hUserId" scope="col" class="text-left unsorted">
+                        {{ __('User id') }}
+                    </th>
+                    <th id="hRatingSystem" scope="col" class="text-right">
+                        <a href="{{ sort.ratingSystem.url }}" title="{{ __f('Sort by %s', {'%s': 'rating system'})|e('html_attr') }}" class="{{ sort.ratingSystem.class }}">{{ __('Rating system') }}</a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+            
+            {% for rating in items %}
+                <tr>
+                    {% if routeArea == 'admin' %}
+                        <td headers="hSelect" class="text-center z-w02">
+                            <input type="checkbox" name="items[]" value="{{ rating.getKey() }}" class="paustianratings-toggle-checkbox" />
+                        </td>
+                    {% endif %}
+                    <td id="itemActions{{ rating.getKey() }}Start" headers="hItemActionsStart" class="actions nowrap z-w02">
+                        {% set itemActions = knp_menu_get('paustianRatingsMenuItemActions', [], {entity: rating, area: routeArea, context: 'view'}) %}
+                        <div class="dropdown item-actions">
+                            <a id="itemActions{{ rating.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                            {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
+                        </div>
+                    </td>
+                    <td headers="hModuleName" class="text-left">
+                        {{ rating.moduleName }}
+                    </td>
+                    <td headers="hObjectId" class="text-right">
+                        {{ rating.objectId }}
+                    </td>
+                    <td headers="hRating" class="text-right">
+                        {{ rating.rating }}
+                    </td>
+                    <td headers="hUserId" class="text-left">
+                            {{ rating.userId.uid|profileLinkByUserId }}{% if currentUser.loggedIn %}{% set sendMessageUrl = rating.userId.uid|messageSendLink(urlOnly=true) %}{% if sendMessageUrl != '#' %}{% set linkTitle = __f('Send private message to %userName%', {'%userName%': rating.userId.uname}) %}<a href="{{ sendMessageUrl }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-envelope-o"></i></a>{% endif %}{% endif %}
+                            <span class="avatar">{{ userAvatar(rating.userId.uid, {rating: 'g'}) }}</span>
+                    </td>
+                    <td headers="hRatingSystem" class="text-right">
+                        {{ rating.ratingSystem }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
+                    <td class="text-left" colspan="{% if routeArea == 'admin' %}7{% else %}6{% endif %}">
+                {{ __('No ratings found.') }}
+                  </td>
+                </tr>
+            {% endfor %}
+            
+                </tbody>
+            </table>
+            </div>
+            
+            {% if all != 1 and pager|default %}
+                {{ pager({rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'paustianratingsmodule_rating_' ~ routeArea ~ 'view'}) }}
+            {% endif %}
+        {% if routeArea == 'admin' %}
+                <fieldset>
+                    <label for="paustianRatingsModuleAction" class="col-sm-3 control-label">{{ __('With selected ratings') }}</label>
+                    <div class="col-sm-6">
+                        <select id="paustianRatingsModuleAction" name="action" class="form-control input-sm">
+                            <option value="">{{ __('Choose action') }}</option>
+                            <option value="delete" title="{{ __('Delete content permanently.')|e('html_attr') }}">{{ __('Delete') }}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="submit" value="{{ __('Submit')|e('html_attr') }}" class="btn btn-default btn-sm" />
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+{% endblock %}
