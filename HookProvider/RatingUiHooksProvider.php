@@ -13,12 +13,95 @@
 
 namespace Paustian\RatingsModule\HookProvider;
 
+use Paustian\RatingsModule\Helper\PermissionHelper;
 use Paustian\RatingsModule\HookProvider\Base\AbstractRatingUiHooksProvider;
+use Zikula\Bundle\HookBundle\Hook\Hook;
+use Zikula\Bundle\HookBundle\Hook\DisplayHookResponse;
+use Zikula\UsersModule\Api\CurrentUserApi;
+use Zikula\Common\Translator\TranslatorInterface;
+use Paustian\RatingsModule\Entity\Factory\EntityFactory;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Twig_Environment;
 
 /**
  * Implementation class for ui hooks provider.
  */
 class RatingUiHooksProvider extends AbstractRatingUiHooksProvider
 {
-    // feel free to add your own convenience methods here
+    protected $currentUserApi;
+
+    /**
+     * RatingUiHooksProvider constructor.
+     * @param TranslatorInterface $translator
+     * @param RequestStack $requestStack
+     * @param EntityFactory $entityFactory
+     * @param Twig_Environment $twig
+     * @param PermissionHelper $permissionHelper
+     * @param CurrentUserApi $currentUserApi
+     */
+    public function __construct(
+        TranslatorInterface $translator,
+        RequestStack $requestStack,
+        EntityFactory $entityFactory,
+        Twig_Environment $twig,
+        PermissionHelper $permissionHelper,
+        CurrentUserApi $currentUserApi)
+    {
+        parent::__construct($translator, $requestStack, $entityFactory, $twig, $permissionHelper);
+        $this->currentUserApi = $currentUserApi;
+    }
+
+    /**
+     * Returns the response for a display hook of a given context.
+     *
+     * @param Hook $hook
+     * @param string $context
+     *
+     * @return DisplayHookResponse
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
+    protected function renderDisplayHookResponse(Hook $hook, $context)
+    {
+        list ($assignments, $assignedEntities) = $this->selectAssignedEntities($hook);
+        $template = '@PaustianRatingsModule/Rating/displayRatingHook.html.twig';
+
+        $module = $hook->getCaller();
+        $moduleItem = $hook->getId();
+        $repo = $this->entityFactory->getObjectManager()->getRepository("Paustian\RatingsModule\Entity\RatingEntity");
+        $ratings = $repo->getRatingForItem($module, $moduleItem);
+        $loggedIn = $this->currentUserApi->isLoggedIn();
+        //user id of 1 means guest. Anything above 1 is a real user.
+        $user = $this->currentUserApi->get('uid');
+        $count = count($ratings);
+        if($count > 0){
+            //calculate the rating count
+            foreach($ratings as $rating){
+
+            }
+        } else {
+            //
+        }
+        $templateParameters = [
+            'items' => $assignedEntities,
+            'context' => $context,
+            'routeArea' => ''
+        ];
+
+        if ($context == 'hookDisplayView') {
+            // add context information to template parameters in order to provide means
+            // for adding new assignments and removing existing assignments
+            $templateParameters['assignments'] = $assignments;
+            $templateParameters['subscriberOwner'] = $hook->getCaller();
+            $templateParameters['subscriberAreaId'] = $hook->getAreaId();
+            $templateParameters['subscriberObjectId'] = $hook->getId();
+            $url = method_exists($hook, 'getUrl') ? $hook->getUrl() : null;
+            $templateParameters['subscriberUrl'] = (null !== $url && is_object($url)) ? $url->serialize() : serialize([]);
+        }
+
+        $output = $this->templating->render($template, $templateParameters);
+
+        return new DisplayHookResponse($this->getAreaName(), $output);
+    }
 }

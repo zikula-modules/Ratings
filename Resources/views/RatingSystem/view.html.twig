@@ -22,6 +22,7 @@
                         <col id="cSelect" />
                     {% endif %}
                     <col id="cItemActionsStart" />
+                <col id="id" />
                     <col id="cScaleDim" />
                     <col id="cIconFa" />
                     <col id="cIconUrl" />
@@ -33,7 +34,10 @@
                             <input type="checkbox" class="paustianratings-mass-toggle" />
                         </th>
                     {% endif %}
-                    <th id="hItemActionsStart" scope="col" class=" z-w02">{{ __('Actions') }}</th>
+                <th id="hItemActionsStart" scope="col" class="z-w02">{{ __('Actions') }}</th>
+                <th id="hId" scope="col" class="text-right">
+                    <a href="{{ sort.id.url }}" title="{{ __f('Sort by %s', {'%s': 'id dim'}) }}" class="{{ sort.id.class }}">{{ __('id') }}</a>
+                </th>
                     <th id="hScaleDim" scope="col" class="text-right">
                         <a href="{{ sort.scaleDim.url }}" title="{{ __f('Sort by %s', {'%s': 'scale dim'})|e('html_attr') }}" class="{{ sort.scaleDim.class }}">{{ __('Scale dim') }}</a>
                     </th>
@@ -60,6 +64,9 @@
                             <a id="itemActions{{ ratingSystem.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                             {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
                         </div>
+                </td>
+                <td headers="hId" class="text-right">
+                    {{ ratingSystem.id }}
                     </td>
                     <td headers="hScaleDim" class="text-right">
                         {{ ratingSystem.scaleDim }}
