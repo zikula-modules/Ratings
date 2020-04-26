@@ -1,7 +1,0 @@
-{# purpose of this template: ratings view json view #}
-[
-{% for rating in items %}
-    {% if not loop.first %},{% endif %}
-    {{ rating.toArray()|json_encode()|raw }}
-{% endfor %}
-]

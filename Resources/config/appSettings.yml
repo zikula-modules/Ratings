@@ -1,5 +1,0 @@
-services:
-    paustian_ratings_module.app_settings:
-        class: Paustian\RatingsModule\AppSettings
-        arguments:
-            - "@zikula_extensions_module.api.variable"

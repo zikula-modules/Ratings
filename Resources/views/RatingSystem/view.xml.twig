@@ -1,9 +1,0 @@
-{# purpose of this template: rating systems view xml view #}
-<?xml version="1.0" encoding="{{ pageGetVar('meta.charset') }}" ?>
-<ratingSystems>
-{% for ratingSystem in items %}
-    {{ include('@PaustianRatingsModule/RatingSystem/include.xml.twig') }}
-{% else %}
-    <noRatingSystem />
-{% endfor %}
-</ratingSystems>

@@ -1,9 +1,0 @@
-{# purpose of this template: rating systems view csv view #}
-{% spaceless %}"{{ __('Scale dim') }}";"{{ __('Icon fa') }}";"{{ __('Icon url') }}"
-{% endspaceless %}
-{% for ratingSystem in items %}
-
-{% spaceless %}
-    "{{ ratingSystem.scaleDim }}";"{{ ratingSystem.iconFa }}";"{{ ratingSystem.iconUrl }}"
-{% endspaceless %}
-{% endfor %}

@@ -1,9 +1,0 @@
-{# purpose of this template: ratings xml inclusion template #}
-<rating id="{{ rating.getId() }}" createdon="{{ rating.createdDate|localizeddate('medium', 'short') }}" updatedon="{{ rating.updatedDate|localizeddate('medium', 'short') }}">
-    <id>{{ rating.id }}</id>
-    <moduleName><![CDATA[{{ rating.moduleName }}]]></moduleName>
-    <objectId>{{ rating.objectId }}</objectId>
-    <rating>{{ rating.rating }}</rating>
-    <userId>{{ rating.userId.getUname() }}</userId>
-    <ratingSystem>{{ rating.ratingSystem }}</ratingSystem>
-</rating>
