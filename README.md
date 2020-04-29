@@ -11,8 +11,8 @@ For questions, please contact me on zikula.slack.com
 Timothy Paustian (tdpaustian@gmail.com)
 <https://www.microbiologytext.com/>
 
-##Setting up the module
-###Designating rating icons
+## Setting up the module
+### Designating rating icons
 Install the module as per any Zikula Module. Once installed go to the admin page for the module by clicking on the link 
 icon next to the module name. Once there it is important to set up the icons that will be used for showing ratings. Either
 all the font awesome (fa) text boxes or all the icon url boxes must be filled out. 
@@ -28,7 +28,7 @@ three icon url text boxes designate the path to the icons, starting from the roo
 
 `/name-of-zikula-site/web/uploads/rating/emptystaricon.png`
 
-###Hooking to other modules
+### Hooking to other modules
 Modules that want to use the RatingsModule must have the uiHookSubscriber interface implemented. You can hook the RatingsModule
 to subscribers by clicking the Hooks tab in either the subscriber module or the RatingsModule. If done in the subscriber module
 drag the Rating ui hooks provider into the ui_hooks area. If hooking up in the RatingsModule check the check box next to 
