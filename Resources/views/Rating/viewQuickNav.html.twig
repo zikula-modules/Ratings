@@ -23,7 +23,6 @@
     <div id="collapseRatingQuickNav" class="collapse">
         <fieldset>
             <h3>{{ __('Quick navigation') }}</h3>
-            {{ helper.renderQuickNavEntry(quickNavForm, 'ratingSystemVal', ratingSystemValFilter is not defined or ratingSystemValFilter == true) }}
             {{ helper.renderQuickNavEntry(quickNavForm, 'workflowState', workflowStateFilter is not defined or workflowStateFilter == true) }}
             {{ helper.renderQuickNavEntry(quickNavForm, 'userId', userIdFilter is not defined or userIdFilter == true) }}
             {{ helper.renderQuickNavEntry(quickNavForm, 'q', searchFilter is not defined or searchFilter == true) }}

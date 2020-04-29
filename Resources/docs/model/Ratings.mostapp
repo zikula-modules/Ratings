@@ -23,35 +23,9 @@ application "Ratings" {
     generateJsonTemplates false
     generateKmlTemplates false
     generateIcsTemplates false
-    skipFiles ""
-    markFiles ""
+    skipFiles "HookProvider/RatingUiHooksProvider.php, \nEntity/Repository/RatingRepository.php"
+    markFiles "Resources/config/hooks.yml,\nRatingsModule/Controller/AjaxController.php"
     entities {
-        entity "ratingSystem" {
-            documentation "The rating system to use for the specified rating. Only one rating system can be used per interface"
-            nameMultiple "ratingSystems"
-            displayPattern "#id#, #scaleDim#, #iconUrl#, #iconFa#"
-            skipHookSubscribers true
-            fields {
-                integer "scaleDim" {
-                    documentation "The number of divisions in the scale. For example there are five divisions in a 1 to 5 scale, four divisions in a four-star scale"
-                    defaultValue "0"
-                },
-                string "iconFa" {
-                    documentation "A font-awesome css string that is used to display ratings. Either this or iconUrl must be specified."
-                mandatory false
-                },
-                url "iconUrl" {
-                    documentation "A url to a rating icon to be used. Either this or IconFa must be designated."
-                    mandatory false
-                }
-            }
-            actions {
-                mainAction "Index",
-                editAction "Edit"
-            ,
-                viewAction "View"
-            }
-        },
         entity "rating" leading {
             documentation "A list of ratings for various hooked modules."
             nameMultiple "ratings"
@@ -76,11 +50,6 @@ application "Ratings" {
                 user "userId" {
                     documentation "The Id of the user who rated the item. "
                 }
-            ,
-                integer "ratingSystem" {
-                    documentation "The system to use for rating. For example 1 to 5 stars, or 1 to 10 number scale. "
-                    defaultValue "1"
-                }
             }
             actions {
                 mainAction "Index",
@@ -92,12 +61,38 @@ application "Ratings" {
             }
         }
     }
-    relations {
-        many2one {
-            source "rating"
-            sourceAlias "ratingVal"
-            target "ratingSystem"
-            targetAlias "ratingSystemVal"
+    variables {
+        varContainer "RatingSettings" {
+            fields {
+                integer "ratingScale" {
+                    documentation "The number of divisions in the scale. For example there are five divisions in a 1 to 5 scale, four divisions in a four-star scale"
+                    defaultValue "5"
+                },
+                string "iconFa" {
+                    documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
+                    mandatory false
+                },
+                string "halfIconFa" {
+                    documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
+                    mandatory false
+                },
+                string "emptyIconFa" {
+                    documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
+                    mandatory false
+                },
+                string "iconUrl" {
+                    documentation "A url to a rating icon to be used for a rating. Either this or IconFas must be designated."
+                    mandatory false
+                },
+                string "halfIconUrl" {
+                    documentation "A url to a rating icon to be used for a rating. Either this or IconFas must be designated."
+                mandatory false
+                },
+                string "emptyIconUrl" {
+                    documentation "A url to a rating icon to be used for a rating. Either this or IconFas must be designated."
+                    mandatory false
+                }
+            }
         }
     }
 }

@@ -17,7 +17,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use InvalidArgumentException;
 use Paustian\RatingsModule\Entity\Factory\EntityInitialiser;
-use Paustian\RatingsModule\Entity\RatingSystemEntity;
 use Paustian\RatingsModule\Entity\RatingEntity;
 use Paustian\RatingsModule\Helper\CollectionFilterHelper;
 
@@ -67,20 +66,6 @@ abstract class AbstractEntityFactory
         $repository->setCollectionFilterHelper($this->collectionFilterHelper);
 
         return $repository;
-    }
-
-    /**
-     * Creates a new ratingSystem instance.
-     *
-     * @return RatingSystemEntity The newly created entity instance
-     */
-    public function createRatingSystem()
-    {
-        $entity = new RatingSystemEntity();
-
-        $this->entityInitialiser->initRatingSystem($entity);
-
-        return $entity;
     }
 
     /**

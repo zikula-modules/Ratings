@@ -124,3 +124,16 @@ div.paustianratingsmodule-view .avatar img {
     width: auto;
     max-height: 24px;
 }
+
+span.avg-font {
+    font-family: "Courier New", serif;
+    font-size: medium;
+}
+
+img.rating-star {
+    margin-bottom:8px;
+}
+
+.hidden-style {
+    display:none;
+}

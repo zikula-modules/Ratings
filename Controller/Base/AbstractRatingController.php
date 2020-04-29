@@ -111,7 +111,6 @@ abstract class AbstractRatingController extends AbstractController
             new Column('moduleName'),
             new Column('objectId'),
             new Column('rating'),
-            new Column('ratingSystem'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

@@ -15,7 +15,6 @@ namespace Paustian\RatingsModule\Base;
 
 use Exception;
 use Zikula\Core\AbstractExtensionInstaller;
-use Paustian\RatingsModule\Entity\RatingSystemEntity;
 use Paustian\RatingsModule\Entity\RatingEntity;
 use Paustian\RatingsModule\Entity\HookAssignmentEntity;
 
@@ -28,7 +27,6 @@ abstract class AbstractRatingsModuleInstaller extends AbstractExtensionInstaller
      * @var string[]
      */
     protected $entities = [
-        RatingSystemEntity::class,
         RatingEntity::class,
         HookAssignmentEntity::class
     ];
@@ -51,13 +49,16 @@ abstract class AbstractRatingsModuleInstaller extends AbstractExtensionInstaller
         }
     
         // set up all our vars with initial values
-        $this->setVar('ratingSystemEntriesPerPage', 10);
-        $this->setVar('linkOwnRatingSystemsOnAccountPage', true);
+        $this->setVar('ratingScale', 5);
+        $this->setVar('iconFa', '');
+        $this->setVar('halfIconFa', '');
+        $this->setVar('emptyIconFa', '');
+        $this->setVar('iconUrl', '');
+        $this->setVar('halfIconUrl', '');
+        $this->setVar('emptyIconUrl', '');
         $this->setVar('ratingEntriesPerPage', 10);
         $this->setVar('linkOwnRatingsOnAccountPage', true);
         $this->setVar('showOnlyOwnEntries', false);
-        $this->setVar('allowModerationSpecificCreatorForRatingSystem', false);
-        $this->setVar('allowModerationSpecificCreationDateForRatingSystem', false);
         $this->setVar('allowModerationSpecificCreatorForRating', false);
         $this->setVar('allowModerationSpecificCreationDateForRating', false);
     

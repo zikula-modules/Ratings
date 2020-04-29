@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
@@ -45,6 +46,7 @@ abstract class AbstractConfigType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addRatingSettingsFields($builder, $options);
         $this->addListViewsFields($builder, $options);
         $this->addModerationFields($builder, $options);
 
@@ -52,40 +54,129 @@ abstract class AbstractConfigType extends AbstractType
     }
 
     /**
-     * Adds fields for list views fields.
+     * Adds fields for rating settings fields.
      */
-    public function addListViewsFields(FormBuilderInterface $builder, array $options = [])
+    public function addRatingSettingsFields(FormBuilderInterface $builder, array $options = [])
     {
         
-        $builder->add('ratingSystemEntriesPerPage', IntegerType::class, [
-            'label' => $this->__('Rating system entries per page:'),
+        $builder->add('ratingScale', IntegerType::class, [
+            'label' => $this->__('Rating scale:'),
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('The amount of rating systems shown per page')
+                'title' => $this->__('The number of divisions in the scale. For example there are five divisions in a 1 to 5 scale, four divisions in a four-star scale')
             ],
-            'help' => $this->__('The amount of rating systems shown per page'),
-            'empty_data' => 10,
+            'help' => $this->__('The number of divisions in the scale. For example there are five divisions in a 1 to 5 scale, four divisions in a four-star scale'),
+            'empty_data' => 5,
             'attr' => [
                 'maxlength' => 11,
                 'class' => '',
-                'title' => $this->__('Enter the rating system entries per page. Only digits are allowed.')
+                'title' => $this->__('Enter the rating scale. Only digits are allowed.')
             ],
             'required' => true,
         ]);
         
-        $builder->add('linkOwnRatingSystemsOnAccountPage', CheckboxType::class, [
-            'label' => $this->__('Link own rating systems on account page:'),
+        $builder->add('iconFa', TextType::class, [
+            'label' => $this->__('Icon fa:'),
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('Whether to add a link to rating systems of the current user on his account page')
+                'title' => $this->__('A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.')
             ],
-            'help' => $this->__('Whether to add a link to rating systems of the current user on his account page'),
+            'help' => $this->__('A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.'),
+            'empty_data' => '',
             'attr' => [
+                'maxlength' => 255,
                 'class' => '',
-                'title' => $this->__('The link own rating systems on account page option')
+                'title' => $this->__('Enter the icon fa.')
             ],
             'required' => false,
         ]);
+        
+        $builder->add('halfIconFa', TextType::class, [
+            'label' => $this->__('Half icon fa:'),
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.')
+            ],
+            'help' => $this->__('A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the half icon fa.')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('emptyIconFa', TextType::class, [
+            'label' => $this->__('Empty icon fa:'),
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.')
+            ],
+            'help' => $this->__('A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the empty icon fa.')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('iconUrl', TextType::class, [
+            'label' => $this->__('Icon url:'),
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('A url to a rating icon to be used for a rating. Either this or IconFas must be designated.')
+            ],
+            'help' => $this->__('A url to a rating icon to be used for a rating. Either this or IconFas must be designated.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the icon url.')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('halfIconUrl', TextType::class, [
+            'label' => $this->__('Half icon url:'),
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('A url to a rating icon to be used for a rating. Either this or IconFas must be designated.')
+            ],
+            'help' => $this->__('A url to a rating icon to be used for a rating. Either this or IconFas must be designated.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the half icon url.')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('emptyIconUrl', TextType::class, [
+            'label' => $this->__('Empty icon url:'),
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('A url to a rating icon to be used for a rating. Either this or IconFas must be designated.')
+            ],
+            'help' => $this->__('A url to a rating icon to be used for a rating. Either this or IconFas must be designated.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the empty icon url.')
+            ],
+            'required' => false,
+        ]);
+    }
+
+    /**
+     * Adds fields for list views fields.
+     */
+    public function addListViewsFields(FormBuilderInterface $builder, array $options = [])
+    {
         
         $builder->add('ratingEntriesPerPage', IntegerType::class, [
             'label' => $this->__('Rating entries per page:'),
@@ -137,34 +228,6 @@ abstract class AbstractConfigType extends AbstractType
      */
     public function addModerationFields(FormBuilderInterface $builder, array $options = [])
     {
-        
-        $builder->add('allowModerationSpecificCreatorForRatingSystem', CheckboxType::class, [
-            'label' => $this->__('Allow moderation specific creator for rating system:'),
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('Whether to allow moderators choosing a user which will be set as creator.')
-            ],
-            'help' => $this->__('Whether to allow moderators choosing a user which will be set as creator.'),
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('The allow moderation specific creator for rating system option')
-            ],
-            'required' => false,
-        ]);
-        
-        $builder->add('allowModerationSpecificCreationDateForRatingSystem', CheckboxType::class, [
-            'label' => $this->__('Allow moderation specific creation date for rating system:'),
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('Whether to allow moderators choosing a custom creation date.')
-            ],
-            'help' => $this->__('Whether to allow moderators choosing a custom creation date.'),
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('The allow moderation specific creation date for rating system option')
-            ],
-            'required' => false,
-        ]);
         
         $builder->add('allowModerationSpecificCreatorForRating', CheckboxType::class, [
             'label' => $this->__('Allow moderation specific creator for rating:'),

@@ -105,13 +105,6 @@ abstract class AbstractEditHandler
      * @var string
      */
     protected $repeatReturnUrl;
-    
-    /**
-     * List of identifiers for predefined relationships.
-     *
-     * @var mixed
-     */
-    protected $relationPresets = [];
 
     /**
      * Full prefix for related items.
@@ -266,7 +259,6 @@ abstract class AbstractEditHandler
     {
         $request = $this->requestStack->getCurrentRequest();
         $this->templateParameters = $templateParameters;
-        $this->templateParameters['inlineUsage'] = $request->query->getBoolean('raw');
         $this->idPrefix = $request->query->get('idp', '');
         $session = $request->hasSession() ? $request->getSession() : null;
     
@@ -358,8 +350,6 @@ abstract class AbstractEditHandler
         // save entity reference for later reuse
         $this->entityRef = $entity;
     
-        
-        $this->initRelationPresets();
     
         $actions = $this->workflowHelper->getActionsForObject($entity);
         if (false === $actions || !is_array($actions)) {
@@ -440,15 +430,6 @@ abstract class AbstractEditHandler
     {
         // to be customised in sub classes
         return [];
-    }
-    
-    
-    /**
-     * Initialises relationship presets.
-     */
-    protected function initRelationPresets()
-    {
-        // to be customised in sub classes
     }
     
     /**

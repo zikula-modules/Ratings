@@ -7,7 +7,6 @@ framework:
                 arguments:
                     - workflowState
             supports:
-                - Paustian\RatingsModule\Entity\RatingSystemEntity
                 - Paustian\RatingsModule\Entity\RatingEntity
             places:
                 - initial

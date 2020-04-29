@@ -1,21 +1,10 @@
 services:
     # Form types
     
-    paustian_ratings_module.form.type.ratingsystemquicknav:
-        class: Paustian\RatingsModule\Form\Type\QuickNavigation\RatingSystemQuickNavType
-        arguments:
-            - "@translator.default"
-            - "@paustian_ratings_module.listentries_helper"
-        tags: ['form.type']
-    
     paustian_ratings_module.form.type.ratingquicknav:
         class: Paustian\RatingsModule\Form\Type\QuickNavigation\RatingQuickNavType
         arguments:
             - "@translator.default"
-            - "@request_stack"
-            - "@paustian_ratings_module.entity_factory"
-            - "@paustian_ratings_module.permission_helper"
-            - "@paustian_ratings_module.entity_display_helper"
             - "@paustian_ratings_module.listentries_helper"
         tags: ['form.type']
     
@@ -40,20 +29,6 @@ services:
             - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
     
     
-    paustian_ratings_module.form.handler.ratingsystem:
-        class: Paustian\RatingsModule\Form\Handler\RatingSystem\EditHandler
-        parent: paustian_ratings_module.form.handler.common
-    
-    paustian_ratings_module.form.type.ratingsystem:
-        class: Paustian\RatingsModule\Form\Type\RatingSystemType
-        arguments:
-            - "@translator.default"
-            - "@paustian_ratings_module.entity_factory"
-            - "@paustian_ratings_module.collection_filter_helper"
-            - "@paustian_ratings_module.entity_display_helper"
-            - "@paustian_ratings_module.listentries_helper"
-        tags: ['form.type']
-    
     paustian_ratings_module.form.handler.rating:
         class: Paustian\RatingsModule\Form\Handler\Rating\EditHandler
         parent: paustian_ratings_module.form.handler.common
@@ -63,8 +38,6 @@ services:
         arguments:
             - "@translator.default"
             - "@paustian_ratings_module.entity_factory"
-            - "@paustian_ratings_module.collection_filter_helper"
-            - "@paustian_ratings_module.entity_display_helper"
             - "@paustian_ratings_module.listentries_helper"
         tags: ['form.type']
     

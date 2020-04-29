@@ -13,11 +13,13 @@
 
 namespace Paustian\RatingsModule\HookProvider;
 
+use Paustian\RatingsModule\Api\RatingsApi;
 use Paustian\RatingsModule\Helper\PermissionHelper;
 use Paustian\RatingsModule\HookProvider\Base\AbstractRatingUiHooksProvider;
 use Zikula\Bundle\HookBundle\Hook\Hook;
 use Zikula\Bundle\HookBundle\Hook\DisplayHookResponse;
 use Zikula\UsersModule\Api\CurrentUserApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Paustian\RatingsModule\Entity\Factory\EntityFactory;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -29,6 +31,7 @@ use Twig_Environment;
 class RatingUiHooksProvider extends AbstractRatingUiHooksProvider
 {
     protected $currentUserApi;
+    protected $variableApi;
 
     /**
      * RatingUiHooksProvider constructor.
@@ -45,10 +48,12 @@ class RatingUiHooksProvider extends AbstractRatingUiHooksProvider
         EntityFactory $entityFactory,
         Twig_Environment $twig,
         PermissionHelper $permissionHelper,
-        CurrentUserApi $currentUserApi)
+        CurrentUserApi $currentUserApi,
+        VariableApiInterface $variableApi)
     {
         parent::__construct($translator, $requestStack, $entityFactory, $twig, $permissionHelper);
         $this->currentUserApi = $currentUserApi;
+        $this->variableApi = $variableApi;
     }
 
     /**
@@ -65,28 +70,35 @@ class RatingUiHooksProvider extends AbstractRatingUiHooksProvider
     protected function renderDisplayHookResponse(Hook $hook, $context)
     {
         list ($assignments, $assignedEntities) = $this->selectAssignedEntities($hook);
-        $template = '@PaustianRatingsModule/Rating/displayRatingHook.html.twig';
+        $template = '@PaustianRatingsModule/Hook/displayRatingHook.html.twig';
 
         $module = $hook->getCaller();
         $moduleItem = $hook->getId();
-        $repo = $this->entityFactory->getObjectManager()->getRepository("Paustian\RatingsModule\Entity\RatingEntity");
-        $ratings = $repo->getRatingForItem($module, $moduleItem);
-        $loggedIn = $this->currentUserApi->isLoggedIn();
+        $repo = $this->entityFactory->getEntityManager()->getRepository("Paustian\RatingsModule\Entity\RatingEntity");
+
+        //Get the module variables
+        $moduleVars = $this->variableApi->getAll('PaustianRatingsModule');
         //user id of 1 means guest. Anything above 1 is a real user.
         $user = $this->currentUserApi->get('uid');
+        //Determine the overall rating of this article
+        $ratings = $repo->getRatingForItem($module, $moduleItem);
         $count = count($ratings);
-        if($count > 0){
-            //calculate the rating count
-            foreach($ratings as $rating){
+        $avgData = RatingsApi::calculateAverage($ratings, $moduleVars['ratingScale']);
 
-            }
-        } else {
-            //
-        }
         $templateParameters = [
-            'items' => $assignedEntities,
-            'context' => $context,
-            'routeArea' => ''
+            'ratingClass' => $moduleVars['iconFa'],
+            'halfRatingClass' => $moduleVars['halfIconFa'],
+            'emptyRatingClass' => $moduleVars['emptyIconFa'],
+            'ratingIcon' => $moduleVars['iconUrl'],
+            'halfRatingIcon' => $moduleVars['halfIconUrl'],
+            'emptyRatingIcon' => $moduleVars['emptyIconUrl'],
+            'average' => $avgData['average'] ,
+            'doHalfStar' => $avgData['doHalfStar'],
+            'emptyStars' => $avgData['emptyStars'],
+            'max' => $moduleVars['ratingScale'],
+            'module' => $module,
+            'moduleItem' => $moduleItem,
+            'user' => $user
         ];
 
         if ($context == 'hookDisplayView') {

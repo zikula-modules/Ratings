@@ -13,7 +13,6 @@
 
 namespace Paustian\RatingsModule\Form\Type\Base;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -28,8 +27,6 @@ use Zikula\Common\Translator\TranslatorTrait;
 use Paustian\RatingsModule\Entity\Factory\EntityFactory;
 use Zikula\UsersModule\Form\Type\UserLiveSearchType;
 use Paustian\RatingsModule\Entity\RatingEntity;
-use Paustian\RatingsModule\Helper\CollectionFilterHelper;
-use Paustian\RatingsModule\Helper\EntityDisplayHelper;
 use Paustian\RatingsModule\Helper\ListEntriesHelper;
 use Paustian\RatingsModule\Traits\ModerationFormFieldsTrait;
 
@@ -48,16 +45,6 @@ abstract class AbstractRatingType extends AbstractType
     protected $entityFactory;
 
     /**
-     * @var CollectionFilterHelper
-     */
-    protected $collectionFilterHelper;
-
-    /**
-     * @var EntityDisplayHelper
-     */
-    protected $entityDisplayHelper;
-
-    /**
      * @var ListEntriesHelper
      */
     protected $listHelper;
@@ -65,14 +52,10 @@ abstract class AbstractRatingType extends AbstractType
     public function __construct(
         TranslatorInterface $translator,
         EntityFactory $entityFactory,
-        CollectionFilterHelper $collectionFilterHelper,
-        EntityDisplayHelper $entityDisplayHelper,
         ListEntriesHelper $listHelper
     ) {
         $this->setTranslator($translator);
         $this->entityFactory = $entityFactory;
-        $this->collectionFilterHelper = $collectionFilterHelper;
-        $this->entityDisplayHelper = $entityDisplayHelper;
         $this->listHelper = $listHelper;
     }
 
@@ -84,7 +67,6 @@ abstract class AbstractRatingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addEntityFields($builder, $options);
-        $this->addOutgoingRelationshipFields($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addSubmitButtons($builder, $options);
     }
@@ -157,51 +139,6 @@ abstract class AbstractRatingType extends AbstractType
                 'title' => $this->__('Enter the user id of the rating.')
             ],
             'required' => true,
-            'inline_usage' => $options['inline_usage']
-        ]);
-        
-        $builder->add('ratingSystem', IntegerType::class, [
-            'label' => $this->__('Rating system:'),
-            'label_attr' => [
-                'class' => 'tooltips',
-                'title' => $this->__('The system to use for rating. For example 1 to 5 stars, or 1 to 10 number scale. ')
-            ],
-            'help' => $this->__('The system to use for rating. For example 1 to 5 stars, or 1 to 10 number scale. '),
-            'empty_data' => 1,
-            'attr' => [
-                'maxlength' => 11,
-                'class' => '',
-                'title' => $this->__('Enter the rating system of the rating. Only digits are allowed.')
-            ],
-            'required' => true,
-        ]);
-    }
-
-    /**
-     * Adds fields for outgoing relationships.
-     */
-    public function addOutgoingRelationshipFields(FormBuilderInterface $builder, array $options = [])
-    {
-        $queryBuilder = function (EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('ratingSystemVal', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'PaustianRatingsModule:RatingSystemEntity',
-            'choice_label' => $choiceLabelClosure,
-            'multiple' => false,
-            'expanded' => false,
-            'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option.'),
-            'required' => false,
-            'label' => $this->__('Rating system val'),
-            'attr' => [
-                'title' => $this->__('Choose the rating system val.')
-            ]
         ]);
     }
 
@@ -218,7 +155,7 @@ abstract class AbstractRatingType extends AbstractType
                     'class' => $action['buttonClass']
                 ]
             ]);
-            if ('create' === $options['mode'] && 'submit' === $action['id'] && !$options['inline_usage']) {
+            if ('create' === $options['mode'] && 'submit' === $action['id']) {
                 // add additional button to submit item and return to create form
                 $builder->add('submitrepeat', SubmitType::class, [
                     'label' => $this->__('Submit and repeat'),
@@ -269,8 +206,6 @@ abstract class AbstractRatingType extends AbstractType
                 'has_moderate_permission' => false,
                 'allow_moderation_specific_creator' => false,
                 'allow_moderation_specific_creation_date' => false,
-                'filter_by_ownership' => true,
-                'inline_usage' => false
             ])
             ->setRequired(['mode', 'actions'])
             ->setAllowedTypes('mode', 'string')
@@ -278,8 +213,6 @@ abstract class AbstractRatingType extends AbstractType
             ->setAllowedTypes('has_moderate_permission', 'bool')
             ->setAllowedTypes('allow_moderation_specific_creator', 'bool')
             ->setAllowedTypes('allow_moderation_specific_creation_date', 'bool')
-            ->setAllowedTypes('filter_by_ownership', 'bool')
-            ->setAllowedTypes('inline_usage', 'bool')
             ->setAllowedValues('mode', ['create', 'edit'])
         ;
     }

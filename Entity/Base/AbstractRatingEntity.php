@@ -14,7 +14,6 @@
 namespace Paustian\RatingsModule\Entity\Base;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\Core\Doctrine\EntityAccess;
@@ -47,6 +46,9 @@ abstract class AbstractRatingEntity extends EntityAccess
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
+     * @Assert\Type(type="integer")
+     * @Assert\NotNull
+     * @Assert\LessThan(value=1000000000)
      * @var int $id
      */
     protected $id = 0;
@@ -105,30 +107,6 @@ abstract class AbstractRatingEntity extends EntityAccess
      */
     protected $userId = 0;
     
-    /**
-     * The system to use for rating. For example 1 to 5 stars, or 1 to 10 number scale. 
-     *
-     * @ORM\Column(type="integer")
-     * @Assert\Type(type="integer")
-     * @Assert\NotBlank
-     * @Assert\NotEqualTo(value=0)
-     * @Assert\LessThan(value=100000000000)
-     * @var int $ratingSystem
-     */
-    protected $ratingSystem = 1;
-    
-    
-    /**
-     * Unidirectional - Many ratingVal [ratings] have one ratingSystemVal [rating system] (OWNING SIDE).
-     *
-     * @ORM\ManyToOne(
-     *     targetEntity="Paustian\RatingsModule\Entity\RatingSystemEntity"
-     * )
-     * @ORM\JoinTable(name="paustian_rating_ratingsystem")
-     * @Assert\Type(type="Paustian\RatingsModule\Entity\RatingSystemEntity")
-     * @var \Paustian\RatingsModule\Entity\RatingSystemEntity $ratingSystemVal
-     */
-    protected $ratingSystemVal;
     
     
     /**
@@ -140,7 +118,6 @@ abstract class AbstractRatingEntity extends EntityAccess
      */
     public function __construct()
     {
-        $this->ratingVal = new ArrayCollection();
     }
     
     /**
@@ -311,52 +288,6 @@ abstract class AbstractRatingEntity extends EntityAccess
                 $this->userId = $userId;
             }
         }
-    }
-    
-    /**
-     * Returns the rating system.
-     *
-     * @return int
-     */
-    public function getRatingSystem()
-    {
-        return $this->ratingSystem;
-    }
-    
-    /**
-     * Sets the rating system.
-     *
-     * @param int $ratingSystem
-     *
-     * @return void
-     */
-    public function setRatingSystem($ratingSystem)
-    {
-        if ((int)$this->ratingSystem !== (int)$ratingSystem) {
-            $this->ratingSystem = (int)$ratingSystem;
-        }
-    }
-    
-    /**
-     * Returns the rating system val.
-     *
-     * @return \Paustian\RatingsModule\Entity\RatingSystemEntity
-     */
-    public function getRatingSystemVal()
-    {
-        return $this->ratingSystemVal;
-    }
-    
-    /**
-     * Sets the rating system val.
-     *
-     * @param \Paustian\RatingsModule\Entity\RatingSystemEntity $ratingSystemVal
-     *
-     * @return void
-     */
-    public function setRatingSystemVal(\Paustian\RatingsModule\Entity\RatingSystemEntity $ratingSystemVal = null)
-    {
-        $this->ratingSystemVal = $ratingSystemVal;
     }
     
     /**

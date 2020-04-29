@@ -27,24 +27,69 @@ abstract class AbstractAppSettings
     protected $variableApi;
     
     /**
-     * The amount of rating systems shown per page
+     * The number of divisions in the scale. For example there are five divisions in a 1 to 5 scale, four divisions in a four-star scale
      *
      * @Assert\Type(type="integer")
      * @Assert\NotBlank
      * @Assert\NotEqualTo(value=0)
      * @Assert\LessThan(value=100000000000)
-     * @var int $ratingSystemEntriesPerPage
+     * @var int $ratingScale
      */
-    protected $ratingSystemEntriesPerPage = 10;
+    protected $ratingScale = 5;
     
     /**
-     * Whether to add a link to rating systems of the current user on his account page
+     * A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.
      *
      * @Assert\NotNull
-     * @Assert\Type(type="bool")
-     * @var bool $linkOwnRatingSystemsOnAccountPage
+     * @Assert\Length(min="0", max="255")
+     * @var string $iconFa
      */
-    protected $linkOwnRatingSystemsOnAccountPage = true;
+    protected $iconFa = '';
+    
+    /**
+     * A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.
+     *
+     * @Assert\NotNull
+     * @Assert\Length(min="0", max="255")
+     * @var string $halfIconFa
+     */
+    protected $halfIconFa = '';
+    
+    /**
+     * A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.
+     *
+     * @Assert\NotNull
+     * @Assert\Length(min="0", max="255")
+     * @var string $emptyIconFa
+     */
+    protected $emptyIconFa = '';
+    
+    /**
+     * A url to a rating icon to be used for a rating. Either this or IconFas must be designated.
+     *
+     * @Assert\NotNull
+     * @Assert\Length(min="0", max="255")
+     * @var string $iconUrl
+     */
+    protected $iconUrl = '';
+    
+    /**
+     * A url to a rating icon to be used for a rating. Either this or IconFas must be designated.
+     *
+     * @Assert\NotNull
+     * @Assert\Length(min="0", max="255")
+     * @var string $halfIconUrl
+     */
+    protected $halfIconUrl = '';
+    
+    /**
+     * A url to a rating icon to be used for a rating. Either this or IconFas must be designated.
+     *
+     * @Assert\NotNull
+     * @Assert\Length(min="0", max="255")
+     * @var string $emptyIconUrl
+     */
+    protected $emptyIconUrl = '';
     
     /**
      * The amount of ratings shown per page
@@ -80,24 +125,6 @@ abstract class AbstractAppSettings
      *
      * @Assert\NotNull
      * @Assert\Type(type="bool")
-     * @var bool $allowModerationSpecificCreatorForRatingSystem
-     */
-    protected $allowModerationSpecificCreatorForRatingSystem = false;
-    
-    /**
-     * Whether to allow moderators choosing a custom creation date.
-     *
-     * @Assert\NotNull
-     * @Assert\Type(type="bool")
-     * @var bool $allowModerationSpecificCreationDateForRatingSystem
-     */
-    protected $allowModerationSpecificCreationDateForRatingSystem = false;
-    
-    /**
-     * Whether to allow moderators choosing a user which will be set as creator.
-     *
-     * @Assert\NotNull
-     * @Assert\Type(type="bool")
      * @var bool $allowModerationSpecificCreatorForRating
      */
     protected $allowModerationSpecificCreatorForRating = false;
@@ -121,50 +148,170 @@ abstract class AbstractAppSettings
     }
     
     /**
-     * Returns the rating system entries per page.
+     * Returns the rating scale.
      *
      * @return int
      */
-    public function getRatingSystemEntriesPerPage()
+    public function getRatingScale()
     {
-        return $this->ratingSystemEntriesPerPage;
+        return $this->ratingScale;
     }
     
     /**
-     * Sets the rating system entries per page.
+     * Sets the rating scale.
      *
-     * @param int $ratingSystemEntriesPerPage
+     * @param int $ratingScale
      *
      * @return void
      */
-    public function setRatingSystemEntriesPerPage($ratingSystemEntriesPerPage)
+    public function setRatingScale($ratingScale)
     {
-        if ((int)$this->ratingSystemEntriesPerPage !== (int)$ratingSystemEntriesPerPage) {
-            $this->ratingSystemEntriesPerPage = (int)$ratingSystemEntriesPerPage;
+        if ((int)$this->ratingScale !== (int)$ratingScale) {
+            $this->ratingScale = (int)$ratingScale;
         }
     }
     
     /**
-     * Returns the link own rating systems on account page.
+     * Returns the icon fa.
      *
-     * @return bool
+     * @return string
      */
-    public function getLinkOwnRatingSystemsOnAccountPage()
+    public function getIconFa()
     {
-        return $this->linkOwnRatingSystemsOnAccountPage;
+        return $this->iconFa;
     }
     
     /**
-     * Sets the link own rating systems on account page.
+     * Sets the icon fa.
      *
-     * @param bool $linkOwnRatingSystemsOnAccountPage
+     * @param string $iconFa
      *
      * @return void
      */
-    public function setLinkOwnRatingSystemsOnAccountPage($linkOwnRatingSystemsOnAccountPage)
+    public function setIconFa($iconFa)
     {
-        if ((bool)$this->linkOwnRatingSystemsOnAccountPage !== (bool)$linkOwnRatingSystemsOnAccountPage) {
-            $this->linkOwnRatingSystemsOnAccountPage = (bool)$linkOwnRatingSystemsOnAccountPage;
+        if ($this->iconFa !== $iconFa) {
+            $this->iconFa = isset($iconFa) ? $iconFa : '';
+        }
+    }
+    
+    /**
+     * Returns the half icon fa.
+     *
+     * @return string
+     */
+    public function getHalfIconFa()
+    {
+        return $this->halfIconFa;
+    }
+    
+    /**
+     * Sets the half icon fa.
+     *
+     * @param string $halfIconFa
+     *
+     * @return void
+     */
+    public function setHalfIconFa($halfIconFa)
+    {
+        if ($this->halfIconFa !== $halfIconFa) {
+            $this->halfIconFa = isset($halfIconFa) ? $halfIconFa : '';
+        }
+    }
+    
+    /**
+     * Returns the empty icon fa.
+     *
+     * @return string
+     */
+    public function getEmptyIconFa()
+    {
+        return $this->emptyIconFa;
+    }
+    
+    /**
+     * Sets the empty icon fa.
+     *
+     * @param string $emptyIconFa
+     *
+     * @return void
+     */
+    public function setEmptyIconFa($emptyIconFa)
+    {
+        if ($this->emptyIconFa !== $emptyIconFa) {
+            $this->emptyIconFa = isset($emptyIconFa) ? $emptyIconFa : '';
+        }
+    }
+    
+    /**
+     * Returns the icon url.
+     *
+     * @return string
+     */
+    public function getIconUrl()
+    {
+        return $this->iconUrl;
+    }
+    
+    /**
+     * Sets the icon url.
+     *
+     * @param string $iconUrl
+     *
+     * @return void
+     */
+    public function setIconUrl($iconUrl)
+    {
+        if ($this->iconUrl !== $iconUrl) {
+            $this->iconUrl = isset($iconUrl) ? $iconUrl : '';
+        }
+    }
+    
+    /**
+     * Returns the half icon url.
+     *
+     * @return string
+     */
+    public function getHalfIconUrl()
+    {
+        return $this->halfIconUrl;
+    }
+    
+    /**
+     * Sets the half icon url.
+     *
+     * @param string $halfIconUrl
+     *
+     * @return void
+     */
+    public function setHalfIconUrl($halfIconUrl)
+    {
+        if ($this->halfIconUrl !== $halfIconUrl) {
+            $this->halfIconUrl = isset($halfIconUrl) ? $halfIconUrl : '';
+        }
+    }
+    
+    /**
+     * Returns the empty icon url.
+     *
+     * @return string
+     */
+    public function getEmptyIconUrl()
+    {
+        return $this->emptyIconUrl;
+    }
+    
+    /**
+     * Sets the empty icon url.
+     *
+     * @param string $emptyIconUrl
+     *
+     * @return void
+     */
+    public function setEmptyIconUrl($emptyIconUrl)
+    {
+        if ($this->emptyIconUrl !== $emptyIconUrl) {
+            $this->emptyIconUrl = isset($emptyIconUrl) ? $emptyIconUrl : '';
         }
     }
     
@@ -241,54 +388,6 @@ abstract class AbstractAppSettings
     }
     
     /**
-     * Returns the allow moderation specific creator for rating system.
-     *
-     * @return bool
-     */
-    public function getAllowModerationSpecificCreatorForRatingSystem()
-    {
-        return $this->allowModerationSpecificCreatorForRatingSystem;
-    }
-    
-    /**
-     * Sets the allow moderation specific creator for rating system.
-     *
-     * @param bool $allowModerationSpecificCreatorForRatingSystem
-     *
-     * @return void
-     */
-    public function setAllowModerationSpecificCreatorForRatingSystem($allowModerationSpecificCreatorForRatingSystem)
-    {
-        if ((bool)$this->allowModerationSpecificCreatorForRatingSystem !== (bool)$allowModerationSpecificCreatorForRatingSystem) {
-            $this->allowModerationSpecificCreatorForRatingSystem = (bool)$allowModerationSpecificCreatorForRatingSystem;
-        }
-    }
-    
-    /**
-     * Returns the allow moderation specific creation date for rating system.
-     *
-     * @return bool
-     */
-    public function getAllowModerationSpecificCreationDateForRatingSystem()
-    {
-        return $this->allowModerationSpecificCreationDateForRatingSystem;
-    }
-    
-    /**
-     * Sets the allow moderation specific creation date for rating system.
-     *
-     * @param bool $allowModerationSpecificCreationDateForRatingSystem
-     *
-     * @return void
-     */
-    public function setAllowModerationSpecificCreationDateForRatingSystem($allowModerationSpecificCreationDateForRatingSystem)
-    {
-        if ((bool)$this->allowModerationSpecificCreationDateForRatingSystem !== (bool)$allowModerationSpecificCreationDateForRatingSystem) {
-            $this->allowModerationSpecificCreationDateForRatingSystem = (bool)$allowModerationSpecificCreationDateForRatingSystem;
-        }
-    }
-    
-    /**
      * Returns the allow moderation specific creator for rating.
      *
      * @return bool
@@ -343,11 +442,26 @@ abstract class AbstractAppSettings
     {
         $moduleVars = $this->variableApi->getAll('PaustianRatingsModule');
     
-        if (isset($moduleVars['ratingSystemEntriesPerPage'])) {
-            $this->setRatingSystemEntriesPerPage($moduleVars['ratingSystemEntriesPerPage']);
+        if (isset($moduleVars['ratingScale'])) {
+            $this->setRatingScale($moduleVars['ratingScale']);
         }
-        if (isset($moduleVars['linkOwnRatingSystemsOnAccountPage'])) {
-            $this->setLinkOwnRatingSystemsOnAccountPage($moduleVars['linkOwnRatingSystemsOnAccountPage']);
+        if (isset($moduleVars['iconFa'])) {
+            $this->setIconFa($moduleVars['iconFa']);
+        }
+        if (isset($moduleVars['halfIconFa'])) {
+            $this->setHalfIconFa($moduleVars['halfIconFa']);
+        }
+        if (isset($moduleVars['emptyIconFa'])) {
+            $this->setEmptyIconFa($moduleVars['emptyIconFa']);
+        }
+        if (isset($moduleVars['iconUrl'])) {
+            $this->setIconUrl($moduleVars['iconUrl']);
+        }
+        if (isset($moduleVars['halfIconUrl'])) {
+            $this->setHalfIconUrl($moduleVars['halfIconUrl']);
+        }
+        if (isset($moduleVars['emptyIconUrl'])) {
+            $this->setEmptyIconUrl($moduleVars['emptyIconUrl']);
         }
         if (isset($moduleVars['ratingEntriesPerPage'])) {
             $this->setRatingEntriesPerPage($moduleVars['ratingEntriesPerPage']);
@@ -357,12 +471,6 @@ abstract class AbstractAppSettings
         }
         if (isset($moduleVars['showOnlyOwnEntries'])) {
             $this->setShowOnlyOwnEntries($moduleVars['showOnlyOwnEntries']);
-        }
-        if (isset($moduleVars['allowModerationSpecificCreatorForRatingSystem'])) {
-            $this->setAllowModerationSpecificCreatorForRatingSystem($moduleVars['allowModerationSpecificCreatorForRatingSystem']);
-        }
-        if (isset($moduleVars['allowModerationSpecificCreationDateForRatingSystem'])) {
-            $this->setAllowModerationSpecificCreationDateForRatingSystem($moduleVars['allowModerationSpecificCreationDateForRatingSystem']);
         }
         if (isset($moduleVars['allowModerationSpecificCreatorForRating'])) {
             $this->setAllowModerationSpecificCreatorForRating($moduleVars['allowModerationSpecificCreatorForRating']);
@@ -377,13 +485,16 @@ abstract class AbstractAppSettings
      */
     public function save()
     {
-        $this->variableApi->set('PaustianRatingsModule', 'ratingSystemEntriesPerPage', $this->getRatingSystemEntriesPerPage());
-        $this->variableApi->set('PaustianRatingsModule', 'linkOwnRatingSystemsOnAccountPage', $this->getLinkOwnRatingSystemsOnAccountPage());
+        $this->variableApi->set('PaustianRatingsModule', 'ratingScale', $this->getRatingScale());
+        $this->variableApi->set('PaustianRatingsModule', 'iconFa', $this->getIconFa());
+        $this->variableApi->set('PaustianRatingsModule', 'halfIconFa', $this->getHalfIconFa());
+        $this->variableApi->set('PaustianRatingsModule', 'emptyIconFa', $this->getEmptyIconFa());
+        $this->variableApi->set('PaustianRatingsModule', 'iconUrl', $this->getIconUrl());
+        $this->variableApi->set('PaustianRatingsModule', 'halfIconUrl', $this->getHalfIconUrl());
+        $this->variableApi->set('PaustianRatingsModule', 'emptyIconUrl', $this->getEmptyIconUrl());
         $this->variableApi->set('PaustianRatingsModule', 'ratingEntriesPerPage', $this->getRatingEntriesPerPage());
         $this->variableApi->set('PaustianRatingsModule', 'linkOwnRatingsOnAccountPage', $this->getLinkOwnRatingsOnAccountPage());
         $this->variableApi->set('PaustianRatingsModule', 'showOnlyOwnEntries', $this->getShowOnlyOwnEntries());
-        $this->variableApi->set('PaustianRatingsModule', 'allowModerationSpecificCreatorForRatingSystem', $this->getAllowModerationSpecificCreatorForRatingSystem());
-        $this->variableApi->set('PaustianRatingsModule', 'allowModerationSpecificCreationDateForRatingSystem', $this->getAllowModerationSpecificCreationDateForRatingSystem());
         $this->variableApi->set('PaustianRatingsModule', 'allowModerationSpecificCreatorForRating', $this->getAllowModerationSpecificCreatorForRating());
         $this->variableApi->set('PaustianRatingsModule', 'allowModerationSpecificCreationDateForRating', $this->getAllowModerationSpecificCreationDateForRating());
     }

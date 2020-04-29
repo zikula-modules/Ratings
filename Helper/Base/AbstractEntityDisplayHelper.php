@@ -15,7 +15,6 @@ namespace Paustian\RatingsModule\Helper\Base;
 
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Core\Doctrine\EntityAccess;
-use Paustian\RatingsModule\Entity\RatingSystemEntity;
 use Paustian\RatingsModule\Entity\RatingEntity;
 use Paustian\RatingsModule\Helper\ListEntriesHelper;
 
@@ -51,34 +50,11 @@ abstract class AbstractEntityDisplayHelper
      */
     public function getFormattedTitle(EntityAccess $entity)
     {
-        if ($entity instanceof RatingSystemEntity) {
-            return $this->formatRatingSystem($entity);
-        }
         if ($entity instanceof RatingEntity) {
             return $this->formatRating($entity);
         }
     
         return '';
-    }
-    
-    /**
-     * Returns the formatted title for a given entity.
-     *
-     * @param RatingSystemEntity $entity The given entity instance
-     *
-     * @return string The formatted title
-     */
-    protected function formatRatingSystem(RatingSystemEntity $entity)
-    {
-        return $this->translator->__f(
-            '%id%, %scaleDim%, %iconUrl%, %iconFa%',
-            [
-                '%id%' => $entity->getId(),
-                '%scaleDim%' => $entity->getScaleDim(),
-                '%iconUrl%' => $entity->getIconUrl(),
-                '%iconFa%' => $entity->getIconFa()
-            ]
-        );
     }
     
     /**
@@ -96,8 +72,7 @@ abstract class AbstractEntityDisplayHelper
                 '%id%' => $entity->getId(),
                 '%moduleName%' => $entity->getModuleName(),
                 '%objectId%' => $entity->getObjectId(),
-                '%rating%' => $entity->getRating(),
-                '%ratingSystem%' => $entity->getRatingSystem()
+                '%rating%' => $entity->getRating()
             ]
         );
     }
@@ -111,9 +86,6 @@ abstract class AbstractEntityDisplayHelper
      */
     public function getTitleFieldName($objectType = '')
     {
-        if ('ratingSystem' === $objectType) {
-            return 'iconFa';
-        }
         if ('rating' === $objectType) {
             return 'moduleName';
         }
@@ -130,9 +102,6 @@ abstract class AbstractEntityDisplayHelper
      */
     public function getDescriptionFieldName($objectType = '')
     {
-        if ('ratingSystem' === $objectType) {
-            return 'iconFa';
-        }
         if ('rating' === $objectType) {
             return 'moduleName';
         }
@@ -150,9 +119,6 @@ abstract class AbstractEntityDisplayHelper
      */
     public function getStartDateFieldName($objectType = '')
     {
-        if ('ratingSystem' === $objectType) {
-            return 'createdDate';
-        }
         if ('rating' === $objectType) {
             return 'createdDate';
         }

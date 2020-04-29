@@ -111,7 +111,6 @@ abstract class AbstractControllerHelper
         }
     
         $allowedObjectTypes = [];
-        $allowedObjectTypes[] = 'ratingSystem';
         $allowedObjectTypes[] = 'rating';
     
         return $allowedObjectTypes;

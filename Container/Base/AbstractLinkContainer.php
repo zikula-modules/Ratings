@@ -89,19 +89,6 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 return $links;
             }
 
-            if (true === $this->variableApi->get('PaustianRatingsModule', 'linkOwnRatingSystemsOnAccountPage', true)) {
-                $objectType = 'ratingSystem';
-                if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_READ)) {
-                    $routeParameters = ['own' => 1];
-                    $routeName = 'paustianratingsmodule_' . strtolower($objectType) . '_view';
-                    $links[] = [
-                        'url' => $this->router->generate($routeName, $routeParameters),
-                        'text' => $this->__('My rating systems', 'paustianratingsmodule'),
-                        'icon' => 'list-alt'
-                    ];
-                }
-            }
-
             if (true === $this->variableApi->get('PaustianRatingsModule', 'linkOwnRatingsOnAccountPage', true)) {
                 $objectType = 'rating';
                 if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_READ)) {
@@ -147,16 +134,6 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             }
         }
         
-        if (
-            in_array('ratingSystem', $allowedObjectTypes, true)
-            && $this->permissionHelper->hasComponentPermission('ratingSystem', $permLevel)
-        ) {
-            $links[] = [
-                'url' => $this->router->generate('paustianratingsmodule_ratingsystem_' . $routeArea . 'view'),
-                'text' => $this->__('Rating systems', 'paustianratingsmodule'),
-                'title' => $this->__('Rating systems list', 'paustianratingsmodule')
-            ];
-        }
         if (
             in_array('rating', $allowedObjectTypes, true)
             && $this->permissionHelper->hasComponentPermission('rating', $permLevel)

@@ -36,8 +36,6 @@
             },
             "securityschema": {
                 "PaustianRatingsModule::": "::",
-                "PaustianRatingsModule:RatingSystem:": "RatingSystem ID::",
-                "PaustianRatingsModule:Rating:RatingSystem": "Rating ID:RatingSystem ID:",
                 "PaustianRatingsModule:Rating:": "Rating ID::",
                 "PaustianRatingsModule::Ajax": "::"
             }

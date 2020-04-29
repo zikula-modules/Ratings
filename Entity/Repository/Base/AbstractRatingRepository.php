@@ -58,7 +58,6 @@ abstract class AbstractRatingRepository extends EntityRepository
             'moduleName',
             'objectId',
             'rating',
-            'ratingSystem',
             'createdBy',
             'createdDate',
             'updatedBy',
@@ -624,7 +623,7 @@ abstract class AbstractRatingRepository extends EntityRepository
         if (!$isPaginated) {
             $result = $query->getResult();
         } else {
-            $paginator = new Paginator($query, true);
+            $paginator = new Paginator($query, false);
     
             $count = count($paginator);
             $result = $paginator;
@@ -740,7 +739,6 @@ abstract class AbstractRatingRepository extends EntityRepository
             $selection .= ', tbl.moduleName';
             $selection .= ', tbl.objectId';
             $selection .= ', tbl.rating';
-            $selection .= ', tbl.ratingSystem';
             $useJoins = false;
         }
     
@@ -831,7 +829,7 @@ abstract class AbstractRatingRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblRatingSystemVal';
+        $selection = '';
     
         return $selection;
     }
@@ -845,7 +843,6 @@ abstract class AbstractRatingRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.ratingSystemVal', 'tblRatingSystemVal');
     
         return $qb;
     }

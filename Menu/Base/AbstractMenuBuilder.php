@@ -22,7 +22,6 @@ use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use Zikula\UsersModule\Constant as UsersConstant;
-use Paustian\RatingsModule\Entity\RatingSystemEntity;
 use Paustian\RatingsModule\Entity\RatingEntity;
 use Paustian\RatingsModule\RatingsEvents;
 use Paustian\RatingsModule\Event\ConfigureItemActionsMenuEvent;
@@ -129,46 +128,8 @@ class AbstractMenuBuilder
             new ConfigureItemActionsMenuEvent($this->factory, $menu, $options)
         );
     
-        $currentUserId = $this->currentUserApi->isLoggedIn()
-            ? $this->currentUserApi->get('uid')
-            : UsersConstant::USER_ID_ANONYMOUS
-        ;
-        if ($entity instanceof RatingSystemEntity) {
-            $routePrefix = 'paustianratingsmodule_ratingsystem_';
-            $isOwner = 0 < $currentUserId
-                && null !== $entity->getCreatedBy()
-                && $currentUserId === $entity->getCreatedBy()->getUid()
-            ;
-            
-            if ($this->permissionHelper->mayEdit($entity)) {
-                $menu->addChild($this->__('Edit', 'paustianratingsmodule'), [
-                    'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => $entity->createUrlArgs()
-                ])
-                    ->setLinkAttribute(
-                        'title',
-                        $this->__('Edit this rating system', 'paustianratingsmodule')
-                    )
-                    ->setAttribute('icon', 'fa fa-pencil-square-o')
-                ;
-                $menu->addChild($this->__('Reuse', 'paustianratingsmodule'), [
-                    'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity->getKey()]
-                ])
-                    ->setLinkAttribute(
-                        'title',
-                        $this->__('Reuse for new rating system', 'paustianratingsmodule')
-                    )
-                    ->setAttribute('icon', 'fa fa-files-o')
-                ;
-            }
-        }
         if ($entity instanceof RatingEntity) {
             $routePrefix = 'paustianratingsmodule_rating_';
-            $isOwner = 0 < $currentUserId
-                && null !== $entity->getCreatedBy()
-                && $currentUserId === $entity->getCreatedBy()->getUid()
-            ;
             
             if ('admin' === $routeArea) {
                 $previewRouteParameters = $entity->createUrlArgs();
@@ -262,64 +223,6 @@ class AbstractMenuBuilder
     
         $query = $this->requestStack->getMasterRequest()->query;
         $currentTemplate = $query->getAlnum('tpl', '');
-        if ('ratingSystem' === $objectType) {
-            $routePrefix = 'paustianratingsmodule_ratingsystem_';
-            if (!in_array($currentTemplate, [])) {
-                $canBeCreated = $this->modelHelper->canBeCreated($objectType);
-                if ($canBeCreated) {
-                    if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
-                        $menu->addChild($this->__('Create rating system', 'paustianratingsmodule'), [
-                            'route' => $routePrefix . $routeArea . 'edit'
-                        ])
-                            ->setAttribute('icon', 'fa fa-plus')
-                        ;
-                    }
-                }
-                $routeParameters = $query->all();
-                if (1 === $query->getInt('own')) {
-                    $routeParameters['own'] = 1;
-                } else {
-                    unset($routeParameters['own']);
-                }
-                if (1 === $query->getInt('all')) {
-                    unset($routeParameters['all']);
-                    $menu->addChild($this->__('Back to paginated view', 'paustianratingsmodule'), [
-                        'route' => $routePrefix . $routeArea . 'view',
-                        'routeParameters' => $routeParameters
-                    ])
-                        ->setAttribute('icon', 'fa fa-table')
-                    ;
-                } else {
-                    $routeParameters['all'] = 1;
-                    $menu->addChild($this->__('Show all entries', 'paustianratingsmodule'), [
-                        'route' => $routePrefix . $routeArea . 'view',
-                        'routeParameters' => $routeParameters
-                    ])
-                        ->setAttribute('icon', 'fa fa-table')
-                    ;
-                }
-                if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_EDIT)) {
-                    $routeParameters = $query->all();
-                    if (1 === $query->getInt('own')) {
-                        unset($routeParameters['own']);
-                        $menu->addChild($this->__('Show also entries from other users', 'paustianratingsmodule'), [
-                            'route' => $routePrefix . $routeArea . 'view',
-                            'routeParameters' => $routeParameters
-                        ])
-                            ->setAttribute('icon', 'fa fa-users')
-                        ;
-                    } else {
-                        $routeParameters['own'] = 1;
-                        $menu->addChild($this->__('Show only own entries', 'paustianratingsmodule'), [
-                            'route' => $routePrefix . $routeArea . 'view',
-                            'routeParameters' => $routeParameters
-                        ])
-                            ->setAttribute('icon', 'fa fa-user')
-                        ;
-                    }
-                }
-            }
-        }
         if ('rating' === $objectType) {
             $routePrefix = 'paustianratingsmodule_rating_';
             if (!in_array($currentTemplate, [])) {

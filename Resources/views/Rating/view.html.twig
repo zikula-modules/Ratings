@@ -26,7 +26,6 @@
                     <col id="cObjectId" />
                     <col id="cRating" />
                     <col id="cUserId" />
-                    <col id="cRatingSystem" />
                 </colgroup>
                 <thead>
                 <tr>
@@ -47,9 +46,6 @@
                     </th>
                     <th id="hUserId" scope="col" class="text-left unsorted">
                         {{ __('User id') }}
-                    </th>
-                    <th id="hRatingSystem" scope="col" class="text-right">
-                        <a href="{{ sort.ratingSystem.url }}" title="{{ __f('Sort by %s', {'%s': 'rating system'})|e('html_attr') }}" class="{{ sort.ratingSystem.class }}">{{ __('Rating system') }}</a>
                     </th>
                 </tr>
                 </thead>
@@ -82,13 +78,10 @@
                             {{ rating.userId.uid|profileLinkByUserId }}{% if currentUser.loggedIn %}{% set sendMessageUrl = rating.userId.uid|messageSendLink(urlOnly=true) %}{% if sendMessageUrl != '#' %}{% set linkTitle = __f('Send private message to %userName%', {'%userName%': rating.userId.uname}) %}<a href="{{ sendMessageUrl }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-envelope-o"></i></a>{% endif %}{% endif %}
                             <span class="avatar">{{ userAvatar(rating.userId.uid, {rating: 'g'}) }}</span>
                     </td>
-                    <td headers="hRatingSystem" class="text-right">
-                        {{ rating.ratingSystem }}
-                    </td>
                 </tr>
             {% else %}
                 <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                    <td class="text-left" colspan="{% if routeArea == 'admin' %}7{% else %}6{% endif %}">
+                    <td class="text-left" colspan="{% if routeArea == 'admin' %}6{% else %}5{% endif %}">
                 {{ __('No ratings found.') }}
                   </td>
                 </tr>

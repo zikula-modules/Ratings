@@ -76,381 +76,6 @@
 <h2><i class="fa fa-sitemap"></i> Application model</h2>
 <p><img src="Ratings_Entities%20Diagram.jpg" alt="Ratings Model" class="img-thumbnail img-responsive" /></p>
 <h2><i class="fa fa-database"></i> Data tables</h2>
-<h3><i class="fa fa-vcard-o"></i> Rating system / Rating systems</h3>
-<p>The rating system to use for the specified rating. Only one rating system can be used per interface</p>
-<h4><i class="fa fa-cog"></i> Basic settings</h4>
-<div class="table-responsive">
-    <table class="table-striped table-bordered table-hover table-condensed">
-        <colgroup>
-            <col id="cRatingSystemSettingsName" />
-            <col id="cRatingSystemSettingsValue" />
-            <col id="cRatingSystemSettingsDescription" />
-        </colgroup>
-        <thead>
-            <tr>
-                <th id="hRatingSystemSettingsName" scope="col">Name</th>
-                <th id="hRatingSystemSettingsValue" scope="col">Value</th>
-                <th id="hRatingSystemSettingsDescription" scope="col">Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th id="hRatingSystemSettingsLeading" scope="row" headers="hRatingSystemSettingsName">Leading</th>
-                <td headers="hRatingSystemSettingsLeading hRatingSystemSettingsValue" class="text-center"><i class="fa fa-times"></i>
-                </td>
-                <td headers="hRatingSystemSettingsLeading hRatingSystemSettingsDescription">Whether this represents the primary entity of the application</td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemSettingsDisplayPattern" scope="row" headers="hRatingSystemSettingsName">Display pattern</th>
-                <td headers="hRatingSystemSettingsDisplayPattern hRatingSystemSettingsValue">#id#, #scaleDim#, #iconUrl#, #iconFa#</td>
-                <td headers="hRatingSystemSettingsDisplayPattern hRatingSystemSettingsDescription">Pattern for displaying instances of this entity</td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemSettingsIdentifierStrategy" scope="row" headers="hRatingSystemSettingsName">ID strategy</th>
-                <td headers="hRatingSystemSettingsIdentifierStrategy hRatingSystemSettingsValue">AUTO &ndash; Choose automatically.</td>
-                <td headers="hRatingSystemSettingsIdentifierStrategy hRatingSystemSettingsDescription">Whether and which identifier generation strategy is applied</td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemSettingsChangeTrackingPolicy" scope="row" headers="hRatingSystemSettingsName">Change tracking policy</th>
-                <td headers="hRatingSystemSettingsChangeTrackingPolicy hRatingSystemSettingsValue">DEFERRED_IMPLICIT &ndash; Changes are determined by comparing properties during commit.</td>
-                <td headers="hRatingSystemSettingsChangeTrackingPolicy hRatingSystemSettingsDescription">How change detection is being done</td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemSettingsLockType" scope="row" headers="hRatingSystemSettingsName">Locking strategy</th>
-                <td headers="hRatingSystemSettingsLockType hRatingSystemSettingsValue">PAGELOCK &ndash; Uses the PageLock module.</td>
-                <td headers="hRatingSystemSettingsLockType hRatingSystemSettingsDescription">Whether and which locking strategy is applied</td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemSettingsReadOnly" scope="row" headers="hRatingSystemSettingsName">Read only</th>
-                <td headers="hRatingSystemSettingsReadOnly hRatingSystemSettingsValue" class="text-center"><i class="fa fa-times"></i>
-                </td>
-                <td headers="hRatingSystemSettingsReadOnly hRatingSystemSettingsDescription">Whether this entity is read only or not. If yes, editing is not possible.</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<h4><i class="fa fa-bars"></i> Fields</h4>
-<div class="table-responsive">
-    <table class="table-striped table-bordered table-hover table-condensed">
-        <colgroup>
-            <col id="cEntityRatingSystemFieldName" />
-            <col id="cEntityRatingSystemFieldType" />
-            <col id="cEntityRatingSystemFieldMandatory" />
-            <col id="cEntityRatingSystemFieldDefault" />
-            <col id="cEntityRatingSystemFieldDisplayType" />
-            <col id="cEntityRatingSystemFieldConstraints" />
-            <col id="cEntityRatingSystemFieldRemarks" />
-        </colgroup>
-        <thead>
-            <tr>
-                <th id="hEntityRatingSystemFieldName" scope="col">Name</th>
-                <th id="hEntityRatingSystemFieldType" scope="col">Type</th>
-                <th id="hEntityRatingSystemFieldMandatory" scope="col">Mandatory</th>
-                <th id="hEntityRatingSystemFieldDefault" scope="col">Default value</th>
-                <th id="hEntityRatingSystemFieldDisplayType" scope="col">Display</th>
-                <th id="hEntityRatingSystemFieldConstraints" scope="col">Constraints</th>
-                <th id="hEntityRatingSystemFieldRemarks" scope="col">Remarks</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th id="hEntityRatingSystemFieldId" scope="row" headers="hEntityRatingSystemFieldName">Id</th>
-                <td headers="hEntityRatingSystemFieldId hEntityRatingSystemFieldType">Integer</td>
-                <td headers="hEntityRatingSystemFieldId hEntityRatingSystemFieldMandatory">true</td>
-                <td headers="hEntityRatingSystemFieldId hEntityRatingSystemFieldDefault"></td>
-                <td headers="hEntityRatingSystemFieldId hEntityRatingSystemFieldDisplayType">ALL</td>
-                <td headers="hEntityRatingSystemFieldId hEntityRatingSystemFieldConstraints">
-                    <ul>
-                        <li>Has a length of 9.</li>
-                    </ul>
-                </td>
-                <td headers="hEntityRatingSystemFieldId hEntityRatingSystemFieldRemarks">
-                    <ul>
-                        <li>This field is unique and allows no null values.</li>
-                        <li>Acts as primary key.</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th id="hEntityRatingSystemFieldWorkflowState" scope="row" headers="hEntityRatingSystemFieldName">Workflow state</th>
-                <td headers="hEntityRatingSystemFieldWorkflowState hEntityRatingSystemFieldType">List</td>
-                <td headers="hEntityRatingSystemFieldWorkflowState hEntityRatingSystemFieldMandatory">true</td>
-                <td headers="hEntityRatingSystemFieldWorkflowState hEntityRatingSystemFieldDefault"></td>
-                <td headers="hEntityRatingSystemFieldWorkflowState hEntityRatingSystemFieldDisplayType">ALL</td>
-                <td headers="hEntityRatingSystemFieldWorkflowState hEntityRatingSystemFieldConstraints">
-                    <ul>
-                        <li>Has a length of 20 chars.</li>
-                    </ul>
-                </td>
-                <td headers="hEntityRatingSystemFieldWorkflowState hEntityRatingSystemFieldRemarks">
-                    <ul>
-                        <li>the current workflow state </li>
-                        <li>This field is not unique and allows no null values.</li>
-                        <li>The list is represented by a single-valued dropdown list.</li>
-                        <li>Available entries: <ul><li>Initial (initial)</li><li>Approved (approved)</li><li>Trashed (trashed)</li><li>Deleted (deleted)</li></ul></li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th id="hEntityRatingSystemFieldScaleDim" scope="row" headers="hEntityRatingSystemFieldName">Scale dim</th>
-                <td headers="hEntityRatingSystemFieldScaleDim hEntityRatingSystemFieldType">Integer</td>
-                <td headers="hEntityRatingSystemFieldScaleDim hEntityRatingSystemFieldMandatory">true</td>
-                <td headers="hEntityRatingSystemFieldScaleDim hEntityRatingSystemFieldDefault">0</td>
-                <td headers="hEntityRatingSystemFieldScaleDim hEntityRatingSystemFieldDisplayType">ALL</td>
-                <td headers="hEntityRatingSystemFieldScaleDim hEntityRatingSystemFieldConstraints">
-                    <ul>
-                        <li>Has a length of 11.</li>
-                    </ul>
-                </td>
-                <td headers="hEntityRatingSystemFieldScaleDim hEntityRatingSystemFieldRemarks">
-                    <ul>
-                        <li>The number of divisions in the scale. For example there are five divisions in a 1 to 5 scale, four divisions in a four-star scale </li>
-                        <li>This field is not unique and allows no null values.</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th id="hEntityRatingSystemFieldIconFa" scope="row" headers="hEntityRatingSystemFieldName">Icon fa</th>
-                <td headers="hEntityRatingSystemFieldIconFa hEntityRatingSystemFieldType">String</td>
-                <td headers="hEntityRatingSystemFieldIconFa hEntityRatingSystemFieldMandatory">false</td>
-                <td headers="hEntityRatingSystemFieldIconFa hEntityRatingSystemFieldDefault"></td>
-                <td headers="hEntityRatingSystemFieldIconFa hEntityRatingSystemFieldDisplayType">ALL</td>
-                <td headers="hEntityRatingSystemFieldIconFa hEntityRatingSystemFieldConstraints">
-                    <ul>
-                        <li>Has a length of 255 chars.</li>
-                    </ul>
-                </td>
-                <td headers="hEntityRatingSystemFieldIconFa hEntityRatingSystemFieldRemarks">
-                    <ul>
-                        <li>A font-awesome css string that is used to display ratings. Either this or iconUrl must be specified. </li>
-                        <li>This field is not unique and allows no null values.</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th id="hEntityRatingSystemFieldIconUrl" scope="row" headers="hEntityRatingSystemFieldName">Icon url</th>
-                <td headers="hEntityRatingSystemFieldIconUrl hEntityRatingSystemFieldType">URL</td>
-                <td headers="hEntityRatingSystemFieldIconUrl hEntityRatingSystemFieldMandatory">false</td>
-                <td headers="hEntityRatingSystemFieldIconUrl hEntityRatingSystemFieldDefault"></td>
-                <td headers="hEntityRatingSystemFieldIconUrl hEntityRatingSystemFieldDisplayType">ALL</td>
-                <td headers="hEntityRatingSystemFieldIconUrl hEntityRatingSystemFieldConstraints">
-                    <ul>
-                        <li>Has a length of 255 chars.</li>
-                    </ul>
-                </td>
-                <td headers="hEntityRatingSystemFieldIconUrl hEntityRatingSystemFieldRemarks">
-                    <ul>
-                        <li>A url to a rating icon to be used. Either this or IconFa must be designated. </li>
-                        <li>This field is not unique and allows no null values.</li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<h4><i class="fa fa-arrows-h"></i> Relations</h4>
-<div class="table-responsive">
-    <table class="table-striped table-bordered table-hover table-condensed">
-        <colgroup>
-            <col id="cRatingSystemRelationName" />
-            <col id="cRatingSystemRelationType" />
-            <col id="cRatingSystemRelationIncoming" />
-            <col id="cRatingSystemRelationRemarks" />
-        </colgroup>
-        <thead>
-            <tr>
-                <th id="hRatingSystemRelationName" scope="col">Name</th>
-                <th id="hRatingSystemRelationType" scope="col">Type</th>
-                <th id="hRatingSystemRelationIncoming" scope="col">Incoming</th>
-                <th id="hRatingSystemRelationRemarks" scope="col">Remarks</th>
-            </tr>
-        </thead>
-        <tbody>
-            <span class="hidden">1</span>
-            <tr>
-                <th id="hRatingSystemRelation1" scope="row" headers="hRatingSystemRelationName">m rating val have 1 rating system val</th>
-                <td headers="hRatingSystemRelation1 hRatingSystemRelationType">m:1</td>
-                <td headers="hRatingSystemRelation1 hRatingSystemRelationIncoming" class="text-center"><i class="fa fa-check"></i>
-                </td>
-                <td headers="hRatingSystemRelation1 hRatingSystemRelationRemarks">
-                    <ul>
-                        <li>This relation is not unique and allows null values.</li>
-                        <li>It uses the "lazy" fetch type.</li>
-                        <li>From source view no cascading is applied.</li>
-                        <li>From target view no cascading is applied.</li>
-                        <li>Editing the source side includes choosing target elements that are represented as a single-valued dropdown list.</li>
-                        <li>Editing the target side includes no behaviour regarding source elements.</li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<h4><i class="fa fa-key"></i> Indexes</h4>
-<div class="table-responsive">
-    <table class="table-striped table-bordered table-hover table-condensed">
-        <colgroup>
-            <col id="cRatingSystemIndexName" />
-            <col id="cRatingSystemIndexType" />
-            <col id="cRatingSystemIndexSize" />
-            <col id="cRatingSystemIndexDescription" />
-        </colgroup>
-        <thead>
-            <tr>
-                <th id="hRatingSystemIndexName" scope="col">Name</th>
-                <th id="hRatingSystemIndexType" scope="col">Type</th>
-                <th id="hRatingSystemIndexSize" scope="col">Size</th>
-                <th id="hRatingSystemIndexDescription" scope="col">Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th id="hRatingSystemIndexWorkflowStateIndex" scope="row" headers="hRatingSystemIndexName">Workflow state index</th>
-                <td headers="hRatingSystemIndexWorkflowStateIndex hRatingSystemIndexType">NORMAL &ndash; normal index</td>
-                <td headers="hRatingSystemIndexWorkflowStateIndex hRatingSystemIndexSize">1 field</td>
-                <td headers="hRatingSystemIndexWorkflowStateIndex hRatingSystemIndexDescription"></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<h4><i class="fa fa-paw"></i> Actions</h4>
-<div class="table-responsive">
-    <table class="table-striped table-bordered table-hover table-condensed">
-        <colgroup>
-            <col id="cRatingSystemActionName" />
-            <col id="cRatingSystemActionDescription" />
-        </colgroup>
-        <thead>
-            <tr>
-                <th id="hRatingSystemActionName" scope="col">Name</th>
-                <th id="hRatingSystemActionDescription" scope="col">Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th id="hRatingSystemActionIndex" scope="row" headers="hRatingSystemActionName">Index</th>
-                <td headers="hRatingSystemActionIndex hRatingSystemActionDescription">Index action in RatingSystem controller</td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemActionEdit" scope="row" headers="hRatingSystemActionName">Edit</th>
-                <td headers="hRatingSystemActionEdit hRatingSystemActionDescription">Edit action in RatingSystem controller</td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemActionView" scope="row" headers="hRatingSystemActionName">View</th>
-                <td headers="hRatingSystemActionView hRatingSystemActionDescription">View action in RatingSystem controller</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<h4><i class="fa fa-map-signs"></i> Workflow</h4>
-<div class="table-responsive">
-    <table class="table-striped table-bordered table-hover table-condensed">
-        <colgroup>
-            <col id="cRatingSystemWorkflowName" />
-            <col id="cRatingSystemWorkflowDescription" />
-        </colgroup>
-        <thead>
-            <tr>
-                <th id="hRatingSystemWorkflowName" scope="col">Name</th>
-                <th id="hRatingSystemWorkflowDescription" scope="col">Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th id="hRatingSystemWorkflowType" scope="row" headers="hRatingSystemWorkflowName">Workflow type</th>
-                <td headers="hRatingSystemWorkflowType hRatingSystemWorkflowDescription">NONE &ndash; no approval.</td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemWorkflowStates" scope="row" headers="hRatingSystemWorkflowName">States</th>
-                <td headers="hRatingSystemWorkflowStates hRatingSystemWorkflowDescription">
-                    <ul>
-                        <li><strong>Initial:</strong> content is just created and not persisted yet.</li>
-                        <li><strong>Approved:</strong> content has been approved and is available online.</li>
-                        <li><strong>Deleted:</strong> content has been deleted from the database.</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemWorkflowOwnerPermission" scope="row" headers="hRatingSystemWorkflowName">Users are able to manage and edit their own data</th>
-                <td headers="hRatingSystemWorkflowOwnerPermission hRatingSystemWorkflowDescription" class="text-center"><i class="fa fa-times"></i>
-                </td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemWorkflowAccountDeletionCreator" scope="row" headers="hRatingSystemWorkflowName">If creator is deleted</th>
-                <td headers="hRatingSystemWorkflowAccountDeletionCreator hRatingSystemWorkflowDescription">the "admin" user will be assigned.</td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemWorkflowAccountDeletionLastEditor" scope="row" headers="hRatingSystemWorkflowName">If last editor is deleted</th>
-                <td headers="hRatingSystemWorkflowAccountDeletionLastEditor hRatingSystemWorkflowDescription">the "admin" user will be assigned.</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<h4><i class="fa fa-magic"></i> Behaviour</h4>
-<div class="table-responsive">
-    <table class="table-striped table-bordered table-hover table-condensed">
-        <colgroup>
-            <col id="cRatingSystemBehaviourName1" />
-            <col id="cRatingSystemBehaviourValue1" />
-            <col id="cRatingSystemBehaviourName2" />
-            <col id="cRatingSystemBehaviourValue2" />
-        </colgroup>
-        <thead>
-            <tr class="sr-only">
-                <th id="hRatingSystemBehaviourName1" scope="col">Name</th>
-                <th id="hRatingSystemBehaviourValue1" scope="col">Value</th>
-                <th id="hRatingSystemBehaviourName2" scope="col">Name</th>
-                <th id="hRatingSystemBehaviourValue2" scope="col">Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th id="hRatingSystemBehaviourAttributable" scope="row" headers="hRatingSystemBehaviourName1">Attributable</th>
-                <td headers="hRatingSystemBehaviourAttributable hRatingSystemBehaviourValue1" class="text-center"><i class="fa fa-times"></i>
-                </td>
-                <th id="hRatingSystemBehaviourLoggable" scope="row" headers="hRatingSystemBehaviourName2">Versionable</th>
-                <td headers="hRatingSystemBehaviourLoggable hRatingSystemBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
-                </td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemBehaviourCategorisable" scope="row" headers="hRatingSystemBehaviourName1">Categorisable</th>
-                <td headers="hRatingSystemBehaviourCategorisable hRatingSystemBehaviourValue1" class="text-center"><i class="fa fa-times"></i>
-                </td>
-                <th id="hRatingSystemBehaviourCategorisableMulti" scope="row" headers="hRatingSystemBehaviourName2">Categories multi selection</th>
-                <td headers="hRatingSystemBehaviourCategorisableMulti hRatingSystemBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
-                </td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemBehaviourSluggable" scope="row" headers="hRatingSystemBehaviourName1">Slugs</th>
-                <td headers="hRatingSystemBehaviourSluggable hRatingSystemBehaviourValue1" class="text-center"><i class="fa fa-times"></i>
-                </td>
-                <td headers="hRatingSystemBehaviourSluggable hRatingSystemBehaviourValue2" class="text-center"></td>
-                <td headers="hRatingSystemBehaviourSluggable hRatingSystemBehaviourValue2" class="text-center"></td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemBehaviourTree" scope="row" headers="hRatingSystemBehaviourName1">Tree</th>
-                <td headers="hRatingSystemBehaviourAttributable hRatingSystemBehaviourValue1" class="text-center">NONE</td>
-                <th id="hRatingSystemBehaviourGeographical" scope="row" headers="hRatingSystemBehaviourName2">Geographical</th>
-                <td headers="hRatingSystemBehaviourGeographical hRatingSystemBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
-                </td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemBehaviourStandardFields" scope="row" headers="hRatingSystemBehaviourName1">Standard fields</th>
-                <td headers="hRatingSystemBehaviourStandardFields hRatingSystemBehaviourValue1" class="text-center"><i class="fa fa-check"></i>
-                </td>
-                <th id="hRatingSystemBehaviourHookSubscribers" scope="row" headers="hRatingSystemBehaviourName2">Hook subscribers</th>
-                <td headers="hRatingSystemBehaviourHookSubscribers hRatingSystemBehaviourValue2" class="text-center"><i class="fa fa-times"></i>
-                </td>
-            </tr>
-            <tr>
-                <th id="hRatingSystemBehaviourFormAwareHookProvider" scope="row" headers="hRatingSystemBehaviourName1">Form aware hooks provider</th>
-                <td headers="hRatingSystemBehaviourFormAwareHookProvider hRatingSystemBehaviourValue1" class="text-center">DISABLED &ndash; no hook provider available</td>
-                <th id="hRatingSystemBehaviourUiHooksProvider" scope="row" headers="hRatingSystemBehaviourName2">UI hooks provider</th>
-                <td headers="hRatingSystemBehaviourUiHooksProvider hRatingSystemBehaviourValue2" class="text-center">DISABLED &ndash; no hook provider available</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
 <h3><i class="fa fa-vcard-o"></i> Rating / Ratings</h3>
 <p>A list of ratings for various hooked modules.</p>
 <h4><i class="fa fa-cog"></i> Basic settings</h4>
@@ -638,62 +263,6 @@
                     </ul>
                 </td>
             </tr>
-            <tr>
-                <th id="hEntityRatingFieldRatingSystem" scope="row" headers="hEntityRatingFieldName">Rating system</th>
-                <td headers="hEntityRatingFieldRatingSystem hEntityRatingFieldType">Integer</td>
-                <td headers="hEntityRatingFieldRatingSystem hEntityRatingFieldMandatory">true</td>
-                <td headers="hEntityRatingFieldRatingSystem hEntityRatingFieldDefault">1</td>
-                <td headers="hEntityRatingFieldRatingSystem hEntityRatingFieldDisplayType">ALL</td>
-                <td headers="hEntityRatingFieldRatingSystem hEntityRatingFieldConstraints">
-                    <ul>
-                        <li>Has a length of 11.</li>
-                    </ul>
-                </td>
-                <td headers="hEntityRatingFieldRatingSystem hEntityRatingFieldRemarks">
-                    <ul>
-                        <li>The system to use for rating. For example 1 to 5 stars, or 1 to 10 number scale.  </li>
-                        <li>This field is not unique and allows no null values.</li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<h4><i class="fa fa-arrows-h"></i> Relations</h4>
-<div class="table-responsive">
-    <table class="table-striped table-bordered table-hover table-condensed">
-        <colgroup>
-            <col id="cRatingRelationName" />
-            <col id="cRatingRelationType" />
-            <col id="cRatingRelationIncoming" />
-            <col id="cRatingRelationRemarks" />
-        </colgroup>
-        <thead>
-            <tr>
-                <th id="hRatingRelationName" scope="col">Name</th>
-                <th id="hRatingRelationType" scope="col">Type</th>
-                <th id="hRatingRelationIncoming" scope="col">Incoming</th>
-                <th id="hRatingRelationRemarks" scope="col">Remarks</th>
-            </tr>
-        </thead>
-        <tbody>
-            <span class="hidden">1</span>
-            <tr>
-                <th id="hRatingRelation1" scope="row" headers="hRatingRelationName">m rating val have 1 rating system val</th>
-                <td headers="hRatingRelation1 hRatingRelationType">m:1</td>
-                <td headers="hRatingRelation1 hRatingRelationIncoming" class="text-center"><i class="fa fa-times"></i>
-                </td>
-                <td headers="hRatingRelation1 hRatingRelationRemarks">
-                    <ul>
-                        <li>This relation is not unique and allows null values.</li>
-                        <li>It uses the "lazy" fetch type.</li>
-                        <li>From source view no cascading is applied.</li>
-                        <li>From target view no cascading is applied.</li>
-                        <li>Editing the source side includes choosing target elements that are represented as a single-valued dropdown list.</li>
-                        <li>Editing the target side includes no behaviour regarding source elements.</li>
-                    </ul>
-                </td>
-            </tr>
         </tbody>
     </table>
 </div>
@@ -871,9 +440,166 @@
     </table>
 </div>
 <h2><i class="fa fa-wrench"></i> Configuration variables</h2>
+<h3><i class="fa fa-server"></i> Rating settings</h3>
+<p>Sort value: 1</p>
+<p>Composite: <i class="fa fa-times"></i>
+</p>
+<h4><i class="fa fa-bars"></i> Fields</h4>
+<div class="table-responsive">
+    <table class="table-striped table-bordered table-hover table-condensed">
+        <colgroup>
+            <col id="cVariablesRatingSettingsFieldName" />
+            <col id="cVariablesRatingSettingsFieldType" />
+            <col id="cVariablesRatingSettingsFieldMandatory" />
+            <col id="cVariablesRatingSettingsFieldDefault" />
+            <col id="cVariablesRatingSettingsFieldDisplayType" />
+            <col id="cVariablesRatingSettingsFieldConstraints" />
+            <col id="cVariablesRatingSettingsFieldRemarks" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hVariablesRatingSettingsFieldName" scope="col">Name</th>
+                <th id="hVariablesRatingSettingsFieldType" scope="col">Type</th>
+                <th id="hVariablesRatingSettingsFieldMandatory" scope="col">Mandatory</th>
+                <th id="hVariablesRatingSettingsFieldDefault" scope="col">Default value</th>
+                <th id="hVariablesRatingSettingsFieldDisplayType" scope="col">Display</th>
+                <th id="hVariablesRatingSettingsFieldConstraints" scope="col">Constraints</th>
+                <th id="hVariablesRatingSettingsFieldRemarks" scope="col">Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th id="hVariablesRatingSettingsFieldRatingScale" scope="row" headers="hVariablesRatingSettingsFieldName">Rating scale</th>
+                <td headers="hVariablesRatingSettingsFieldRatingScale hVariablesRatingSettingsFieldType">Integer</td>
+                <td headers="hVariablesRatingSettingsFieldRatingScale hVariablesRatingSettingsFieldMandatory">true</td>
+                <td headers="hVariablesRatingSettingsFieldRatingScale hVariablesRatingSettingsFieldDefault">5</td>
+                <td headers="hVariablesRatingSettingsFieldRatingScale hVariablesRatingSettingsFieldDisplayType">ALL</td>
+                <td headers="hVariablesRatingSettingsFieldRatingScale hVariablesRatingSettingsFieldConstraints">
+                    <ul>
+                        <li>Has a length of 11.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesRatingSettingsFieldRatingScale hVariablesRatingSettingsFieldRemarks">
+                    <ul>
+                        <li>The number of divisions in the scale. For example there are five divisions in a 1 to 5 scale, four divisions in a four-star scale </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesRatingSettingsFieldIconFa" scope="row" headers="hVariablesRatingSettingsFieldName">Icon fa</th>
+                <td headers="hVariablesRatingSettingsFieldIconFa hVariablesRatingSettingsFieldType">String</td>
+                <td headers="hVariablesRatingSettingsFieldIconFa hVariablesRatingSettingsFieldMandatory">false</td>
+                <td headers="hVariablesRatingSettingsFieldIconFa hVariablesRatingSettingsFieldDefault"></td>
+                <td headers="hVariablesRatingSettingsFieldIconFa hVariablesRatingSettingsFieldDisplayType">ALL</td>
+                <td headers="hVariablesRatingSettingsFieldIconFa hVariablesRatingSettingsFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesRatingSettingsFieldIconFa hVariablesRatingSettingsFieldRemarks">
+                    <ul>
+                        <li>A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesRatingSettingsFieldHalfIconFa" scope="row" headers="hVariablesRatingSettingsFieldName">Half icon fa</th>
+                <td headers="hVariablesRatingSettingsFieldHalfIconFa hVariablesRatingSettingsFieldType">String</td>
+                <td headers="hVariablesRatingSettingsFieldHalfIconFa hVariablesRatingSettingsFieldMandatory">false</td>
+                <td headers="hVariablesRatingSettingsFieldHalfIconFa hVariablesRatingSettingsFieldDefault"></td>
+                <td headers="hVariablesRatingSettingsFieldHalfIconFa hVariablesRatingSettingsFieldDisplayType">ALL</td>
+                <td headers="hVariablesRatingSettingsFieldHalfIconFa hVariablesRatingSettingsFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesRatingSettingsFieldHalfIconFa hVariablesRatingSettingsFieldRemarks">
+                    <ul>
+                        <li>A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesRatingSettingsFieldEmptyIconFa" scope="row" headers="hVariablesRatingSettingsFieldName">Empty icon fa</th>
+                <td headers="hVariablesRatingSettingsFieldEmptyIconFa hVariablesRatingSettingsFieldType">String</td>
+                <td headers="hVariablesRatingSettingsFieldEmptyIconFa hVariablesRatingSettingsFieldMandatory">false</td>
+                <td headers="hVariablesRatingSettingsFieldEmptyIconFa hVariablesRatingSettingsFieldDefault"></td>
+                <td headers="hVariablesRatingSettingsFieldEmptyIconFa hVariablesRatingSettingsFieldDisplayType">ALL</td>
+                <td headers="hVariablesRatingSettingsFieldEmptyIconFa hVariablesRatingSettingsFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesRatingSettingsFieldEmptyIconFa hVariablesRatingSettingsFieldRemarks">
+                    <ul>
+                        <li>A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesRatingSettingsFieldIconUrl" scope="row" headers="hVariablesRatingSettingsFieldName">Icon url</th>
+                <td headers="hVariablesRatingSettingsFieldIconUrl hVariablesRatingSettingsFieldType">String</td>
+                <td headers="hVariablesRatingSettingsFieldIconUrl hVariablesRatingSettingsFieldMandatory">false</td>
+                <td headers="hVariablesRatingSettingsFieldIconUrl hVariablesRatingSettingsFieldDefault"></td>
+                <td headers="hVariablesRatingSettingsFieldIconUrl hVariablesRatingSettingsFieldDisplayType">ALL</td>
+                <td headers="hVariablesRatingSettingsFieldIconUrl hVariablesRatingSettingsFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesRatingSettingsFieldIconUrl hVariablesRatingSettingsFieldRemarks">
+                    <ul>
+                        <li>A url to a rating icon to be used for a rating. Either this or IconFas must be designated. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesRatingSettingsFieldHalfIconUrl" scope="row" headers="hVariablesRatingSettingsFieldName">Half icon url</th>
+                <td headers="hVariablesRatingSettingsFieldHalfIconUrl hVariablesRatingSettingsFieldType">String</td>
+                <td headers="hVariablesRatingSettingsFieldHalfIconUrl hVariablesRatingSettingsFieldMandatory">false</td>
+                <td headers="hVariablesRatingSettingsFieldHalfIconUrl hVariablesRatingSettingsFieldDefault"></td>
+                <td headers="hVariablesRatingSettingsFieldHalfIconUrl hVariablesRatingSettingsFieldDisplayType">ALL</td>
+                <td headers="hVariablesRatingSettingsFieldHalfIconUrl hVariablesRatingSettingsFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesRatingSettingsFieldHalfIconUrl hVariablesRatingSettingsFieldRemarks">
+                    <ul>
+                        <li>A url to a rating icon to be used for a rating. Either this or IconFas must be designated. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hVariablesRatingSettingsFieldEmptyIconUrl" scope="row" headers="hVariablesRatingSettingsFieldName">Empty icon url</th>
+                <td headers="hVariablesRatingSettingsFieldEmptyIconUrl hVariablesRatingSettingsFieldType">String</td>
+                <td headers="hVariablesRatingSettingsFieldEmptyIconUrl hVariablesRatingSettingsFieldMandatory">false</td>
+                <td headers="hVariablesRatingSettingsFieldEmptyIconUrl hVariablesRatingSettingsFieldDefault"></td>
+                <td headers="hVariablesRatingSettingsFieldEmptyIconUrl hVariablesRatingSettingsFieldDisplayType">ALL</td>
+                <td headers="hVariablesRatingSettingsFieldEmptyIconUrl hVariablesRatingSettingsFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hVariablesRatingSettingsFieldEmptyIconUrl hVariablesRatingSettingsFieldRemarks">
+                    <ul>
+                        <li>A url to a rating icon to be used for a rating. Either this or IconFas must be designated. </li>
+                        <li>This field is not unique and allows no null values.</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <h3><i class="fa fa-server"></i> List views</h3>
 <p>Here you can configure parameters for list views.</p>
-<p>Sort value: 1</p>
+<p>Sort value: 2</p>
 <p>Composite: <i class="fa fa-times"></i>
 </p>
 <h4><i class="fa fa-bars"></i> Fields</h4>
@@ -900,41 +626,6 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th id="hVariablesListViewsFieldRatingSystemEntriesPerPage" scope="row" headers="hVariablesListViewsFieldName">Rating system entries per page</th>
-                <td headers="hVariablesListViewsFieldRatingSystemEntriesPerPage hVariablesListViewsFieldType">Integer</td>
-                <td headers="hVariablesListViewsFieldRatingSystemEntriesPerPage hVariablesListViewsFieldMandatory">true</td>
-                <td headers="hVariablesListViewsFieldRatingSystemEntriesPerPage hVariablesListViewsFieldDefault">10</td>
-                <td headers="hVariablesListViewsFieldRatingSystemEntriesPerPage hVariablesListViewsFieldDisplayType">ALL</td>
-                <td headers="hVariablesListViewsFieldRatingSystemEntriesPerPage hVariablesListViewsFieldConstraints">
-                    <ul>
-                        <li>Has a length of 11.</li>
-                    </ul>
-                </td>
-                <td headers="hVariablesListViewsFieldRatingSystemEntriesPerPage hVariablesListViewsFieldRemarks">
-                    <ul>
-                        <li>The amount of rating systems shown per page </li>
-                        <li>This field is not unique and allows no null values.</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th id="hVariablesListViewsFieldLinkOwnRatingSystemsOnAccountPage" scope="row" headers="hVariablesListViewsFieldName">Link own rating systems on account page</th>
-                <td headers="hVariablesListViewsFieldLinkOwnRatingSystemsOnAccountPage hVariablesListViewsFieldType">Boolean</td>
-                <td headers="hVariablesListViewsFieldLinkOwnRatingSystemsOnAccountPage hVariablesListViewsFieldMandatory">false</td>
-                <td headers="hVariablesListViewsFieldLinkOwnRatingSystemsOnAccountPage hVariablesListViewsFieldDefault">true</td>
-                <td headers="hVariablesListViewsFieldLinkOwnRatingSystemsOnAccountPage hVariablesListViewsFieldDisplayType">ALL</td>
-                <td headers="hVariablesListViewsFieldLinkOwnRatingSystemsOnAccountPage hVariablesListViewsFieldConstraints">
-                    <ul>
-                    </ul>
-                </td>
-                <td headers="hVariablesListViewsFieldLinkOwnRatingSystemsOnAccountPage hVariablesListViewsFieldRemarks">
-                    <ul>
-                        <li>Whether to add a link to rating systems of the current user on his account page </li>
-                        <li>This field is not unique and allows no null values.</li>
-                    </ul>
-                </td>
-            </tr>
             <tr>
                 <th id="hVariablesListViewsFieldRatingEntriesPerPage" scope="row" headers="hVariablesListViewsFieldName">Rating entries per page</th>
                 <td headers="hVariablesListViewsFieldRatingEntriesPerPage hVariablesListViewsFieldType">Integer</td>
@@ -992,7 +683,7 @@
 </div>
 <h3><i class="fa fa-server"></i> Moderation</h3>
 <p>Here you can define moderation-related settings.</p>
-<p>Sort value: 2</p>
+<p>Sort value: 3</p>
 <p>Composite: <i class="fa fa-times"></i>
 </p>
 <h4><i class="fa fa-bars"></i> Fields</h4>
@@ -1019,40 +710,6 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th id="hVariablesModerationFieldAllowModerationSpecificCreatorForRatingSystem" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creator for rating system</th>
-                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRatingSystem hVariablesModerationFieldType">Boolean</td>
-                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRatingSystem hVariablesModerationFieldMandatory">false</td>
-                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRatingSystem hVariablesModerationFieldDefault">false</td>
-                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRatingSystem hVariablesModerationFieldDisplayType">ALL</td>
-                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRatingSystem hVariablesModerationFieldConstraints">
-                    <ul>
-                    </ul>
-                </td>
-                <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRatingSystem hVariablesModerationFieldRemarks">
-                    <ul>
-                        <li>Whether to allow moderators choosing a user which will be set as creator. </li>
-                        <li>This field is not unique and allows no null values.</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th id="hVariablesModerationFieldAllowModerationSpecificCreationDateForRatingSystem" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creation date for rating system</th>
-                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForRatingSystem hVariablesModerationFieldType">Boolean</td>
-                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForRatingSystem hVariablesModerationFieldMandatory">false</td>
-                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForRatingSystem hVariablesModerationFieldDefault">false</td>
-                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForRatingSystem hVariablesModerationFieldDisplayType">ALL</td>
-                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForRatingSystem hVariablesModerationFieldConstraints">
-                    <ul>
-                    </ul>
-                </td>
-                <td headers="hVariablesModerationFieldAllowModerationSpecificCreationDateForRatingSystem hVariablesModerationFieldRemarks">
-                    <ul>
-                        <li>Whether to allow moderators choosing a custom creation date. </li>
-                        <li>This field is not unique and allows no null values.</li>
-                    </ul>
-                </td>
-            </tr>
             <tr>
                 <th id="hVariablesModerationFieldAllowModerationSpecificCreatorForRating" scope="row" headers="hVariablesModerationFieldName">Allow moderation specific creator for rating</th>
                 <td headers="hVariablesModerationFieldAllowModerationSpecificCreatorForRating hVariablesModerationFieldType">Boolean</td>

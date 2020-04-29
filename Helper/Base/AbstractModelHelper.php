@@ -50,9 +50,6 @@ abstract class AbstractModelHelper
         $result = false;
     
         switch ($objectType) {
-            case 'ratingSystem':
-                $result = true;
-                break;
             case 'rating':
                 $result = true;
                 break;
@@ -92,7 +89,7 @@ abstract class AbstractModelHelper
             return 'RAND()';
         }
     
-        $hasStandardFields = in_array($objectType, ['ratingSystem', 'rating']);
+        $hasStandardFields = in_array($objectType, ['rating']);
     
         $sortParam = '';
         if ('newest' === $sorting) {

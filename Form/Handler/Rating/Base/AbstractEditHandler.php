@@ -93,8 +93,6 @@ abstract class AbstractEditHandler extends EditHandler
                 'allowModerationSpecificCreationDateFor' . $this->objectTypeCapital,
                 false
             ),
-            'filter_by_ownership' => !$this->permissionHelper->hasEntityPermission($this->entityRef, ACCESS_ADD),
-            'inline_usage' => $this->templateParameters['inlineUsage']
         ];
     
         return $options;
@@ -274,18 +272,6 @@ abstract class AbstractEditHandler extends EditHandler
      */
     protected function getRedirectUrl(array $args = [])
     {
-        if (isset($this->templateParameters['inlineUsage']) && true === $this->templateParameters['inlineUsage']) {
-            $commandName = 'submit' === substr($args['commandName'], 0, 6) ? 'create' : $args['commandName'];
-            $urlArgs = [
-                'idPrefix' => $this->idPrefix,
-                'commandName' => $commandName,
-                'id' => $this->idValue
-            ];
-    
-            // inline usage, return to special function for closing the modal window instance
-            return $this->router->generate('paustianratingsmodule_' . $this->objectTypeLower . '_handleinlineredirect', $urlArgs);
-        }
-    
         if ($this->repeatCreateAction) {
             return $this->repeatReturnUrl;
         }

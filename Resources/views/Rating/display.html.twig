@@ -18,79 +18,42 @@
 {% block content %}
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
     <div class="paustianratingsmodule-rating paustianratingsmodule-display">
-        <div class="row">
-            <div class="col-sm-9">
-                <dl>
-                    {% if rating.moduleName is not empty %}
-                        <dt>{{ __('Module name') }}</dt>
-                        <dd>{{ rating.moduleName }}</dd>
-                    {% endif %}
-                    {% if rating.objectId is not empty %}
-                        <dt>{{ __('Object id') }}</dt>
-                        <dd>{{ rating.objectId }}</dd>
-                    {% endif %}
-                    {% if rating.rating is not empty %}
-                        <dt>{{ __('Rating') }}</dt>
-                        <dd>{{ rating.rating }}</dd>
-                    {% endif %}
-                    {% if rating.userId is not empty %}
-                        <dt>{{ __('User id') }}</dt>
-                        <dd>{% if not isQuickView %}
-                            {{ rating.userId.uid|profileLinkByUserId }}{% if currentUser.loggedIn %}{% set sendMessageUrl = rating.userId.uid|messageSendLink(urlOnly=true) %}{% if sendMessageUrl != '#' %}{% set linkTitle = __f('Send private message to %userName%', {'%userName%': rating.userId.uname}) %}<a href="{{ sendMessageUrl }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-envelope-o"></i></a>{% endif %}{% endif %}
-                            <span class="avatar">{{ userAvatar(rating.userId.uid, {rating: 'g'}) }}</span>
-                        {% else %}
-                            {{ rating.userId.uname }}
-                        {% endif %}
-                        </dd>
-                    {% endif %}
-                    {% if rating.ratingSystem is not empty %}
-                        <dt>{{ __('Rating system') }}</dt>
-                        <dd>{{ rating.ratingSystem }}</dd>
-                    {% endif %}
-                    
-                </dl>
-                <h3 class="hook-assignments">{{ __('Hook assignments') }}</h3>
-                    {% if hookAssignments|length > 0 %}
-                        <p>{{ __('This rating is assigned to the following data objects:') }}</p>
-                        <ul>
-                        {% for assignment in hookAssignments %}
-                            <li><a href="{{ assignment.url|e('html_attr') }}" title="{{ __('View this object')|e('html_attr') }}">{{ assignment.date|localizeddate('medium', 'short') }} - {{ assignment.text }}</a></li>
-                        {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p>{{ __('This rating is not assigned to any data objects yet.') }}</p>
-                    {% endif %}
-                {{ include('@PaustianRatingsModule/Helper/includeStandardFieldsDisplay.html.twig', {obj: rating}) }}
-            </div>
-            <div class="col-sm-3">
-                {{ block('related_items') }}
-            </div>
-        </div>
+        <dl>
+            {% if rating.moduleName is not empty %}
+                <dt>{{ __('Module name') }}</dt>
+                <dd>{{ rating.moduleName }}</dd>
+            {% endif %}
+            {% if rating.objectId is not empty %}
+                <dt>{{ __('Object id') }}</dt>
+                <dd>{{ rating.objectId }}</dd>
+            {% endif %}
+            {% if rating.rating is not empty %}
+                <dt>{{ __('Rating') }}</dt>
+                <dd>{{ rating.rating }}</dd>
+            {% endif %}
+            {% if rating.userId is not empty %}
+                <dt>{{ __('User id') }}</dt>
+                <dd>{% if not isQuickView %}
+                    {{ rating.userId.uid|profileLinkByUserId }}{% if currentUser.loggedIn %}{% set sendMessageUrl = rating.userId.uid|messageSendLink(urlOnly=true) %}{% if sendMessageUrl != '#' %}{% set linkTitle = __f('Send private message to %userName%', {'%userName%': rating.userId.uname}) %}<a href="{{ sendMessageUrl }}" title="{{ linkTitle|e('html_attr') }}"><i class="fa fa-envelope-o"></i></a>{% endif %}{% endif %}
+                    <span class="avatar">{{ userAvatar(rating.userId.uid, {rating: 'g'}) }}</span>
+                {% else %}
+                    {{ rating.userId.uname }}
+                {% endif %}
+                </dd>
+            {% endif %}
+            
+        </dl>
+        <h3 class="hook-assignments">{{ __('Hook assignments') }}</h3>
+            {% if hookAssignments|length > 0 %}
+                <p>{{ __('This rating is assigned to the following data objects:') }}</p>
+                <ul>
+                {% for assignment in hookAssignments %}
+                    <li><a href="{{ assignment.url|e('html_attr') }}" title="{{ __('View this object')|e('html_attr') }}">{{ assignment.date|localizeddate('medium', 'short') }} - {{ assignment.text }}</a></li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>{{ __('This rating is not assigned to any data objects yet.') }}</p>
+            {% endif %}
+        {{ include('@PaustianRatingsModule/Helper/includeStandardFieldsDisplay.html.twig', {obj: rating}) }}
     </div>
-{% endblock %}
-{% block related_items %}
-    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
-    {% if routeArea == 'admin' %}
-        <h4>{{ __('Rating system val') }}</h4>
-    {% else %}
-        <h3>{{ __('Rating system val') }}</h3>
-    {% endif %}
-    
-    {% if rating.ratingSystemVal|default %}
-        {{ include(
-            '@PaustianRatingsModule/RatingSystem/includeDisplayItemListOne.html.twig',
-            {item: rating.ratingSystemVal}
-        ) }}
-    {% endif %}
-    {% if not isQuickView %}
-        {% if rating.ratingSystemVal is not defined or rating.ratingSystemVal is null %}
-        {% set mayManage = permissionHelper.hasComponentPermission('ratingSystem', constant('ACCESS_EDIT')) %}
-        {% if mayManage %}
-            <p class="managelink">
-                {% set createTitle = __('Create rating system') %}
-                <a href="{{ path('paustianratingsmodule_ratingsystem_' ~ routeArea ~ 'edit', {ratingVal: rating.getKey()}) }}" title="{{ createTitle|e('html_attr') }}"><i class="fa fa-plus"></i> {{ createTitle }}</a>
-            </p>
-        {% endif %}
-        {% endif %}
-    {% endif %}
 {% endblock %}

@@ -119,13 +119,6 @@ abstract class AbstractListEntriesHelper
     
         $result = false;
         switch ($objectType) {
-            case 'ratingSystem':
-                switch ($fieldName) {
-                    case 'workflowState':
-                        $result = false;
-                        break;
-                }
-                break;
             case 'rating':
                 switch ($fieldName) {
                     case 'workflowState':
@@ -155,13 +148,6 @@ abstract class AbstractListEntriesHelper
     
         $entries = [];
         switch ($objectType) {
-            case 'ratingSystem':
-                switch ($fieldName) {
-                    case 'workflowState':
-                        $entries = $this->getWorkflowStateEntriesForRatingSystem();
-                        break;
-                }
-                break;
             case 'rating':
                 switch ($fieldName) {
                     case 'workflowState':
@@ -174,46 +160,6 @@ abstract class AbstractListEntriesHelper
         return $entries;
     }
     
-    
-    /**
-     * Get 'workflow state' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getWorkflowStateEntriesForRatingSystem()
-    {
-        $states = [];
-        $states[] = [
-            'value'   => 'approved',
-            'text'    => $this->__('Approved'),
-            'title'   => $this->__('Content has been approved and is available online.'),
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => 'trashed',
-            'text'    => $this->__('Trashed'),
-            'title'   => $this->__('Content has been marked as deleted, but is still persisted in the database.'),
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => '!approved',
-            'text'    => $this->__('All except approved'),
-            'title'   => $this->__('Shows all items except these which are approved'),
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => '!trashed',
-            'text'    => $this->__('All except trashed'),
-            'title'   => $this->__('Shows all items except these which are trashed'),
-            'image'   => '',
-            'default' => false
-        ];
-    
-        return $states;
-    }
     
     /**
      * Get 'workflow state' list entries.

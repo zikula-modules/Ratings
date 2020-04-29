@@ -108,7 +108,6 @@ class RatingController extends AbstractRatingController
         );
     }
     
-    //ToDo:I need to add javascript that allows an update of the rating.
     /**
      *
      * @Route("/admin/rating/{id}.{_format}",

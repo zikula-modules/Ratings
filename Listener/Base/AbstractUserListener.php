@@ -121,35 +121,6 @@ abstract class AbstractUserListener implements EventSubscriberInterface
     {
         $userId = (int) $event->getSubject();
         
-        $repo = $this->entityFactory->getRepository('ratingSystem');
-        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all rating systems created by this user
-        $repo->updateCreator(
-            $userId,
-            UsersConstant::USER_ID_ADMIN,
-            $this->translator,
-            $this->logger,
-            $this->currentUserApi
-        );
-        
-        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all rating systems updated by this user
-        $repo->updateLastEditor(
-            $userId,
-            UsersConstant::USER_ID_ADMIN,
-            $this->translator,
-            $this->logger,
-            $this->currentUserApi
-        );
-        
-        $logArgs = [
-            'app' => 'PaustianRatingsModule',
-            'user' => $this->currentUserApi->get('uname'),
-            'entities' => 'rating systems'
-        ];
-        $this->logger->notice(
-            '{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.',
-            $logArgs
-        );
-        
         $repo = $this->entityFactory->getRepository('rating');
         // set creator to admin (UsersConstant::USER_ID_ADMIN) for all ratings created by this user
         $repo->updateCreator(

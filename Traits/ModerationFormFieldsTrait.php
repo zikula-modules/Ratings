@@ -33,9 +33,6 @@ trait ModerationFormFieldsTrait
         if (!$options['has_moderate_permission']) {
             return;
         }
-        if (isset($options['inline_usage']) && $options['inline_usage']) {
-            return;
-        }
     
         if (
             isset($options['allow_moderation_specific_creator'])

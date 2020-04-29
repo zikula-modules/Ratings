@@ -72,9 +72,6 @@ abstract class AbstractCollectionFilterHelper
             $context = 'controllerAction';
         }
     
-        if ('ratingSystem' === $objectType) {
-            return $this->getViewQuickNavParametersForRatingSystem($context, $args);
-        }
         if ('rating' === $objectType) {
             return $this->getViewQuickNavParametersForRating($context, $args);
         }
@@ -92,9 +89,6 @@ abstract class AbstractCollectionFilterHelper
      */
     public function addCommonViewFilters($objectType, QueryBuilder $qb)
     {
-        if ('ratingSystem' === $objectType) {
-            return $this->addCommonViewFiltersForRatingSystem($qb);
-        }
         if ('rating' === $objectType) {
             return $this->addCommonViewFiltersForRating($qb);
         }
@@ -113,36 +107,11 @@ abstract class AbstractCollectionFilterHelper
      */
     public function applyDefaultFilters($objectType, QueryBuilder $qb, array $parameters = [])
     {
-        if ('ratingSystem' === $objectType) {
-            return $this->applyDefaultFiltersForRatingSystem($qb, $parameters);
-        }
         if ('rating' === $objectType) {
             return $this->applyDefaultFiltersForRating($qb, $parameters);
         }
     
         return $qb;
-    }
-    
-    /**
-     * Returns an array of additional template variables for view quick navigation forms.
-     *
-     * @param string $context Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
-     * @param array $args Additional arguments
-     *
-     * @return array List of template variables to be assigned
-     */
-    protected function getViewQuickNavParametersForRatingSystem($context = '', array $args = [])
-    {
-        $parameters = [];
-        $request = $this->requestStack->getCurrentRequest();
-        if (null === $request) {
-            return $parameters;
-        }
-    
-        $parameters['workflowState'] = $request->query->get('workflowState', '');
-        $parameters['q'] = $request->query->get('q', '');
-    
-        return $parameters;
     }
     
     /**
@@ -161,69 +130,11 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
-        $parameters['ratingSystemVal'] = $request->query->get('ratingSystemVal', 0);
-        if (is_object($parameters['ratingSystemVal'])) {
-            $parameters['ratingSystemVal'] = $parameters['ratingSystemVal']->getId();
-        }
         $parameters['workflowState'] = $request->query->get('workflowState', '');
         $parameters['userId'] = $request->query->getInt('userId', 0);
         $parameters['q'] = $request->query->get('q', '');
     
         return $parameters;
-    }
-    
-    /**
-     * Adds quick navigation related filter options as where clauses.
-     *
-     * @param QueryBuilder $qb Query builder to be enhanced
-     *
-     * @return QueryBuilder Enriched query builder instance
-     */
-    protected function addCommonViewFiltersForRatingSystem(QueryBuilder $qb)
-    {
-        $request = $this->requestStack->getCurrentRequest();
-        if (null === $request) {
-            return $qb;
-        }
-        $routeName = $request->get('_route', '');
-        if (false !== strpos($routeName, 'edit')) {
-            return $qb;
-        }
-    
-        $parameters = $this->getViewQuickNavParametersForRatingSystem();
-        foreach ($parameters as $k => $v) {
-            if (null === $v) {
-                continue;
-            }
-            if (in_array($k, ['q', 'searchterm'], true)) {
-                // quick search
-                if (!empty($v)) {
-                    $qb = $this->addSearchFilter('ratingSystem', $qb, $v);
-                }
-                continue;
-            }
-    
-            if (is_array($v)) {
-                continue;
-            }
-    
-            // field filter
-            if ((!is_numeric($v) && '' !== $v) || (is_numeric($v) && 0 < $v)) {
-                $v = (string)$v;
-                if ('workflowState' === $k && 0 === strpos($v, '!')) {
-                    $qb->andWhere('tbl.' . $k . ' != :' . $k)
-                       ->setParameter($k, substr($v, 1));
-                } elseif (0 === strpos($v, '%')) {
-                    $qb->andWhere('tbl.' . $k . ' LIKE :' . $k)
-                       ->setParameter($k, '%' . substr($v, 1) . '%');
-                } else {
-                    $qb->andWhere('tbl.' . $k . ' = :' . $k)
-                       ->setParameter($k, $v);
-                }
-            }
-        }
-    
-        return $this->applyDefaultFiltersForRatingSystem($qb, $parameters);
     }
     
     /**
@@ -294,42 +205,6 @@ abstract class AbstractCollectionFilterHelper
      *
      * @return QueryBuilder Enriched query builder instance
      */
-    protected function applyDefaultFiltersForRatingSystem(QueryBuilder $qb, array $parameters = [])
-    {
-        $request = $this->requestStack->getCurrentRequest();
-        if (null === $request) {
-            return $qb;
-        }
-    
-        $showOnlyOwnEntries = (bool)$request->query->getInt('own', $this->showOnlyOwnEntries);
-        if ($showOnlyOwnEntries) {
-            $qb = $this->addCreatorFilter($qb);
-        }
-    
-        $routeName = $request->get('_route', '');
-        $isAdminArea = false !== strpos($routeName, 'paustianratingsmodule_ratingsystem_admin');
-        if ($isAdminArea) {
-            return $qb;
-        }
-    
-        if (!array_key_exists('workflowState', $parameters) || empty($parameters['workflowState'])) {
-            // per default we show approved rating systems only
-            $onlineStates = ['approved'];
-            $qb->andWhere('tbl.workflowState IN (:onlineStates)')
-               ->setParameter('onlineStates', $onlineStates);
-        }
-    
-        return $qb;
-    }
-    
-    /**
-     * Adds default filters as where clauses.
-     *
-     * @param QueryBuilder $qb Query builder to be enhanced
-     * @param array $parameters List of determined filter options
-     *
-     * @return QueryBuilder Enriched query builder instance
-     */
     protected function applyDefaultFiltersForRating(QueryBuilder $qb, array $parameters = [])
     {
         $request = $this->requestStack->getCurrentRequest();
@@ -376,16 +251,6 @@ abstract class AbstractCollectionFilterHelper
         $filters = [];
         $parameters = [];
     
-        if ('ratingSystem' === $objectType) {
-            if (is_numeric($fragment)) {
-                $filters[] = 'tbl.scaleDim = :searchScaleDim';
-                $parameters['searchScaleDim'] = $fragment;
-            }
-            $filters[] = 'tbl.iconFa LIKE :searchIconFa';
-            $parameters['searchIconFa'] = '%' . $fragment . '%';
-            $filters[] = 'tbl.iconUrl = :searchIconUrl';
-            $parameters['searchIconUrl'] = $fragment;
-        }
         if ('rating' === $objectType) {
             $filters[] = 'tbl.moduleName LIKE :searchModuleName';
             $parameters['searchModuleName'] = '%' . $fragment . '%';
@@ -396,10 +261,6 @@ abstract class AbstractCollectionFilterHelper
             if (is_numeric($fragment)) {
                 $filters[] = 'tbl.rating = :searchRating';
                 $parameters['searchRating'] = $fragment;
-            }
-            if (is_numeric($fragment)) {
-                $filters[] = 'tbl.ratingSystem = :searchRatingSystem';
-                $parameters['searchRatingSystem'] = $fragment;
             }
         }
     

@@ -13,7 +13,6 @@
 
 namespace Paustian\RatingsModule\Entity\Factory\Base;
 
-use Paustian\RatingsModule\Entity\RatingSystemEntity;
 use Paustian\RatingsModule\Entity\RatingEntity;
 use Paustian\RatingsModule\Helper\PermissionHelper;
 
@@ -31,18 +30,6 @@ abstract class AbstractEntityInitialiser
         PermissionHelper $permissionHelper
     ) {
         $this->permissionHelper = $permissionHelper;
-    }
-
-    /**
-     * Initialises a given ratingSystem instance.
-     *
-     * @param RatingSystemEntity $entity The newly created entity instance
-     *
-     * @return RatingSystemEntity The updated entity instance
-     */
-    public function initRatingSystem(RatingSystemEntity $entity)
-    {
-        return $entity;
     }
 
     /**

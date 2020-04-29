@@ -17,13 +17,8 @@
             {{ form_row(form.objectId) }}
             {{ form_row(form.rating) }}
             {{ form_row(form.userId) }}
-            {{ form_row(form.ratingSystem) }}
         </fieldset>
         
-        {{ include(
-            '@PaustianRatingsModule/RatingSystem/includeSelectOne.html.twig',
-            {group: 'rating', heading: __('Rating system val'), alias: 'ratingSystemVal', mandatory: false, idPrefix: 'ratingRating_RatingSystemVal', linkingItem: rating, displayMode: 'choices'}
-        ) }}
         {% if mode != 'create' %}
             {{ include('@PaustianRatingsModule/Helper/includeStandardFieldsEdit.html.twig', {obj: rating}) }}
         {% endif %}

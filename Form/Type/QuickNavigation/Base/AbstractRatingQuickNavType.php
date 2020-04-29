@@ -20,15 +20,11 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\UsersModule\Entity\UserEntity;
-use Paustian\RatingsModule\Entity\Factory\EntityFactory;
-use Paustian\RatingsModule\Helper\EntityDisplayHelper;
 use Paustian\RatingsModule\Helper\ListEntriesHelper;
-use Paustian\RatingsModule\Helper\PermissionHelper;
 
 /**
  * Rating quick navigation form type base class.
@@ -38,43 +34,15 @@ abstract class AbstractRatingQuickNavType extends AbstractType
     use TranslatorTrait;
 
     /**
-     * @var RequestStack
-     */
-    protected $requestStack;
-
-    /**
-     * @var EntityFactory
-     */
-    protected $entityFactory;
-
-    /**
-     * @var PermissionHelper
-     */
-    protected $permissionHelper;
-
-    /**
-     * @var EntityDisplayHelper
-     */
-    protected $entityDisplayHelper;
-
-    /**
      * @var ListEntriesHelper
      */
     protected $listHelper;
 
     public function __construct(
         TranslatorInterface $translator,
-        RequestStack $requestStack,
-        EntityFactory $entityFactory,
-        PermissionHelper $permissionHelper,
-        EntityDisplayHelper $entityDisplayHelper,
         ListEntriesHelper $listHelper
     ) {
         $this->setTranslator($translator);
-        $this->requestStack = $requestStack;
-        $this->entityFactory = $entityFactory;
-        $this->permissionHelper = $permissionHelper;
-        $this->entityDisplayHelper = $entityDisplayHelper;
         $this->listHelper = $listHelper;
     }
 
@@ -92,7 +60,6 @@ abstract class AbstractRatingQuickNavType extends AbstractType
             ->add('tpl', HiddenType::class)
         ;
 
-        $this->addOutgoingRelationshipFields($builder, $options);
         $this->addListFields($builder, $options);
         $this->addUserFields($builder, $options);
         $this->addSearchField($builder, $options);
@@ -104,53 +71,6 @@ abstract class AbstractRatingQuickNavType extends AbstractType
                 'class' => 'btn btn-default btn-sm'
             ]
         ]);
-    }
-
-    /**
-     * Adds fields for outgoing relationships.
-     */
-    public function addOutgoingRelationshipFields(FormBuilderInterface $builder, array $options = [])
-    {
-        $mainSearchTerm = '';
-        $request = $this->requestStack->getCurrentRequest();
-        if ($request->query->has('q')) {
-            // remove current search argument from request to avoid filtering related items
-            $mainSearchTerm = $request->query->get('q');
-            $request->query->remove('q');
-        }
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $objectType = 'ratingSystem';
-        // select without joins
-        $entities = $this->entityFactory->getRepository($objectType)->selectWhere('', '', false);
-        $permLevel = ACCESS_READ;
-        
-        $entities = $this->permissionHelper->filterCollection(
-            $objectType,
-            $entities,
-            $permLevel
-        );
-        $choices = [];
-        foreach ($entities as $entity) {
-            $choices[$entity->getId()] = $entity;
-        }
-        
-        $builder->add('ratingSystemVal', ChoiceType::class, [
-            'choices' => $choices,
-            'choice_label' => function ($entity) use ($entityDisplayHelper) {
-                return $entityDisplayHelper->getFormattedTitle($entity);
-            },
-            'placeholder' => $this->__('All'),
-            'required' => false,
-            'label' => $this->__('Rating system val'),
-            'attr' => [
-                'class' => 'input-sm'
-            ]
-        ]);
-    
-        if ('' !== $mainSearchTerm) {
-            // readd current search argument
-            $request->query->set('q', $mainSearchTerm);
-        }
     }
 
     /**
@@ -227,7 +147,6 @@ abstract class AbstractRatingQuickNavType extends AbstractType
                     $this->__('Module name') => 'moduleName',
                     $this->__('Object id') => 'objectId',
                     $this->__('Rating') => 'rating',
-                    $this->__('Rating system') => 'ratingSystem',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',
