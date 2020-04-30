@@ -20,7 +20,7 @@
                 {% endif %}
             {% endif %}
             {% if avgData.emptyStars > 0 %}
-                {% for j in 1..emptyStars %}
+                {% for j in 1..avgData.emptyStars %}
                     <span id="rating_{{ counter }}" class="fa {{ modVars.emptyIconFa }}"></span>
                     {% set counter = counter +1 %}
                 {% endfor %}
