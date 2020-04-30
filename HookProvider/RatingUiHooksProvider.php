@@ -75,27 +75,20 @@ class RatingUiHooksProvider extends AbstractRatingUiHooksProvider
         $module = $hook->getCaller();
         $moduleItem = $hook->getId();
         $repo = $this->entityFactory->getEntityManager()->getRepository("Paustian\RatingsModule\Entity\RatingEntity");
-
         //Get the module variables
         $moduleVars = $this->variableApi->getAll('PaustianRatingsModule');
+        RatingsApi::AdjustUrlPath($moduleVars, $this->requestStack->getCurrentRequest()->getBasePath());
+
         //user id of 1 means guest. Anything above 1 is a real user.
         $user = $this->currentUserApi->get('uid');
         //Determine the overall rating of this article
         $ratings = $repo->getRatingForItem($module, $moduleItem);
         $count = count($ratings);
-        $avgData = RatingsApi::calculateAverage($ratings, $moduleVars['ratingScale']);
+        $avgData = RatingsApi::CalculateAverage($ratings, $moduleVars['ratingScale']);
 
         $templateParameters = [
-            'ratingClass' => $moduleVars['iconFa'],
-            'halfRatingClass' => $moduleVars['halfIconFa'],
-            'emptyRatingClass' => $moduleVars['emptyIconFa'],
-            'ratingIcon' => $moduleVars['iconUrl'],
-            'halfRatingIcon' => $moduleVars['halfIconUrl'],
-            'emptyRatingIcon' => $moduleVars['emptyIconUrl'],
-            'average' => $avgData['average'] ,
-            'doHalfStar' => $avgData['doHalfStar'],
-            'emptyStars' => $avgData['emptyStars'],
-            'max' => $moduleVars['ratingScale'],
+            'modVars' => $moduleVars,
+            'avgData' => $avgData,
             'module' => $module,
             'moduleItem' => $moduleItem,
             'user' => $user

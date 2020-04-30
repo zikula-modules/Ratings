@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Paustian\RatingsModule\Controller\Base\AbstractAjaxController;
 use Paustian\RatingsModule\Entity\RatingEntity;
+use \Paustian\RatingsModule\Api\RatingsApi;
 
 /**
  * Ajax controller implementation class.
@@ -116,8 +117,9 @@ class AjaxController extends AbstractAjaxController
         $em->flush();
         //grab the module variables
         $modVars = $this->getVars();
+        RatingsApi::AdjustUrlPath($modVars, $request->getBasePath());
         $ratings = $repo->getRatingForItem($module, $moduleItem);
-        $avgData = \Paustian\RatingsModule\Api\RatingsApi::calculateAverage($ratings, $modVars['ratingScale']);
+        $avgData = RatingsApi::CalculateAverage($ratings, $modVars['ratingScale']);
         //return a JSON response
         $jsonReply = ['user' => $user,
             'rating' => $rating,

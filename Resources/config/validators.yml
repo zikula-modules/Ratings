@@ -7,3 +7,18 @@ services:
             - "@paustian_ratings_module.listentries_helper"
         tags:
             - { name: validator.constraint_validator, alias: paustian_ratings_module.validator.list_entry.validator }
+
+    paustian_ratings_module.validator.icon_fa_group.validator:
+        class: Paustian\RatingsModule\Validator\Constraints\IconFaGroupValidator
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: validator.constraint_validator, alias: paustian_ratings_module.validator.icon_fa_group.validator }
+
+    paustian_ratings_module.validator.icon_url_group.validator:
+        class: Paustian\RatingsModule\Validator\Constraints\IconUrlGroupValidator
+        arguments:
+            - "@translator.default"
+            - "%kernel.project_dir%"
+        tags:
+            - { name: validator.constraint_validator, alias: paustian_ratings_module.validator.icon_url_group.validator }
