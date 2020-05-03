@@ -23,26 +23,4 @@ use Paustian\RatingsModule\Entity\Repository\Base\AbstractRatingRepository;
 class RatingRepository extends AbstractRatingRepository
 {
     // feel free to add your own methods here, like for example reusable DQL queries
-    /**
-     * @param $module
-     * @param $moduleItem
-     * @param $user
-     * @return array
-     */
-
-    public function getRatingForItem($module, $moduleItem, $user=0){
-        $qb = $this->getListQueryBuilder();
-        $qb->andWhere('tbl.objectId = :objId')
-            ->setParameter('objId', $moduleItem);
-        $qb->andWhere('tbl.moduleName = :module')
-            ->setParameter('module', $module);
-        if($user !== 0){
-            $qb->andWhere('tbl.userId = :user')
-                ->setParameter('user', $user);
-        }
-        $query = $this->getQueryFromBuilder($qb);
-
-        return $this->retrieveCollectionResult($query, false);
-
-    }
 }

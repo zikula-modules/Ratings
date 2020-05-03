@@ -33,16 +33,6 @@ div.ratings-edit .tab-pane legend {
 }
 
 /* edit pages */
-div.paustianratingsmodule-relation-leftside {
-    float: left;
-    width: 25%;
-}
-
-div.paustianratingsmodule-relation-rightside {
-    float: right;
-    width: 65%;
-}
-
 .ui-autocomplete {
     max-height: 150px;
     overflow-y: auto;
@@ -123,17 +113,4 @@ div.paustianratingsmodule-view form.paustianratingsmodule-quicknav fieldset labe
 div.paustianratingsmodule-view .avatar img {
     width: auto;
     max-height: 24px;
-}
-
-span.avg-font {
-    font-family: "Courier New", serif;
-    font-size: medium;
-}
-
-img.rating-star {
-    margin-bottom:8px;
-}
-
-.hidden-style {
-    display:none;
 }
