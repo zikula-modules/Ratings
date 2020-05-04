@@ -23,8 +23,8 @@ application "Ratings" {
     generateJsonTemplates false
     generateKmlTemplates false
     generateIcsTemplates false
-    skipFiles "HookProvider/RatingUiHooksProvider.php, \nEntity/Repository/RatingRepository.php\nREADME.md"
-    markFiles "Resources/config/hooks.yml,\nController/AjaxController.php"
+    skipFiles "HookProvider/RatingUiHooksProvider.php, \nEntity/Repository/RatingRepository.php,\nREADME.md, \nForm/Type/ConfigType.php"
+    markFiles "Resources/config/hooks.yml,\nController/AjaxController.php,\nResources/config/validators.yml,\nResources/public/css/style.css"
     entities {
         entity "rating" leading {
             documentation "A list of ratings for various hooked modules."
