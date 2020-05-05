@@ -35,7 +35,7 @@ application "Ratings" {
             fields {
                 string "moduleName" {
                     documentation "The name of the module that the rating is linked to"
-                length 64
+                    length 64
                 },
                 integer "objectId" {
                     documentation "The id of the object that identifies the module instance this rating is linked to"
@@ -45,8 +45,7 @@ application "Ratings" {
                     documentation "The rating, based upon a scale for the item"
                     defaultValue "0"
                     length 3
-                }
-                 ,
+                },
                 user "userId" {
                     documentation "The Id of the user who rated the item. "
                 }
@@ -70,18 +69,21 @@ application "Ratings" {
                 },
                 string "iconFa" {
                     documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
+                    defaultValue "fa-star"
                     mandatory false
-                role ICON
+                    role ICON
                 },
                 string "halfIconFa" {
                     documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
+                    defaultValue "fa-star-half"
                     mandatory false
-                role ICON
+                    role ICON
                 },
                 string "emptyIconFa" {
                     documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
+                    defaultValue "fa-star-o"
                     mandatory false
-                role ICON
+                    role ICON
                 },
                 string "iconUrl" {
                     documentation "A url to a rating icon to be used for a rating. Either this or IconFas must be designated."
@@ -89,7 +91,7 @@ application "Ratings" {
                 },
                 string "halfIconUrl" {
                     documentation "A url to a rating icon to be used for a rating. Either this or IconFas must be designated."
-                mandatory false
+                    mandatory false
                 },
                 string "emptyIconUrl" {
                     documentation "A url to a rating icon to be used for a rating. Either this or IconFas must be designated."
