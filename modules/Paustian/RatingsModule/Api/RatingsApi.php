@@ -22,7 +22,7 @@ class RatingsApi
             $retArray['average'] = $totalRating/$count;
             $averageRemainder = fmod($retArray['average'], 1);
             $retArray['avgInt'] = floor($retArray['average']);
-            $retArray['doHalfStar'] = ($averageRemainder > 0.5);
+            $retArray['doHalfStar'] = ($averageRemainder >= 0.5);
             $max = $ratingScale;
             $retArray['emptyStars'] = $max - Round($retArray['average']);
         }
