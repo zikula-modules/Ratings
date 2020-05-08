@@ -34,8 +34,21 @@ class ConfigController extends AbstractConfigController
      */
     public function configAction(Request $request)
     {
-        return parent::configAction($request);
+        $oldRating = $this->getVar('ratingScale');
+        $result = parent::configAction($request);
+        $newRating = $this->getVar('ratingScale');
+        $em = $this->getDoctrine()->getManager();
+        if($oldRating !== $newRating){
+            $ratingObjs =$em->getRepository('Paustian\RatingsModule\Entity\RatingEntity')->findAll();
+            $ratio = $newRating/$oldRating;
+            foreach($ratingObjs as $ratingObj){
+                $newRating = $ratingObj->getRating() * $ratio;
+                $ratingObj->setRating($newRating);
+            }
+            $em->persist($ratingObj);
+        }
+        $em->flush();
+        return $result;
     }
-
     // feel free to add your own config controller methods here
 }

@@ -3,9 +3,9 @@
 <div>
     <h3>{{ __("Rating") }}</h3>
     {% if avgData.average > 0 %}
-    <div id="#stars" title="{{ __("Click on a star to add your rating.") }}">
+         <div id="#stars" title="{{ __("Click on a star to add your rating.") }}">
     {% else %}
-    <div id="#stars" title="{{ __("There are no ratings for this item. Be the first to rate it!") }}">
+        <div id="#stars" title="{{ __("There are no ratings for this item. Be the first to rate it!") }}">
     {% endif %}
         <p>
         {% if modVars.iconFa %}
@@ -59,6 +59,6 @@
         </p>
     </div>
 </div>
-    {% block footer %}
+{% block footer %}
     {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.Ratings.js'), 99) }}
 {% endblock %}
