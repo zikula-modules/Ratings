@@ -1,4 +1,3 @@
-
 imports:
   - { resource: 'appSettings.yml' }
   - { resource: 'menu.yml' }
