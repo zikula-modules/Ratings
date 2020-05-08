@@ -23,7 +23,7 @@ application "Ratings" {
     generateJsonTemplates false
     generateKmlTemplates false
     generateIcsTemplates false
-    skipFiles "HookProvider/RatingUiHooksProvider.php, \nEntity/Repository/RatingRepository.php,\nREADME.md, \nForm/Type/ConfigType.php"
+    skipFiles "HookProvider/RatingUiHooksProvider.php, \nEntity/Repository/RatingRepository.php,\nREADME.md,\nForm/Type/ConfigType.php,\nController/ConfigController.php\n"
     markFiles "Resources/config/hooks.yml,\nController/AjaxController.php,\nResources/config/validators.yml,\nResources/public/css/style.css"
     entities {
         entity "rating" leading {
@@ -35,7 +35,7 @@ application "Ratings" {
             fields {
                 string "moduleName" {
                     documentation "The name of the module that the rating is linked to"
-                    length 64
+                length 64
                 },
                 integer "objectId" {
                     documentation "The id of the object that identifies the module instance this rating is linked to"
@@ -45,7 +45,8 @@ application "Ratings" {
                     documentation "The rating, based upon a scale for the item"
                     defaultValue "0"
                     length 3
-                },
+                }
+                 ,
                 user "userId" {
                     documentation "The Id of the user who rated the item. "
                 }
@@ -71,19 +72,19 @@ application "Ratings" {
                     documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
                     defaultValue "fa-star"
                     mandatory false
-                    role ICON
+                role ICON
                 },
                 string "halfIconFa" {
                     documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
                     defaultValue "fa-star-half"
                     mandatory false
-                    role ICON
+                role ICON
                 },
                 string "emptyIconFa" {
                     documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
-                    defaultValue "fa-star-o"
+                    defaultValue "fa-star-empty"
                     mandatory false
-                    role ICON
+                role ICON
                 },
                 string "iconUrl" {
                     documentation "A url to a rating icon to be used for a rating. Either this or IconFas must be designated."
@@ -91,7 +92,7 @@ application "Ratings" {
                 },
                 string "halfIconUrl" {
                     documentation "A url to a rating icon to be used for a rating. Either this or IconFas must be designated."
-                    mandatory false
+                mandatory false
                 },
                 string "emptyIconUrl" {
                     documentation "A url to a rating icon to be used for a rating. Either this or IconFas must be designated."
