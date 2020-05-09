@@ -52,7 +52,7 @@ abstract class AbstractRatingsModuleInstaller extends AbstractExtensionInstaller
         $this->setVar('ratingScale', 5);
         $this->setVar('iconFa', 'fa-star');
         $this->setVar('halfIconFa', 'fa-star-half');
-        $this->setVar('emptyIconFa', 'fa-star-o');
+        $this->setVar('emptyIconFa', 'fa-star-empty');
         $this->setVar('iconUrl', '');
         $this->setVar('halfIconUrl', '');
         $this->setVar('emptyIconUrl', '');
