@@ -62,7 +62,7 @@ abstract class AbstractAppSettings
      * @Assert\Length(min="0", max="255")
      * @var string $emptyIconFa
      */
-    protected $emptyIconFa = 'fa-star-o';
+    protected $emptyIconFa = 'fa-star-empty';
     
     /**
      * A url to a rating icon to be used for a rating. Either this or IconFas must be designated.
