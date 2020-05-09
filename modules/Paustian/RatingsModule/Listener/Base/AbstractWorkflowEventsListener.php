@@ -92,7 +92,6 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
             return;
         }
         
-        $objectType = $entity->get_objectType();
         $permissionLevel = ACCESS_READ;
         $transitionName = $event->getTransition()->getName();
         

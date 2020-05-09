@@ -130,11 +130,11 @@ abstract class AbstractPermissionHelper
     public function filterCollection($objectType, $entities, $permissionLevel, $userId = null)
     {
         $filteredEntities = [];
-        foreach ($entities as $ratings) {
-            if (!$this->hasEntityPermission($ratings, $permissionLevel, $userId)) {
+        foreach ($entities as $entity) {
+            if (!$this->hasEntityPermission($entity, $permissionLevel, $userId)) {
                 continue;
             }
-            $filteredEntities[] = $ratings;
+            $filteredEntities[] = $entity;
         }
     
         return $filteredEntities;
