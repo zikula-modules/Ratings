@@ -22,11 +22,11 @@ jobs:
     - name: Build and test
       uses: docker://guite/zikula-action:latest
       with:
-        args: Paustian Ratings 3.0.0 ZK20 "" true
+        args: Paustian Ratings 4.0.0 ZK30 "src/" true
 
     # see https://github.com/actions/upload-artifact
     - name: Upload release folder as artifact
       uses: actions/upload-artifact@master
       with:
-        name: PaustianRatingsModule_v3.0.0
-        path: './PaustianRatingsModule_v3.0.0'
+        name: PaustianRatingsModule_v4.0.0
+        path: './PaustianRatingsModule_v4.0.0'

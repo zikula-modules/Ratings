@@ -1,0 +1,112 @@
+application "Ratings" targets ZK30 {
+    documentation "A hook provider module that will attach ratings to any hookable subscriber module that implements the uiHookSubscribers. "
+    vendor "Paustian"
+    author "Timothy Paustian"
+    email "tdpaustian@gmail.com"
+    url "https://www.microbiologytext.com/"
+    version "4.0.0"
+    prefix "rating"
+    generateSearchApi false
+    generateListBlock false
+    generateDetailBlock false
+    generateModerationBlock false
+    generateListContentType false
+    generateDetailContentType false
+    generateModerationPanel false
+    generatePendingContentSupport false
+    generateExternalControllerAndFinder false
+    generateScribitePlugins false
+    generateRssTemplates false
+    generateAtomTemplates false
+    generateCsvTemplates false
+    generateXmlTemplates false
+    generateJsonTemplates false
+    generateKmlTemplates false
+    generateIcsTemplates false
+    skipFiles "
+        Controller/ConfigController.php,
+        Entity/Repository/RatingRepository.php,
+        Form/Type/ConfigType.php,
+        HookProvider/RatingUiHooksProvider.php,
+        README.md
+    "
+    markFiles "
+        Controller/AjaxController.php,
+        Resources/public/css/style.css
+    "
+    entities {
+        entity "rating" leading {
+            documentation "A list of ratings for various hooked modules."
+            nameMultiple "ratings"
+            displayPattern "#id#, #moduleName#, #objectId#, #rating#, #ratingSystem#"
+            skipHookSubscribers true
+            uiHooksProvider ENABLED
+            fields {
+                string "moduleName" {
+                    documentation "The name of the module that the rating is linked to"
+                    length 64
+                },
+                integer "objectId" {
+                    documentation "The id of the object that identifies the module instance this rating is linked to"
+                    defaultValue "0"
+                },
+                integer "rating" {
+                    documentation "The rating, based upon a scale for the item"
+                    defaultValue "0"
+                    length 3
+                },
+                user "userId" {
+                    documentation "The Id of the user who rated the item. "
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display" {
+                    documentation "Display the rating for the module item hooked to the system"
+                },
+                editAction "Edit"
+            }
+        }
+    }
+    variables {
+        varContainer "RatingSettings" {
+            fields {
+                integer "ratingScale" {
+                    documentation "The number of divisions in the scale. For example there are five divisions in a 1 to 5 scale, four divisions in a four-star scale"
+                    defaultValue "5"
+                },
+                string "iconFa" {
+                    documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
+                    defaultValue "fa-star"
+                    mandatory false
+                    role ICON
+                },
+                string "halfIconFa" {
+                    documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
+                    defaultValue "fa-star-half"
+                    mandatory false
+                    role ICON
+                },
+                string "emptyIconFa" {
+                    documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
+                    defaultValue "fa-star-empty"
+                    mandatory false
+                    role ICON
+                },
+                string "iconUrl" {
+                    documentation "A url to a rating icon to be used for a rating. Either this or IconFas must be designated."
+                    mandatory false
+                },
+                string "halfIconUrl" {
+                    documentation "A url to a rating icon to be used for a rating. Either this or IconFas must be designated."
+                    mandatory false
+                },
+                string "emptyIconUrl" {
+                    documentation "A url to a rating icon to be used for a rating. Either this or IconFas must be designated."
+                    mandatory false
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,60 @@
+{# purpose of this template: ratings display view #}
+{% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
+{% extends '@PaustianRatingsModule/' ~ baseTemplate ~ '.html.twig' %}
+{% trans_default_domain 'rating' %}
+{% block pageTitle %}{{ rating|paustianratingsmodule_formattedTitle|default('Rating'|trans) }}{% endblock %}
+{% block title %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    {% set templateTitle = rating|paustianratingsmodule_formattedTitle|default('Rating'|trans) %}
+    {{ templateTitle }}
+    {% if not isQuickView %}
+        {% set itemActions = knp_menu_get('paustianRatingsMenuItemActions', [], {entity: rating, area: routeArea, context: 'display'}) %}
+        <div class="dropdown item-actions">
+            <a id="itemActions{{ rating.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="d-none dropdown-toggle"><i class="fas fa-tasks"></i> {% trans from 'messages' %}Actions{% endtrans %}</a>
+            {{ knp_menu_render(itemActions, {template: '@ZikulaMenuModule/Override/bootstrap_fontawesome.html.twig'}) }}
+        </div>
+    {% endif %}
+{% endblock %}
+{% block admin_page_icon 'eye' %}
+{% block content %}
+    {% set isQuickView = app.request.query.getBoolean('raw', false) %}
+    <div class="paustianratingsmodule-rating paustianratingsmodule-display">
+        <dl>
+            {% if rating.moduleName is not empty %}
+                <dt>{% trans %}Module name{% endtrans %}</dt>
+                <dd>{{ rating.moduleName }}</dd>
+            {% endif %}
+            {% if rating.objectId is not empty %}
+                <dt>{% trans %}Object id{% endtrans %}</dt>
+                <dd>{{ rating.objectId }}</dd>
+            {% endif %}
+            {% if rating.rating is not empty %}
+                <dt>{% trans %}Rating{% endtrans %}</dt>
+                <dd>{{ rating.rating }}</dd>
+            {% endif %}
+            {% if rating.userId is not empty %}
+                <dt>{% trans %}User id{% endtrans %}</dt>
+                <dd>{% if not isQuickView %}
+                    {{ rating.userId.uid|profileLinkByUserId }}{% if currentUser.loggedIn %}{% set sendMessageUrl = rating.userId.uid|messageSendLink(urlOnly=true) %}{% if sendMessageUrl != '#' %}{% set linkTitle = 'Send private message to %userName%'|trans({'%userName%': rating.userId.uname}, 'messages') %}<a href="{{ sendMessageUrl }}" title="{{ linkTitle|e('html_attr') }}"><i class="fas fa-envelope"></i></a>{% endif %}{% endif %}
+                    <span class="avatar">{{ userAvatar(rating.userId.uid, {rating: 'g'}) }}</span>
+                {% else %}
+                    {{ rating.userId.uname }}
+                {% endif %}
+                </dd>
+            {% endif %}
+            
+        </dl>
+        <h3 class="hook-assignments">{% trans from 'hooks' %}Hook assignments{% endtrans %}</h3>
+            {% if hookAssignments|length > 0 %}
+                <p>{% trans from 'hooks' %}This rating is assigned to the following data objects:{% endtrans %}</p>
+                <ul>
+                {% for assignment in hookAssignments %}
+                    <li><a href="{{ assignment.url|e('html_attr') }}" title="{{ 'View this object'|trans({}, 'hooks')|e('html_attr') }}">{{ assignment.date|format_datetime('medium', 'short') }} - {{ assignment.text }}</a></li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>{% trans from 'hooks' %}This rating is not assigned to any data objects yet.{% endtrans %}</p>
+            {% endif %}
+        {{ include('@PaustianRatingsModule/Helper/includeStandardFieldsDisplay.html.twig', {obj: rating}) }}
+    </div>
+{% endblock %}

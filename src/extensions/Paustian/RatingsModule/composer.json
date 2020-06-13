@@ -1,0 +1,51 @@
+{
+    "name": "paustian/ratings-module",
+    "version": "4.0.0",
+    "description": "A  hook provider module that will attach ratings to any hookable subscriber module that implements the uiHookSubscribers. ",
+    "type": "zikula-module",
+    "license": "LGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Timothy Paustian",
+            "email": "tdpaustian@gmail.com",
+            "homepage": "https://www.microbiologytext.com/",
+            "role": "owner"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Paustian\\RatingsModule\\": "" }
+    },
+    "require": {
+        "php": ">=7.2.5"
+    },
+    "require-dev": {
+    },
+    "extra": {
+        "zikula": {
+            "core-compatibility": ">=3.0.0 <4.0.0",
+            "class": "Paustian\\RatingsModule\\PaustianRatingsModule",
+            "displayname": "Ratings",
+            "url": "ratings",
+            "icon": "fas fa-database",
+            "capabilities": {
+                "admin": {
+                    "route": "paustianratingsmodule_rating_adminindex"
+                },
+                "user": {
+                    "route": "paustianratingsmodule_rating_index"
+                }
+            },
+            "securityschema": {
+                "PaustianRatingsModule::": "::",
+                "PaustianRatingsModule:Rating:": "Rating ID::",
+                "PaustianRatingsModule::Ajax": "::"
+            }
+        }
+    },
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist",
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}

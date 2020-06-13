@@ -1,0 +1,64 @@
+{{ pageAddAsset('stylesheet', zasset('@PaustianRatingsModule:css/style.css')) }}
+{% set counter = 1 %}
+<div>
+    <h3>{% trans %}Rating{% endtrans %}</h3>
+    {% if avgData.average > 0 %}
+         <div id="#stars" title="{% trans %}Click on a star to add your rating.{% endtrans %}">
+    {% else %}
+        <div id="#stars" title="{% trans %}There are no ratings for this item. Be the first to rate it!{% endtrans %}">
+    {% endif %}
+        <p>
+        {% if modVars.iconFa %}
+            {% if avgData.average != 0 %}
+                {% for i in 1..avgData.average %}
+                    <span id="rating_{{ counter }}" class="fas {{ modVars.iconFa }}"></span>
+                    {% set counter = counter +1 %}
+                {% endfor %}
+                {% if avgData.doHalfStar and (avgData.average != modVars.ratingScale) %}
+                    <span id="rating_{{ counter }}" class="fas {{ modVars.halfIconFa }}"></span>
+                    {% set counter = counter +1 %}
+                {% endif %}
+            {% endif %}
+            {% if avgData.emptyStars > 0 %}
+                {% for j in 1..avgData.emptyStars %}
+                    <span id="rating_{{ counter }}" class="fas {{ modVars.emptyIconFa }}"></span>
+                    {% set counter = counter +1 %}
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            {% if avgData.average != 0 %}
+                {% for i in 1..avgData.average %}
+                    <img id="rating_{{ counter }}" class="rating-star" src="{{ modVars.iconUrl }}"
+                         alt="{% trans %}rating icon for rating the item{% endtrans %}"/>
+                    {% set counter = counter +1 %}
+                {% endfor %}
+                {% if avgData.doHalfStar and (avgData.average !=  modVars.ratingScale) %}
+                    <img id="rating_{{ counter }}" class="rating-star" src="{{ modVars.halfIconUrl }}"
+                         alt="{% trans %}rating icon for rating the item{% endtrans %}"/>
+                    {% set counter = counter +1 %}
+                {% endif %}
+            {% endif %}
+            {% if avgData.emptyStars > 0 %}
+                {% for i in 1..avgData.emptyStars %}
+                    <img id="rating_{{ counter }}" class="rating-star" src="{{ modVars.emptyIconUrl }}"
+                         alt="{% trans %}rating icon for rating the item{% endtrans %}"/>
+                    {% set counter = counter +1 %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+        {% if avgData.average > 0 %}
+            <span id="averageNumber"
+                  class="avg-font"> ({{ avgData.average | round(1) }} {% trans %}of{% endtrans %} {{ modVars.ratingScale }}) </span>
+        {% else %}
+            <span id="averageNumber" class="avg-font"></span>
+        {% endif %}
+        <span id="maxSize" class="hidden-style">{{ modVars.ratingScale }}</span>
+        <span id="module" class="hidden-style">{{ module }}</span>
+        <span id="moduleItem" class="hidden-style">{{ moduleItem }}</span>
+        <span id="user" class="hidden-style">{{ user }}</span>
+        </p>
+    </div>
+</div>
+{% block footer %}
+    {{ pageAddAsset('javascript', zasset('@PaustianRatingsModule:js/PaustianRatingsModule.Ratings.js'), 99) }}
+{% endblock %}

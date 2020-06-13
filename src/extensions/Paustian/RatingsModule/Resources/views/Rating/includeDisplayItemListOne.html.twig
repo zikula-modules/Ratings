@@ -1,0 +1,19 @@
+{# purpose of this template: inclusion template for display of related ratings or hook assignments #}
+{% trans_default_domain 'rating' %}
+{% set hasAdminPermission = permissionHelper.hasComponentPermission('rating', constant('ACCESS_EDIT')) %}
+{% set hasEditPermission = permissionHelper.hasComponentPermission('rating', constant('ACCESS_EDIT')) %}
+{% if noLink is not defined %}
+    {% set noLink = false %}
+{% endif %}
+<h5>
+{% apply spaceless %}
+{% if not noLink %}
+    <a href="{{ path('paustianratingsmodule_rating_' ~ routeArea ~ 'display', {'id': item.getId()}) }}" title="{{ item|paustianratingsmodule_formattedTitle|e('html_attr') }}">
+{% endif %}
+    {{ item|paustianratingsmodule_formattedTitle }}
+{% if not noLink %}
+    </a>
+    <a id="ratingItem{{ item.getKey() }}Display" href="{{ path('paustianratingsmodule_rating_' ~ routeArea ~ 'display', {'id': item.getId(), raw: 1}) }}" title="{% trans %}Open quick view window{% endtrans %}" class="paustianratings-inline-window d-none" data-modal-title="{{ item|paustianratingsmodule_formattedTitle|e('html_attr') }}"><i class="fas fa-id-card"></i></a>
+{% endif %}
+{% endapply %}
+</h5>

@@ -13,7 +13,7 @@ jobs:
 
     - name: Update dependencies
       run: |
-        cd modules/Paustian/RatingsModule/
+        cd src/extensions/Paustian/RatingsModule/
         composer update
 
     # see https://github.com/peter-evans/create-pull-request

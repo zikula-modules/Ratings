@@ -1,0 +1,33 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $extension: '@Paustian\RatingsModule\PaustianRatingsModule'
+            $twigLoader: '@twig.loader'
+
+    Paustian\RatingsModule\:
+        resource: '../../*'
+        exclude: '../../{bootstrap.php,Base/bootstrap.php,Tests,vendor}'
+
+    Paustian\RatingsModule\Helper\:
+        resource: '../../Helper/*'
+        lazy: true
+
+    # public because EntityLifecycleListener accesses this using container
+    Paustian\RatingsModule\Entity\Factory\EntityFactory:
+        public: true
+    
+    Paustian\RatingsModule\Form\Handler\:
+        resource: '../../Form/Handler'
+        calls:
+            - setLockingApi: ['@?Zikula\PageLockModule\Api\LockingApi']
+    
+    Paustian\RatingsModule\Listener\EntityLifecycleListener:
+        tags: ['doctrine.event_subscriber']
+    
+    Paustian\RatingsModule\Menu\MenuBuilder:
+        tags:
+            - { name: knp_menu.menu_builder, method: createItemActionsMenu, alias: paustianRatingsMenuItemActions }
+            - { name: knp_menu.menu_builder, method: createViewActionsMenu, alias: paustianRatingsMenuViewActions }

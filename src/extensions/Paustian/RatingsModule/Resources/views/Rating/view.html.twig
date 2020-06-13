@@ -1,0 +1,117 @@
+{# purpose of this template: ratings list view #}
+{% extends routeArea == 'admin' ? '@PaustianRatingsModule/adminBase.html.twig' : '@PaustianRatingsModule/base.html.twig' %}
+{% trans_default_domain 'rating' %}
+{% block title own ? 'My ratings'|trans : 'Ratings list'|trans %}
+{% block admin_page_icon 'list-alt' %}
+{% block content %}
+    <div class="paustianratingsmodule-rating paustianratingsmodule-view">
+        <p class="alert alert-info">{% trans from 'rating' %}A list of ratings for various hooked modules.{% endtrans %}</p>
+        
+        {% set viewActions = knp_menu_get('paustianRatingsMenuViewActions', [], {objectType: 'rating', area: routeArea}) %}
+        {{ knp_menu_render(viewActions, {template: '@ZikulaMenuModule/Override/bootstrap_fontawesome.html.twig'}) }}
+        
+        {{ include('@PaustianRatingsModule/Rating/viewQuickNav.html.twig', {workflowStateFilter: false}) }}{# see template file for available options #}
+
+        {% if routeArea == 'admin' %}
+        <form action="{{ path('paustianratingsmodule_rating_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="ratingsViewForm">
+            <div>
+        {% endif %}
+            <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover{% if routeArea == 'admin' %} table-condensed{% endif %}">
+                <colgroup>
+                    {% if routeArea == 'admin' %}
+                        <col id="cSelect" />
+                    {% endif %}
+                    <col id="cItemActionsStart" />
+                    <col id="cModuleName" />
+                    <col id="cObjectId" />
+                    <col id="cRating" />
+                    <col id="cUserId" />
+                </colgroup>
+                <thead>
+                <tr>
+                    {% if routeArea == 'admin' %}
+                        <th id="hSelect" scope="col" class="text-center">
+                            <input type="checkbox" class="paustianratings-mass-toggle" />
+                        </th>
+                    {% endif %}
+                    <th id="hItemActionsStart" scope="col" class="">{% trans from 'messages' %}Actions{% endtrans %}</th>
+                    <th id="hModuleName" scope="col" class="text-left">
+                        <a href="{{ sort.moduleName.url }}" title="{{ 'Sort by %fieldName%'|trans({'%fieldName%': 'module name'}, 'messages')|e('html_attr') }}" class="{{ sort.moduleName.class }}">{% trans %}Module name{% endtrans %}</a>
+                    </th>
+                    <th id="hObjectId" scope="col" class="text-right">
+                        <a href="{{ sort.objectId.url }}" title="{{ 'Sort by %fieldName%'|trans({'%fieldName%': 'object id'}, 'messages')|e('html_attr') }}" class="{{ sort.objectId.class }}">{% trans %}Object id{% endtrans %}</a>
+                    </th>
+                    <th id="hRating" scope="col" class="text-right">
+                        <a href="{{ sort.rating.url }}" title="{{ 'Sort by %fieldName%'|trans({'%fieldName%': 'rating'}, 'messages')|e('html_attr') }}" class="{{ sort.rating.class }}">{% trans %}Rating{% endtrans %}</a>
+                    </th>
+                    <th id="hUserId" scope="col" class="text-left unsorted">
+                        {% trans %}User id{% endtrans %}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+            
+            {% for rating in items %}
+                <tr>
+                    {% if routeArea == 'admin' %}
+                        <td headers="hSelect" class="text-center">
+                            <input type="checkbox" name="items[]" value="{{ rating.getKey() }}" class="paustianratings-toggle-checkbox" />
+                        </td>
+                    {% endif %}
+                    <td id="itemActions{{ rating.getKey() }}Start" headers="hItemActionsStart" class="actions">
+                        {% set itemActions = knp_menu_get('paustianRatingsMenuItemActions', [], {entity: rating, area: routeArea, context: 'view'}) %}
+                        <div class="dropdown item-actions">
+                            <a id="itemActions{{ rating.getKey() }}DropDownToggleStart" role="button" data-toggle="dropdown" href="javascript:void(0);" class="d-none dropdown-toggle"><i class="fas fa-tasks"></i></a>
+                            {{ knp_menu_render(itemActions, {template: '@ZikulaMenuModule/Override/bootstrap_fontawesome.html.twig'}) }}
+                        </div>
+                    </td>
+                    <td headers="hModuleName" class="text-left">
+                        {{ rating.moduleName }}
+                    </td>
+                    <td headers="hObjectId" class="text-right">
+                        {{ rating.objectId }}
+                    </td>
+                    <td headers="hRating" class="text-right">
+                        {{ rating.rating }}
+                    </td>
+                    <td headers="hUserId" class="text-left">
+                            {{ rating.userId.uid|profileLinkByUserId }}{% if currentUser.loggedIn %}{% set sendMessageUrl = rating.userId.uid|messageSendLink(urlOnly=true) %}{% if sendMessageUrl != '#' %}{% set linkTitle = 'Send private message to %userName%'|trans({'%userName%': rating.userId.uname}, 'messages') %}<a href="{{ sendMessageUrl }}" title="{{ linkTitle|e('html_attr') }}"><i class="fas fa-envelope"></i></a>{% endif %}{% endif %}
+                            <span class="avatar">{{ userAvatar(rating.userId.uid, {rating: 'g'}) }}</span>
+                    </td>
+                </tr>
+            {% else %}
+                <tr class="table-info">
+                    <td colspan="{% if routeArea == 'admin' %}6{% else %}5{% endif %}" class="text-center">
+                {% trans %}No ratings found.{% endtrans %}
+                  </td>
+                </tr>
+            {% endfor %}
+            
+                </tbody>
+            </table>
+            </div>
+            
+            {% if all != 1 %}
+                {{ include(paginator.template) }}
+            {% endif %}
+        {% if routeArea == 'admin' %}
+                <fieldset class="my-3 pt-3">
+                    <div class="row">
+                        <label for="paustianRatingsModuleAction" class="col-md-3 col-form-label">{% trans %}With selected ratings{% endtrans %}</label>
+                        <div class="col-md-6">
+                            <select id="paustianRatingsModuleAction" name="action" class="form-control form-control-sm">
+                                <option value="">{% trans from 'messages' %}Choose action{% endtrans %}</option>
+                                <option value="delete" title="{{ 'Delete content permanently.'|trans({}, 'messages')|e('html_attr') }}">{% trans from 'messages' %}Delete{% endtrans %}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="submit" value="{{ 'Submit'|trans({}, 'messages')|e('html_attr') }}" class="btn btn-secondary btn-sm" />
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+{% endblock %}
