@@ -76,7 +76,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.'
             ],
             'help' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.',
-            'empty_data' => 'fa-star',
+            'empty_data' => 'fas fa-star',
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
@@ -92,7 +92,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.'
             ],
             'help' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.',
-            'empty_data' => 'fa-star-half',
+            'empty_data' => 'fas fa-star-half',
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
@@ -108,7 +108,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.'
             ],
             'help' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.',
-            'empty_data' => 'fa-star-empty',
+            'empty_data' => 'fas fa-star-empty',
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',

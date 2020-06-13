@@ -26,7 +26,6 @@ application "Ratings" targets ZK30 {
     skipFiles "
         Controller/ConfigController.php,
         Entity/Repository/RatingRepository.php,
-        Form/Type/ConfigType.php,
         HookProvider/RatingUiHooksProvider.php,
         README.md
     "
@@ -78,19 +77,19 @@ application "Ratings" targets ZK30 {
                 },
                 string "iconFa" {
                     documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
-                    defaultValue "fa-star"
+                    defaultValue "fas fa-star"
                     mandatory false
                     role ICON
                 },
                 string "halfIconFa" {
                     documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
-                    defaultValue "fa-star-half"
+                    defaultValue "fas fa-star-half"
                     mandatory false
                     role ICON
                 },
                 string "emptyIconFa" {
                     documentation "A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified."
-                    defaultValue "fa-star-empty"
+                    defaultValue "fas fa-star-empty"
                     mandatory false
                     role ICON
                 },

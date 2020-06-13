@@ -11,17 +11,17 @@
         {% if modVars.iconFa %}
             {% if avgData.average != 0 %}
                 {% for i in 1..avgData.average %}
-                    <span id="rating_{{ counter }}" class="fas {{ modVars.iconFa }}"></span>
+                    <span id="rating_{{ counter }}" class="{{ modVars.iconFa }}"></span>
                     {% set counter = counter +1 %}
                 {% endfor %}
                 {% if avgData.doHalfStar and (avgData.average != modVars.ratingScale) %}
-                    <span id="rating_{{ counter }}" class="fas {{ modVars.halfIconFa }}"></span>
+                    <span id="rating_{{ counter }}" class="{{ modVars.halfIconFa }}"></span>
                     {% set counter = counter +1 %}
                 {% endif %}
             {% endif %}
             {% if avgData.emptyStars > 0 %}
                 {% for j in 1..avgData.emptyStars %}
-                    <span id="rating_{{ counter }}" class="fas {{ modVars.emptyIconFa }}"></span>
+                    <span id="rating_{{ counter }}" class="{{ modVars.emptyIconFa }}"></span>
                     {% set counter = counter +1 %}
                 {% endfor %}
             {% endif %}

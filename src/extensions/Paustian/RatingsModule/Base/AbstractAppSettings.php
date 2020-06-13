@@ -46,7 +46,7 @@ abstract class AbstractAppSettings
      * @Assert\Length(min="0", max="255", allowEmptyString="true")
      * @var string $iconFa
      */
-    protected $iconFa = 'fa-star';
+    protected $iconFa = 'fas fa-star';
     
     /**
      * A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.
@@ -55,7 +55,7 @@ abstract class AbstractAppSettings
      * @Assert\Length(min="0", max="255", allowEmptyString="true")
      * @var string $halfIconFa
      */
-    protected $halfIconFa = 'fa-star-half';
+    protected $halfIconFa = 'fas fa-star-half';
     
     /**
      * A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.
@@ -64,7 +64,7 @@ abstract class AbstractAppSettings
      * @Assert\Length(min="0", max="255", allowEmptyString="true")
      * @var string $emptyIconFa
      */
-    protected $emptyIconFa = 'fa-star-empty';
+    protected $emptyIconFa = 'fas fa-star-empty';
     
     /**
      * A url to a rating icon to be used for a rating. Either this or IconFas must be designated.
