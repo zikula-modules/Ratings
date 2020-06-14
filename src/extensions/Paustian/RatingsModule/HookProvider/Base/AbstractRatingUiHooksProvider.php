@@ -88,9 +88,6 @@ abstract class AbstractRatingUiHooksProvider implements HookProviderInterface
         return $this->translator->trans('Rating ui hooks provider', [], 'hooks');
     }
     
-    /**
-     * Returns the area name used by this provider.
-     */
     public function getAreaName(): string
     {
         return 'provider.paustianratingsmodule.ui_hooks.ratings';
