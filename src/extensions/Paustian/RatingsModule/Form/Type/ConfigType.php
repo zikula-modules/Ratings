@@ -16,11 +16,136 @@ declare(strict_types=1);
 namespace Paustian\RatingsModule\Form\Type;
 
 use Paustian\RatingsModule\Form\Type\Base\AbstractConfigType;
+use Paustian\RatingsModule\Validator\Constraints\IconFaGroup;
+use Paustian\RatingsModule\Validator\Constraints\IconUrlGroup;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Zikula\Bundle\FormExtensionBundle\Form\Type\IconType;
 
 /**
  * Configuration form type implementation class.
  */
 class ConfigType extends AbstractConfigType
 {
-    // feel free to extend the base form type class here
+    public function addRatingSettingsFields(FormBuilderInterface $builder, array $options = []): void
+    {
+        $builder->add('ratingScale', IntegerType::class, [
+            'label' => 'Rating scale:',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => 'The number of divisions in the scale. For example there are five divisions in a 1 to 5 scale, four divisions in a four-star scale'
+            ],
+            'help' => 'The number of divisions in the scale. For example there are five divisions in a 1 to 5 scale, four divisions in a four-star scale',
+            'empty_data' => 5,
+            'attr' => [
+                'maxlength' => 11,
+                'class' => '',
+                'title' => 'Enter the rating scale. Only digits are allowed.'
+            ],
+            'required' => true,
+        ]);
+
+        $builder->add('iconFa', IconType::class, [
+            'label' => 'Icon fa:',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.'
+            ],
+            'help' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.',
+            'empty_data' => 'fa-star',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => 'Enter the icon fa.'
+            ],
+            'required' => false,
+            'constraints' => new IconFaGroup()
+        ]);
+
+        $builder->add('halfIconFa', IconType::class, [
+            'label' => 'Half icon fa:',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.'
+            ],
+            'help' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.',
+            'empty_data' => 'fa-star-half',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => 'Enter the half icon fa.'
+            ],
+            'required' => false,
+            'constraints' => new IconFaGroup()
+        ]);
+
+        $builder->add('emptyIconFa', IconType::class, [
+            'label' => 'Empty icon fa:',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.'
+            ],
+            'help' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.',
+            'empty_data' => 'fa-star-empty',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => 'Enter the empty icon fa.'
+            ],
+            'required' => false,
+            'constraints' => new IconFaGroup()
+        ]);
+
+        $builder->add('iconUrl', TextType::class, [
+            'label' => 'Icon url:',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => 'A url to a rating icon to be used for a rating. Either this or IconFas must be designated.'
+            ],
+            'help' => 'A url to a rating icon to be used for a rating. Either this or IconFas must be designated.',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => 'Enter the icon url.'
+            ],
+            'required' => false,
+            'constraints' => new IconUrlGroup()
+        ]);
+
+        $builder->add('halfIconUrl', TextType::class, [
+            'label' => 'Half icon url:',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => 'A url to a rating icon to be used for a rating. Either this or IconFas must be designated.'
+            ],
+            'help' => 'A url to a rating icon to be used for a rating. Either this or IconFas must be designated.',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => 'Enter the half icon url.'
+            ],
+            'required' => false,
+            'constraints' => new IconUrlGroup()
+        ]);
+
+        $builder->add('emptyIconUrl', TextType::class, [
+            'label' => 'Empty icon url:',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => 'A url to a rating icon to be used for a rating. Either this or IconFas must be designated.'
+            ],
+            'help' => 'A url to a rating icon to be used for a rating. Either this or IconFas must be designated.',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => 'Enter the empty icon url.'
+            ],
+            'required' => false,
+            'constraints' => new IconUrlGroup()
+        ]);
+    }
 }

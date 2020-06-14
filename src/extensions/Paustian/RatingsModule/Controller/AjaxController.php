@@ -60,11 +60,11 @@ class AjaxController extends AbstractAjaxController
      */
     public function attachHookObjectAction(
         Request $request,
-        EntityRepository $entityRepository
+        EntityFactory $entityFactory
     ): JsonResponse {
         return parent::attachHookObjectAction(
             $request,
-            $entityRepository
+            $entityFactory
         );
     }
     
@@ -73,11 +73,11 @@ class AjaxController extends AbstractAjaxController
      */
     public function detachHookObjectAction(
         Request $request,
-        EntityRepository $entityRepository
-    )_ JsonResponse {
+        EntityFactory $entityFactory
+    ): JsonResponse {
         return parent::detachHookObjectAction(
             $request,
-            $entityRepository
+            $entityFactory
         );
     }
 
@@ -88,7 +88,7 @@ class AjaxController extends AbstractAjaxController
         Request $request,
         EntityFactory $entityFactory,
         UserRepositoryInterface $userRepository
-    ) {
+    ): JsonResponse {
         if (!$request->isXmlHttpRequest()) {
             return $this->json($this->__('Only ajax access is allowed!'), Response::HTTP_BAD_REQUEST);
         }

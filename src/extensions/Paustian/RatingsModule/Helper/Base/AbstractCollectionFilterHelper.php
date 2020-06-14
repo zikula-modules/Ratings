@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use Zikula\UsersModule\Constant as UsersConstant;
+use Zikula\UsersModule\Entity\RepositoryInterface\UserRepositoryInterface;
 use Paustian\RatingsModule\Helper\PermissionHelper;
 
 /**
@@ -43,6 +44,11 @@ abstract class AbstractCollectionFilterHelper
     protected $currentUserApi;
     
     /**
+     * @var UserRepositoryInterface
+     */
+    protected $userRepository;
+    
+    /**
      * @var bool Fallback value to determine whether only own entries should be selected or not
      */
     protected $showOnlyOwnEntries = false;
@@ -51,11 +57,13 @@ abstract class AbstractCollectionFilterHelper
         RequestStack $requestStack,
         PermissionHelper $permissionHelper,
         CurrentUserApiInterface $currentUserApi,
+        UserRepositoryInterface $userRepository,
         VariableApiInterface $variableApi
     ) {
         $this->requestStack = $requestStack;
         $this->permissionHelper = $permissionHelper;
         $this->currentUserApi = $currentUserApi;
+        $this->userRepository = $userRepository;
         $this->showOnlyOwnEntries = (bool)$variableApi->get('PaustianRatingsModule', 'showOnlyOwnEntries');
     }
     
@@ -110,8 +118,10 @@ abstract class AbstractCollectionFilterHelper
             return $parameters;
         }
     
+        $userId = $request->query->getInt('userId', 0);
+    
         $parameters['workflowState'] = $request->query->get('workflowState', '');
-        $parameters['userId'] = $request->query->getInt('userId', 0);
+        $parameters['userId'] = 0 < $userId ? $this->userRepository->find($userId) : null;
         $parameters['q'] = $request->query->get('q', '');
     
         return $parameters;

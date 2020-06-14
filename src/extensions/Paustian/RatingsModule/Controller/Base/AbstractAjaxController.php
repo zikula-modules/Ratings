@@ -125,7 +125,7 @@ abstract class AbstractAjaxController extends AbstractController
      */
     public function attachHookObjectAction(
         Request $request,
-        EntityRepository $entityRepository
+        EntityFactory $entityFactory
     ): JsonResponse {
         if (!$request->isXmlHttpRequest()) {
             return $this->json($this->trans('Only ajax access is allowed!'), Response::HTTP_BAD_REQUEST);
@@ -174,8 +174,8 @@ abstract class AbstractAjaxController extends AbstractController
      */
     public function detachHookObjectAction(
         Request $request,
-        EntityRepository $entityRepository
-    )_ JsonResponse {
+        EntityFactory $entityFactory
+    ): JsonResponse {
         if (!$request->isXmlHttpRequest()) {
             return $this->json($this->trans('Only ajax access is allowed!'), Response::HTTP_BAD_REQUEST);
         }

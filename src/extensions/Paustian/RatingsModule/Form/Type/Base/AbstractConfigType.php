@@ -108,7 +108,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.'
             ],
             'help' => 'A font-awesome css string that is used to display ratings. Either this or iconUrls must be specified.',
-            'empty_data' => 'fas fa-star-empty',
+            'empty_data' => 'far fa-star',
             'attr' => [
                 'maxlength' => 255,
                 'class' => '',
