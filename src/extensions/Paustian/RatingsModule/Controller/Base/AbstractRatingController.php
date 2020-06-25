@@ -246,7 +246,7 @@ abstract class AbstractRatingController extends AbstractController
     ): RedirectResponse {
         $objectType = 'rating';
         
-        // Get parameters
+        // get parameters
         $action = $request->request->get('action');
         $items = $request->request->get('items');
         if (!is_array($items) || !count($items)) {
