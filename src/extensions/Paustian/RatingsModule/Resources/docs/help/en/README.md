@@ -1,4 +1,4 @@
-# PaustianRatingsModule 4.0.0
+# PaustianRatingsModule 4.1.0
 
 A hook provider module that will attach ratings to any hookable subscriber module that implements the uiHookSubscribers. 
 
