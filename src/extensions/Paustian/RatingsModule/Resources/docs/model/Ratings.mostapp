@@ -4,7 +4,7 @@ application "Ratings" targets ZK30 {
     author "Timothy Paustian"
     email "tdpaustian@gmail.com"
     url "https://www.microbiologytext.com/"
-    version "4.0.0"
+    version "4.1.0"
     prefix "rating"
     generateSearchApi false
     generateListBlock false

@@ -22,7 +22,7 @@ jobs:
     - name: Build and test
       uses: docker://guite/zikula-action:latest
       with:
-        args: Paustian Ratings 4.0.0 ZK30 "src/" true
+        args: Paustian Ratings 4.1.0 ZK30 "src/" true
 
     # see https://github.com/actions/upload-artifact
     - name: Upload release folder as artifact
