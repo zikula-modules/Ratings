@@ -1,3 +1,3 @@
 # Changelog
 
-Changes in PaustianRatingsModule 4.0.0
+Changes in PaustianRatingsModule 4.1.0
