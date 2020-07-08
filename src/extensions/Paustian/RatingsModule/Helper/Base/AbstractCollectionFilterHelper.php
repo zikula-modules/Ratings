@@ -21,6 +21,7 @@ use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use Zikula\UsersModule\Constant as UsersConstant;
 use Zikula\UsersModule\Entity\RepositoryInterface\UserRepositoryInterface;
+use Zikula\UsersModule\Entity\UserEntity;
 use Paustian\RatingsModule\Helper\PermissionHelper;
 
 /**
@@ -160,7 +161,11 @@ abstract class AbstractCollectionFilterHelper
     
             // field filter
             if ((!is_numeric($v) && '' !== $v) || (is_numeric($v) && 0 < $v)) {
-                $v = (string)$v;
+                if ($v instanceof UserEntity) {
+                    $v = $v->getUid();
+                } else {
+                    $v = (string)$v;
+                }
                 if ('workflowState' === $k && 0 === strpos($v, '!')) {
                     $qb->andWhere('tbl.' . $k . ' != :' . $k)
                        ->setParameter($k, substr($v, 1));
