@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Paustian\RatingsModule\Listener;
 
-use Paustian\RatingsModule\Listener\Base\AbstractModuleDispatchListener;
+use Paustian\RatingsModule\Listener\Base\AbstractConnectionsMenuListener;
 
 /**
  * Event handler implementation class for adding connections to extension menus.
