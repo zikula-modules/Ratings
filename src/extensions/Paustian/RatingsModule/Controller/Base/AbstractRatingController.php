@@ -213,8 +213,6 @@ abstract class AbstractRatingController extends AbstractController
             'routeArea' => $isAdmin ? 'admin' : ''
         ];
         
-        $templateParameters = $controllerHelper->processEditActionParameters($objectType, $templateParameters);
-        
         // delegate form processing to the form handler
         $result = $formHandler->processForm($templateParameters);
         if ($result instanceof RedirectResponse) {
@@ -222,6 +220,11 @@ abstract class AbstractRatingController extends AbstractController
         }
         
         $templateParameters = $formHandler->getTemplateParameters();
+        
+        $templateParameters = $controllerHelper->processEditActionParameters(
+            $objectType,
+            $templateParameters
+        );
         
         // fetch and return the appropriate template
         return $viewHelper->processTemplate($objectType, 'edit', $templateParameters);
