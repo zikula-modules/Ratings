@@ -60,7 +60,7 @@ class IconUrlGroupValidator extends ConstraintValidator
         }
 
         //check for the file it points to
-        if (!file_exists($this->projectDir . '/' .  $value)) {
+        if (!file_exists($this->projectDir . '/' . $value)) {
             $this->context->buildViolation($this->trans('This file path does not exist.'))->addViolation();
         }
     }

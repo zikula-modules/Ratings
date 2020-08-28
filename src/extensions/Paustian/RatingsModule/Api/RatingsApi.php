@@ -33,7 +33,7 @@ class RatingsApi
             $retArray['doHalfStar'] = false;
             $retArray['emptyStars'] = $ratingScale;
         } else {
-            $retArray['average'] = $totalRating/$count;
+            $retArray['average'] = $totalRating / $count;
             $averageRemainder = fmod($retArray['average'], 1);
             $retArray['avgInt'] = floor($retArray['average']);
             $retArray['doHalfStar'] = ($averageRemainder >= 0.5);
@@ -47,7 +47,7 @@ class RatingsApi
     /**
      * Adjust a Url path. This is important if Zikula is in a subdirectory.
      */
-    static function adjustUrlPath(&$moduleVars, $docRoot)
+    public static function adjustUrlPath(&$moduleVars, $docRoot)
     {
         $moduleVars['iconUrl'] = $docRoot . '/' . $moduleVars['iconUrl'];
         $moduleVars['halfIconUrl'] = $docRoot . '/' . $moduleVars['halfIconUrl'];

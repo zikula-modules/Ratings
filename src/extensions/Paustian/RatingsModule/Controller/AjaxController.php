@@ -36,7 +36,6 @@ use Zikula\UsersModule\Entity\RepositoryInterface\UserRepositoryInterface;
 class AjaxController extends AbstractAjaxController
 {
     /**
-     *
      * @Route("/getItemListAutoCompletion", methods = {"GET"}, options={"expose"=true})
      */
     public function getItemListAutoCompletionAction(
