@@ -135,7 +135,7 @@ abstract class AbstractRatingController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * Display the rating for the module item hooked to the system
+     * Display the rating for the module item hooked to the system.
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      * @throws NotFoundHttpException Thrown if rating to be displayed isn't found
@@ -357,8 +357,7 @@ abstract class AbstractRatingController extends AbstractController
         string $idPrefix,
         string $commandName,
         int $id = 0
-    ): Response
-     {
+    ): Response {
         if (empty($idPrefix)) {
             return false;
         }
@@ -379,7 +378,7 @@ abstract class AbstractRatingController extends AbstractController
             'formattedTitle' => $formattedTitle,
             'searchTerm' => $searchTerm,
             'idPrefix' => $idPrefix,
-            'commandName' => $commandName
+            'commandName' => $commandName,
         ];
         
         return new PlainResponse(

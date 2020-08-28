@@ -225,7 +225,7 @@ abstract class AbstractRatingUiHooksProvider implements HookProviderInterface
      */
     protected function selectAssignedEntities(Hook $hook): array
     {
-        list ($assignments, $assignedIds) = $this->selectAssignedIds($hook);
+        list($assignments, $assignedIds) = $this->selectAssignedIds($hook);
         if (!count($assignedIds)) {
             return [[], []];
         }
@@ -262,13 +262,13 @@ abstract class AbstractRatingUiHooksProvider implements HookProviderInterface
      */
     protected function renderDisplayHookResponse(Hook $hook, string $context): DisplayHookResponse
     {
-        list ($assignments, $assignedEntities) = $this->selectAssignedEntities($hook);
+        list($assignments, $assignedEntities) = $this->selectAssignedEntities($hook);
         $template = '@PaustianRatingsModule/Rating/includeDisplayItemListMany.html.twig';
 
         $templateParameters = [
             'items' => $assignedEntities,
             'context' => $context,
-            'routeArea' => ''
+            'routeArea' => '',
         ];
 
         if ('hookDisplayView' === $context) {

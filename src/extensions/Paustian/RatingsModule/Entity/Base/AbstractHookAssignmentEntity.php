@@ -18,7 +18,6 @@ declare(strict_types=1);
 namespace Paustian\RatingsModule\Entity\Base;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\Bundle\CoreBundle\Doctrine\EntityAccess;
 
@@ -108,7 +107,6 @@ abstract class AbstractHookAssignmentEntity extends EntityAccess
      */
     protected $updatedDate;
     
-
     
     public function getId(): ?int
     {
