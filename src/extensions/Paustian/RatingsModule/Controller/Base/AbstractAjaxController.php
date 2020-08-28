@@ -98,10 +98,10 @@ abstract class AbstractAjaxController extends AbstractController
                 if (!empty($itemDescription)) {
                     $itemDescription = strip_tags($itemDescription);
                     $descriptionLength = 50;
-                    if (strlen($itemDescription) > $descriptionLength) {
-                        if (false !== ($breakpoint = strpos($itemDescription, ' ', $descriptionLength))) {
+                    if (mb_strlen($itemDescription) > $descriptionLength) {
+                        if (false !== ($breakpoint = mb_strpos($itemDescription, ' ', $descriptionLength))) {
                             $descriptionLength = $breakpoint;
-                            $itemDescription = rtrim(substr($itemDescription, 0, $descriptionLength)) . '&hellip;';
+                            $itemDescription = rtrim(mb_substr($itemDescription, 0, $descriptionLength)) . '&hellip;';
                         }
                     }
                 }
@@ -201,7 +201,7 @@ abstract class AbstractAjaxController extends AbstractController
         
         // return response
         return $this->json([
-            'id' => $id
+            'id' => $id,
         ]);
     }
 }

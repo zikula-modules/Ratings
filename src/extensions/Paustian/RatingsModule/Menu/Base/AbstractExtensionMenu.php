@@ -91,7 +91,7 @@ abstract class AbstractExtensionMenu implements ExtensionMenuInterface
                 if ($this->permissionHelper->hasComponentPermission($objectType, ACCESS_READ)) {
                     $routeParameters = ['own' => 1];
                     $menu->addChild('My ratings', [
-                        'route' => 'paustianratingsmodule_' . strtolower($objectType) . '_view',
+                        'route' => 'paustianratingsmodule_' . mb_strtolower($objectType) . '_view',
                         'routeParameters' => $routeParameters,
                     ])
                         ->setAttribute('icon', 'fas fa-list-alt')

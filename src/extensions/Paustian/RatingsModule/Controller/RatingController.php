@@ -199,8 +199,7 @@ class RatingController extends AbstractRatingController
         string $idPrefix,
         string $commandName,
         int $id = 0
-    ): Response
-     {
+    ): Response {
         return parent::handleInlineRedirectAction(
             $entityFactory,
             $entityDisplayHelper,

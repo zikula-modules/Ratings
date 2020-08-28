@@ -160,11 +160,11 @@ abstract class AbstractEditHandler
      */
     protected $currentUserApi;
 
-
     /**
      * @var UserRepositoryInterface
      */
     protected $userRepository;
+
     /**
      * @var EntityFactory
      */
