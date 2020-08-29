@@ -69,6 +69,7 @@ abstract class AbstractRatingController extends AbstractController
         
         return $this->redirectToRoute('paustianratingsmodule_rating_' . $templateParameters['routeArea'] . 'view');
     }
+
     
     /**
      * This action provides an item list overview.
@@ -132,6 +133,7 @@ abstract class AbstractRatingController extends AbstractController
         // fetch and return the appropriate template
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
     }
+
     
     /**
      * This action provides a item detail view.
@@ -185,6 +187,7 @@ abstract class AbstractRatingController extends AbstractController
         
         return $response;
     }
+
     
     /**
      * This action provides a handling of edit requests.
@@ -228,6 +231,8 @@ abstract class AbstractRatingController extends AbstractController
         // fetch and return the appropriate template
         return $viewHelper->processTemplate($objectType, 'edit', $templateParameters);
     }
+
+    
     
     /**
      * Process status changes for multiple items.
@@ -385,5 +390,4 @@ abstract class AbstractRatingController extends AbstractController
             $this->renderView('@PaustianRatingsModule/Rating/inlineRedirectHandler.html.twig', $templateParameters)
         );
     }
-    
 }

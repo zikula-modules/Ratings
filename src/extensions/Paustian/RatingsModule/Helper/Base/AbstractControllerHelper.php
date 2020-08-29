@@ -335,7 +335,7 @@ abstract class AbstractControllerHelper
                     if (!empty($fragment)) {
                         if ('#' !== $fragment[0]) {
                             $fragment = '#' . $fragment;
-                    	}
+                        }
                         $url .= $fragment;
                     }
                 }

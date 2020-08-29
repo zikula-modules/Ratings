@@ -75,7 +75,7 @@ abstract class AbstractAjaxController extends AbstractController
             $request->attributes->set('_route_params', $routeParams);
         }
         $sortParam = $sort;
-        if (false === strpos(strtolower($sort), ' asc') && false === strpos(strtolower($sort), ' desc')) {
+        if (false === mb_strpos(strtolower($sort), ' asc') && false === mb_strpos(strtolower($sort), ' desc')) {
             $sortParam .= ' asc';
         }
         
@@ -87,7 +87,7 @@ abstract class AbstractAjaxController extends AbstractController
         
         $resultItems = [];
         
-        if ((is_array($entities) || is_object($entities)) && count($entities) > 0) {
+        if ((is_array($entities) || is_object($entities)) && 0 < count($entities)) {
             $descriptionFieldName = $entityDisplayHelper->getDescriptionFieldName($objectType);
             foreach ($entities as $item) {
                 $itemTitle = $entityDisplayHelper->getFormattedTitle($item);

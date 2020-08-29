@@ -39,7 +39,7 @@ abstract class AbstractRatingsModuleInstaller extends AbstractExtensionInstaller
      */
     protected $entities = [
         RatingEntity::class,
-        HookAssignmentEntity::class
+        HookAssignmentEntity::class,
     ];
     
     /**

@@ -40,6 +40,7 @@ use Paustian\RatingsModule\Helper\WorkflowHelper;
  */
 class RatingController extends AbstractRatingController
 {
+    
     /**
      * @Route("/ratings",
      *        methods = {"GET"}
@@ -55,6 +56,7 @@ class RatingController extends AbstractRatingController
             false
         );
     }
+
     /**
      * @Route("/ratings/view/{sort}/{sortdir}/{page}/{num}.{_format}",
      *        requirements = {"sortdir" = "asc|desc|ASC|DESC", "page" = "\d+", "num" = "\d+", "_format" = "html"},
@@ -86,6 +88,31 @@ class RatingController extends AbstractRatingController
             false
         );
     }
+
+    /**
+     * @Route("/rating/edit/{id}.{_format}",
+     *        requirements = {"id" = "\d+", "_format" = "html"},
+     *        defaults = {"id" = "0", "_format" = "html"},
+     *        methods = {"GET", "POST"}
+     * )
+     */
+    public function editAction(
+        Request $request,
+        PermissionHelper $permissionHelper,
+        ControllerHelper $controllerHelper,
+        ViewHelper $viewHelper,
+        EditHandler $formHandler
+    ): Response {
+        return $this->editInternal(
+            $request,
+            $permissionHelper,
+            $controllerHelper,
+            $viewHelper,
+            $formHandler,
+            false
+        );
+    }
+
     /**
      * @Route("/rating/{id}.{_format}",
      *        requirements = {"id" = "\d+", "_format" = "html"},
@@ -113,29 +140,8 @@ class RatingController extends AbstractRatingController
             false
         );
     }
-    /**
-     * @Route("/rating/edit/{id}.{_format}",
-     *        requirements = {"id" = "\d+", "_format" = "html"},
-     *        defaults = {"id" = "0", "_format" = "html"},
-     *        methods = {"GET", "POST"}
-     * )
-     */
-    public function editAction(
-        Request $request,
-        PermissionHelper $permissionHelper,
-        ControllerHelper $controllerHelper,
-        ViewHelper $viewHelper,
-        EditHandler $formHandler
-    ): Response {
-        return $this->editInternal(
-            $request,
-            $permissionHelper,
-            $controllerHelper,
-            $viewHelper,
-            $formHandler,
-            false
-        );
-    }
+
+    
     /**
      * Process status changes for multiple items.
      *
@@ -186,7 +192,6 @@ class RatingController extends AbstractRatingController
     }
     
     /**
-     *
      * @Route("/rating/handleInlineRedirect/{idPrefix}/{commandName}/{id}",
      *        requirements = {"id" = "\d+"},
      *        defaults = {"commandName" = "", "id" = 0},
@@ -208,6 +213,6 @@ class RatingController extends AbstractRatingController
             $id
         );
     }
-    
+
     // feel free to add your own controller methods here
 }
