@@ -71,7 +71,7 @@ abstract class AbstractEditHandler extends EditHandler
             return new RedirectResponse($this->getRedirectUrl(['commandName' => '']), 302);
         }
     
-        // assign data to template (for additions like standard fields)
+        // assign data to template
         $this->templateParameters[$this->objectTypeLower] = $this->entityRef;
     
         return $result;
