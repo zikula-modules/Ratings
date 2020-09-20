@@ -72,7 +72,7 @@ abstract class AbstractEditHandler extends EditHandler
         }
     
         // assign data to template
-        $this->templateParameters[$this->objectTypeLower] = $this->entityRef;
+        $this->templateParameters[$this->objectType] = $this->entityRef;
         $this->templateParameters['supportsHookSubscribers'] = false;
     
         return $result;
