@@ -27,6 +27,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Translation\Extractor\Annotation\Ignore;
 use Translation\Extractor\Annotation\Translate;
+use Zikula\Bundle\FormExtensionBundle\Form\DataTransformer\NullToEmptyTransformer;
 use Zikula\Bundle\FormExtensionBundle\Form\Type\IconType;
 use Paustian\RatingsModule\AppSettings;
 
@@ -68,7 +69,7 @@ abstract class AbstractConfigType extends AbstractType
             ],
             'required' => true,
         ]);
-        $builder->add('iconFa', IconType::class, [
+        $builder->add($builder->create('iconFa', IconType::class, [
             'label' => 'Icon fa:',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -82,8 +83,8 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'Enter the icon fa.',
             ],
             'required' => false,
-        ]);
-        $builder->add('halfIconFa', IconType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('halfIconFa', IconType::class, [
             'label' => 'Half icon fa:',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -97,8 +98,8 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'Enter the half icon fa.',
             ],
             'required' => false,
-        ]);
-        $builder->add('emptyIconFa', IconType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('emptyIconFa', IconType::class, [
             'label' => 'Empty icon fa:',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -112,8 +113,8 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'Enter the empty icon fa.',
             ],
             'required' => false,
-        ]);
-        $builder->add('iconUrl', TextType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('iconUrl', TextType::class, [
             'label' => 'Icon url:',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -127,8 +128,8 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'Enter the icon url.',
             ],
             'required' => false,
-        ]);
-        $builder->add('halfIconUrl', TextType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('halfIconUrl', TextType::class, [
             'label' => 'Half icon url:',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -142,8 +143,8 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'Enter the half icon url.',
             ],
             'required' => false,
-        ]);
-        $builder->add('emptyIconUrl', TextType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('emptyIconUrl', TextType::class, [
             'label' => 'Empty icon url:',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -157,7 +158,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'Enter the empty icon url.',
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
     }
 
     /**
@@ -180,7 +181,7 @@ abstract class AbstractConfigType extends AbstractType
             ],
             'required' => true,
         ]);
-        $builder->add('linkOwnRatingsOnAccountPage', CheckboxType::class, [
+        $builder->add($builder->create('linkOwnRatingsOnAccountPage', CheckboxType::class, [
             'label' => 'Link own ratings on account page:',
             'label_attr' => [
                 'class' => 'tooltips switch-custom',
@@ -192,8 +193,8 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'The link own ratings on account page option',
             ],
             'required' => false,
-        ]);
-        $builder->add('showOnlyOwnEntries', CheckboxType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('showOnlyOwnEntries', CheckboxType::class, [
             'label' => 'Show only own entries:',
             'label_attr' => [
                 'class' => 'tooltips switch-custom',
@@ -205,7 +206,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'The show only own entries option',
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
     }
 
     /**
@@ -213,7 +214,7 @@ abstract class AbstractConfigType extends AbstractType
      */
     public function addModerationFields(FormBuilderInterface $builder, array $options = []): void
     {
-        $builder->add('allowModerationSpecificCreatorForRating', CheckboxType::class, [
+        $builder->add($builder->create('allowModerationSpecificCreatorForRating', CheckboxType::class, [
             'label' => 'Allow moderation specific creator for rating:',
             'label_attr' => [
                 'class' => 'tooltips switch-custom',
@@ -225,8 +226,8 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'The allow moderation specific creator for rating option',
             ],
             'required' => false,
-        ]);
-        $builder->add('allowModerationSpecificCreationDateForRating', CheckboxType::class, [
+        ])->addModelTransformer(new NullToEmptyTransformer()));
+        $builder->add($builder->create('allowModerationSpecificCreationDateForRating', CheckboxType::class, [
             'label' => 'Allow moderation specific creation date for rating:',
             'label_attr' => [
                 'class' => 'tooltips switch-custom',
@@ -238,7 +239,7 @@ abstract class AbstractConfigType extends AbstractType
                 'title' => 'The allow moderation specific creation date for rating option',
             ],
             'required' => false,
-        ]);
+        ])->addModelTransformer(new NullToEmptyTransformer()));
     }
 
     /**
