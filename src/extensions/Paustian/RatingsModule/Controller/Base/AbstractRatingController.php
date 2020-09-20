@@ -45,7 +45,6 @@ use Paustian\RatingsModule\Helper\WorkflowHelper;
  */
 abstract class AbstractRatingController extends AbstractController
 {
-    
     /**
      * This is the default action handling the index area called without defining arguments.
      *
@@ -70,7 +69,6 @@ abstract class AbstractRatingController extends AbstractController
         return $this->redirectToRoute('paustianratingsmodule_rating_' . $templateParameters['routeArea'] . 'view');
     }
 
-    
     /**
      * This action provides an item list overview.
      *
@@ -134,7 +132,6 @@ abstract class AbstractRatingController extends AbstractController
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
     }
 
-    
     /**
      * This action provides a item detail view.
      * Display the rating for the module item hooked to the system.
@@ -188,7 +185,6 @@ abstract class AbstractRatingController extends AbstractController
         return $response;
     }
 
-    
     /**
      * This action provides a handling of edit requests.
      *
