@@ -38,7 +38,7 @@ abstract class AbstractAjaxController extends AbstractController
     /**
      * Searches for entities for auto completion usage.
      */
-    public function getItemListAutoCompletionAction(
+    public function getItemListAutoCompletion(
         Request $request,
         CacheManager $imagineCacheManager,
         ControllerHelper $controllerHelper,
@@ -125,7 +125,7 @@ abstract class AbstractAjaxController extends AbstractController
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function attachHookObjectAction(
+    public function attachHookObject(
         Request $request,
         EntityFactory $entityFactory
     ): JsonResponse {
@@ -174,7 +174,7 @@ abstract class AbstractAjaxController extends AbstractController
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function detachHookObjectAction(
+    public function detachHookObject(
         Request $request,
         EntityFactory $entityFactory
     ): JsonResponse {

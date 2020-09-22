@@ -47,7 +47,7 @@ class RatingController extends AbstractRatingController
      * )
      * @Theme("admin")
      */
-    public function adminIndexAction(
+    public function adminIndex(
         Request $request,
         PermissionHelper $permissionHelper
     ): Response {
@@ -63,7 +63,7 @@ class RatingController extends AbstractRatingController
      *        methods = {"GET"}
      * )
      */
-    public function indexAction(
+    public function index(
         Request $request,
         PermissionHelper $permissionHelper
     ): Response {
@@ -82,7 +82,7 @@ class RatingController extends AbstractRatingController
      * )
      * @Theme("admin")
      */
-    public function adminViewAction(
+    public function adminView(
         Request $request,
         RouterInterface $router,
         PermissionHelper $permissionHelper,
@@ -114,7 +114,7 @@ class RatingController extends AbstractRatingController
      *        methods = {"GET"}
      * )
      */
-    public function viewAction(
+    public function view(
         Request $request,
         RouterInterface $router,
         PermissionHelper $permissionHelper,
@@ -147,7 +147,7 @@ class RatingController extends AbstractRatingController
      * )
      * @Theme("admin")
      */
-    public function adminEditAction(
+    public function adminEdit(
         Request $request,
         PermissionHelper $permissionHelper,
         ControllerHelper $controllerHelper,
@@ -171,7 +171,7 @@ class RatingController extends AbstractRatingController
      *        methods = {"GET", "POST"}
      * )
      */
-    public function editAction(
+    public function edit(
         Request $request,
         PermissionHelper $permissionHelper,
         ControllerHelper $controllerHelper,
@@ -196,7 +196,7 @@ class RatingController extends AbstractRatingController
      * )
      * @Theme("admin")
      */
-    public function adminDisplayAction(
+    public function adminDisplay(
         Request $request,
         PermissionHelper $permissionHelper,
         ControllerHelper $controllerHelper,
@@ -224,7 +224,7 @@ class RatingController extends AbstractRatingController
      *        methods = {"GET"}
      * )
      */
-    public function displayAction(
+    public function display(
         Request $request,
         PermissionHelper $permissionHelper,
         ControllerHelper $controllerHelper,
@@ -254,14 +254,14 @@ class RatingController extends AbstractRatingController
      * )
      * @Theme("admin")
      */
-    public function adminHandleSelectedEntriesAction(
+    public function adminHandleSelectedEntries(
         Request $request,
         LoggerInterface $logger,
         EntityFactory $entityFactory,
         WorkflowHelper $workflowHelper,
         CurrentUserApiInterface $currentUserApi
     ): RedirectResponse {
-        return $this->handleSelectedEntriesActionInternal(
+        return $this->handleSelectedEntriesInternal(
             $request,
             $logger,
             $entityFactory,
@@ -278,14 +278,14 @@ class RatingController extends AbstractRatingController
      *        methods = {"POST"}
      * )
      */
-    public function handleSelectedEntriesAction(
+    public function handleSelectedEntries(
         Request $request,
         LoggerInterface $logger,
         EntityFactory $entityFactory,
         WorkflowHelper $workflowHelper,
         CurrentUserApiInterface $currentUserApi
     ): RedirectResponse {
-        return $this->handleSelectedEntriesActionInternal(
+        return $this->handleSelectedEntriesInternal(
             $request,
             $logger,
             $entityFactory,
@@ -302,14 +302,14 @@ class RatingController extends AbstractRatingController
      *        methods = {"GET"}
      * )
      */
-    public function handleInlineRedirectAction(
+    public function handleInlineRedirect(
         EntityFactory $entityFactory,
         EntityDisplayHelper $entityDisplayHelper,
         string $idPrefix,
         string $commandName,
         int $id = 0
     ): Response {
-        return parent::handleInlineRedirectAction(
+        return parent::handleInlineRedirect(
             $entityFactory,
             $entityDisplayHelper,
             $idPrefix,
