@@ -38,14 +38,14 @@ class AjaxController extends AbstractAjaxController
     /**
      * @Route("/getItemListAutoCompletion", methods = {"GET"}, options={"expose"=true})
      */
-    public function getItemListAutoCompletionAction(
+    public function getItemListAutoCompletion(
         Request $request,
         CacheManager $imagineCacheManager,
         ControllerHelper $controllerHelper,
         EntityFactory $entityFactory,
         EntityDisplayHelper $entityDisplayHelper
     ): JsonResponse {
-        return parent::getItemListAutoCompletionAction(
+        return parent::getItemListAutoCompletion(
             $request,
             $imagineCacheManager,
             $controllerHelper,
@@ -57,11 +57,11 @@ class AjaxController extends AbstractAjaxController
     /**
      * @Route("/attachHookObject", methods = {"POST"}, options={"expose"=true})
      */
-    public function attachHookObjectAction(
+    public function attachHookObject(
         Request $request,
         EntityFactory $entityFactory
     ): JsonResponse {
-        return parent::attachHookObjectAction(
+        return parent::attachHookObject(
             $request,
             $entityFactory
         );
@@ -70,11 +70,11 @@ class AjaxController extends AbstractAjaxController
     /**
      * @Route("/detachHookObject", methods = {"POST"}, options={"expose"=true})
      */
-    public function detachHookObjectAction(
+    public function detachHookObject(
         Request $request,
         EntityFactory $entityFactory
     ): JsonResponse {
-        return parent::detachHookObjectAction(
+        return parent::detachHookObject(
             $request,
             $entityFactory
         );
@@ -83,7 +83,7 @@ class AjaxController extends AbstractAjaxController
     /**
      * @Route("/setRating", methods = {"POST"}, options={"expose"=true})
      */
-    public function setRatingAction(
+    public function setRating(
         Request $request,
         EntityFactory $entityFactory,
         UserRepositoryInterface $userRepository

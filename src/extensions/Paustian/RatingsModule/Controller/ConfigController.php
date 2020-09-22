@@ -41,7 +41,7 @@ class ConfigController extends AbstractConfigController
      * )
      * @Theme("admin")
      */
-    public function configAction(
+    public function config(
         Request $request,
         PermissionHelper $permissionHelper,
         AppSettings $appSettings,
@@ -49,10 +49,10 @@ class ConfigController extends AbstractConfigController
         CurrentUserApiInterface $currentUserApi
     ): Response {
         $oldRating = $this->getVar('ratingScale');
-        $result = parent::configAction($request, $permissionHelper, $appSettings, $logger, $currentUserApi);
+        $result = parent::config($request, $permissionHelper, $appSettings, $logger, $currentUserApi);
         $newRating = $this->getVar('ratingScale');
-        $em = $this->getDoctrine()->getManager();
         if ($oldRating !== $newRating) {
+            $em = $this->getDoctrine()->getManager();
             $ratingObjs = $em->getRepository(RatingEntity::class)->findAll();
             $ratio = $newRating / $oldRating;
             foreach ($ratingObjs as $ratingObj) {
@@ -60,8 +60,8 @@ class ConfigController extends AbstractConfigController
                 $ratingObj->setRating($newRating);
             }
             $em->persist($ratingObj);
+            $em->flush();
         }
-        $em->flush();
 
         return $result;
     }
