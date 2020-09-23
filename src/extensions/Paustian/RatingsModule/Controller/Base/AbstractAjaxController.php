@@ -83,7 +83,7 @@ abstract class AbstractAjaxController extends AbstractController
         $resultsPerPage = 20;
         
         // get objects from database
-        list($entities, $objectCount) = $repository->selectSearch($fragment, $exclude, $sortParam, $currentPage, $resultsPerPage, false);
+        $entities = $repository->selectSearch($fragment, $exclude, $sortParam, $currentPage, $resultsPerPage, false);
         
         $resultItems = [];
         
@@ -95,6 +95,9 @@ abstract class AbstractAjaxController extends AbstractController
                     ? $item[$descriptionFieldName]
                     : '' //$this->trans('No description yet.')
                 ;
+                if ($itemDescription === $itemTitle) {
+                    $itemDescription = '';
+                }
                 if (!empty($itemDescription)) {
                     $itemDescription = strip_tags($itemDescription);
                     $descriptionLength = 50;
