@@ -141,10 +141,17 @@ function paustianRatingsInitAutoCompletion(objectType, alias, idPrefix, includeE
     paustianRatingsResetAutoCompletion(idPrefix);
 
     jQuery('.relation-editing-definition').each(function (index) {
-        if (jQuery(this).data('prefix') !== (idPrefix + 'SelectorDoNew') || jQuery(this).data('input-type') !== 'autocomplete') {
+        if (
+            jQuery(this).data('input-type') !== 'autocomplete'
+            || (
+                jQuery(this).data('prefix') !== idPrefix
+                && jQuery(this).data('prefix') !== (idPrefix + 'SelectorDoNew')
+            )
+        ) {
             return;
         }
 
+        var definition = jQuery(this);
         jQuery('#' + idPrefix + 'Selector').autocomplete({
             minLength: 1,
             open: function (event, ui) {
@@ -163,7 +170,7 @@ function paustianRatingsInitAutoCompletion(objectType, alias, idPrefix, includeE
                     acUrlArgs.exclude = jQuery('#' + idPrefix).val();
                 }
 
-                jQuery.getJSON(Routing.generate(jQuery(this).data('module-name').toLowerCase() + '_ajax_getitemlistautocompletion', acUrlArgs), function (data) {
+                jQuery.getJSON(Routing.generate(definition.data('module-name').toLowerCase() + '_ajax_getitemlistautocompletion', acUrlArgs), function (data) {
                     response(data);
                 });
             },
