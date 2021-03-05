@@ -37,7 +37,7 @@ abstract class AbstractConfigController extends AbstractController
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function config(
+    public function configAction(
         Request $request,
         PermissionHelper $permissionHelper,
         AppSettings $appSettings,

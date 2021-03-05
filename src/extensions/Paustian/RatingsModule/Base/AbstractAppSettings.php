@@ -167,11 +167,13 @@ abstract class AbstractAppSettings
         return $this->ratingScale;
     }
     
-    public function setRatingScale(int $ratingScale): void
+    public function setRatingScale(int $ratingScale): self
     {
         if ((int) $this->ratingScale !== $ratingScale) {
             $this->ratingScale = $ratingScale;
         }
+    
+        return $this;
     }
     
     public function getIconFa(): string
@@ -179,11 +181,13 @@ abstract class AbstractAppSettings
         return $this->iconFa;
     }
     
-    public function setIconFa(string $iconFa): void
+    public function setIconFa(string $iconFa): self
     {
         if ($this->iconFa !== $iconFa) {
             $this->iconFa = $iconFa ?? '';
         }
+    
+        return $this;
     }
     
     public function getHalfIconFa(): string
@@ -191,11 +195,13 @@ abstract class AbstractAppSettings
         return $this->halfIconFa;
     }
     
-    public function setHalfIconFa(string $halfIconFa): void
+    public function setHalfIconFa(string $halfIconFa): self
     {
         if ($this->halfIconFa !== $halfIconFa) {
             $this->halfIconFa = $halfIconFa ?? '';
         }
+    
+        return $this;
     }
     
     public function getEmptyIconFa(): string
@@ -203,11 +209,13 @@ abstract class AbstractAppSettings
         return $this->emptyIconFa;
     }
     
-    public function setEmptyIconFa(string $emptyIconFa): void
+    public function setEmptyIconFa(string $emptyIconFa): self
     {
         if ($this->emptyIconFa !== $emptyIconFa) {
             $this->emptyIconFa = $emptyIconFa ?? '';
         }
+    
+        return $this;
     }
     
     public function getIconUrl(): string
@@ -215,11 +223,13 @@ abstract class AbstractAppSettings
         return $this->iconUrl;
     }
     
-    public function setIconUrl(string $iconUrl): void
+    public function setIconUrl(string $iconUrl): self
     {
         if ($this->iconUrl !== $iconUrl) {
             $this->iconUrl = $iconUrl ?? '';
         }
+    
+        return $this;
     }
     
     public function getHalfIconUrl(): string
@@ -227,11 +237,13 @@ abstract class AbstractAppSettings
         return $this->halfIconUrl;
     }
     
-    public function setHalfIconUrl(string $halfIconUrl): void
+    public function setHalfIconUrl(string $halfIconUrl): self
     {
         if ($this->halfIconUrl !== $halfIconUrl) {
             $this->halfIconUrl = $halfIconUrl ?? '';
         }
+    
+        return $this;
     }
     
     public function getEmptyIconUrl(): string
@@ -239,11 +251,13 @@ abstract class AbstractAppSettings
         return $this->emptyIconUrl;
     }
     
-    public function setEmptyIconUrl(string $emptyIconUrl): void
+    public function setEmptyIconUrl(string $emptyIconUrl): self
     {
         if ($this->emptyIconUrl !== $emptyIconUrl) {
             $this->emptyIconUrl = $emptyIconUrl ?? '';
         }
+    
+        return $this;
     }
     
     public function getRatingEntriesPerPage(): int
@@ -251,11 +265,13 @@ abstract class AbstractAppSettings
         return $this->ratingEntriesPerPage;
     }
     
-    public function setRatingEntriesPerPage(int $ratingEntriesPerPage): void
+    public function setRatingEntriesPerPage(int $ratingEntriesPerPage): self
     {
         if ((int) $this->ratingEntriesPerPage !== $ratingEntriesPerPage) {
             $this->ratingEntriesPerPage = $ratingEntriesPerPage;
         }
+    
+        return $this;
     }
     
     public function getLinkOwnRatingsOnAccountPage(): bool
@@ -263,11 +279,13 @@ abstract class AbstractAppSettings
         return $this->linkOwnRatingsOnAccountPage;
     }
     
-    public function setLinkOwnRatingsOnAccountPage(bool $linkOwnRatingsOnAccountPage): void
+    public function setLinkOwnRatingsOnAccountPage(bool $linkOwnRatingsOnAccountPage): self
     {
         if ((bool) $this->linkOwnRatingsOnAccountPage !== $linkOwnRatingsOnAccountPage) {
             $this->linkOwnRatingsOnAccountPage = $linkOwnRatingsOnAccountPage;
         }
+    
+        return $this;
     }
     
     public function getShowOnlyOwnEntries(): bool
@@ -275,11 +293,13 @@ abstract class AbstractAppSettings
         return $this->showOnlyOwnEntries;
     }
     
-    public function setShowOnlyOwnEntries(bool $showOnlyOwnEntries): void
+    public function setShowOnlyOwnEntries(bool $showOnlyOwnEntries): self
     {
         if ((bool) $this->showOnlyOwnEntries !== $showOnlyOwnEntries) {
             $this->showOnlyOwnEntries = $showOnlyOwnEntries;
         }
+    
+        return $this;
     }
     
     public function getAllowModerationSpecificCreatorForRating(): bool
@@ -287,11 +307,13 @@ abstract class AbstractAppSettings
         return $this->allowModerationSpecificCreatorForRating;
     }
     
-    public function setAllowModerationSpecificCreatorForRating(bool $allowModerationSpecificCreatorForRating): void
+    public function setAllowModerationSpecificCreatorForRating(bool $allowModerationSpecificCreatorForRating): self
     {
         if ((bool) $this->allowModerationSpecificCreatorForRating !== $allowModerationSpecificCreatorForRating) {
             $this->allowModerationSpecificCreatorForRating = $allowModerationSpecificCreatorForRating;
         }
+    
+        return $this;
     }
     
     public function getAllowModerationSpecificCreationDateForRating(): bool
@@ -299,11 +321,13 @@ abstract class AbstractAppSettings
         return $this->allowModerationSpecificCreationDateForRating;
     }
     
-    public function setAllowModerationSpecificCreationDateForRating(bool $allowModerationSpecificCreationDateForRating): void
+    public function setAllowModerationSpecificCreationDateForRating(bool $allowModerationSpecificCreationDateForRating): self
     {
         if ((bool) $this->allowModerationSpecificCreationDateForRating !== $allowModerationSpecificCreationDateForRating) {
             $this->allowModerationSpecificCreationDateForRating = $allowModerationSpecificCreationDateForRating;
         }
+    
+        return $this;
     }
     
     /**

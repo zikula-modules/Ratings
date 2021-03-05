@@ -1,7 +1,7 @@
 {# purpose of this template: ratings view filter form #}
 {% trans_default_domain 'rating' %}
 {% macro renderQuickNavEntry(quickNavForm, fieldName, isVisible) %}
-    {% if attribute(quickNavForm, fieldName) is defined and attribute(quickNavForm, fieldName) is not null %}
+    {% if attribute(quickNavForm, fieldName) is defined %}
         {% if not isVisible %}
             <div class="d-none">
         {% endif %}

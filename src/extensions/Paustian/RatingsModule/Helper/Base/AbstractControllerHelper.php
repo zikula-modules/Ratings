@@ -190,7 +190,19 @@ abstract class AbstractControllerHelper
         $quickNavFormType = 'Paustian\RatingsModule\Form\Type\QuickNavigation\\'
             . ucfirst($objectType) . 'QuickNavType'
         ;
+    
         $quickNavForm = $this->formFactory->create($quickNavFormType, $templateParameters);
+        $routeName = $request->get('_route', '');
+        $routeParams = $request->attributes->get('_route_params');
+        if (1 !== $templateParameters['all']) {
+            // let form target page number 1 to avoid empty page if filters have been set
+            $routeParams['page'] = 1;
+        }
+        $targetRoute = $this->router->generate($routeName, $routeParams);
+    
+        $quickNavForm = $this->formFactory->create($quickNavFormType, $templateParameters, [
+            'action' => $targetRoute
+        ]);
         $quickNavForm->handleRequest($request);
         if ($quickNavForm->isSubmitted()) {
             $quickNavData = $quickNavForm->getData();

@@ -38,13 +38,27 @@
                         <legend>{{ tabTitle }}</legend>
                         <p class="alert alert-info">{% trans %}Here you can manage all basic settings for this application.{% endtrans %}</p>
                     
-                        {{ form_row(form.ratingScale) }}
-                        {{ form_row(form.iconFa) }}
-                        {{ form_row(form.halfIconFa) }}
-                        {{ form_row(form.emptyIconFa) }}
-                        {{ form_row(form.iconUrl) }}
-                        {{ form_row(form.halfIconUrl) }}
-                        {{ form_row(form.emptyIconUrl) }}
+                        {% if form.ratingScale is defined %}
+                            {{ form_row(form.ratingScale) }}
+                        {% endif %}
+                        {% if form.iconFa is defined %}
+                            {{ form_row(form.iconFa) }}
+                        {% endif %}
+                        {% if form.halfIconFa is defined %}
+                            {{ form_row(form.halfIconFa) }}
+                        {% endif %}
+                        {% if form.emptyIconFa is defined %}
+                            {{ form_row(form.emptyIconFa) }}
+                        {% endif %}
+                        {% if form.iconUrl is defined %}
+                            {{ form_row(form.iconUrl) }}
+                        {% endif %}
+                        {% if form.halfIconUrl is defined %}
+                            {{ form_row(form.halfIconUrl) }}
+                        {% endif %}
+                        {% if form.emptyIconUrl is defined %}
+                            {{ form_row(form.emptyIconUrl) }}
+                        {% endif %}
                     </fieldset>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab2" aria-labelledby="vars2Tab">
@@ -53,9 +67,15 @@
                         <legend>{{ tabTitle }}</legend>
                         <p class="alert alert-info">{% trans from 'config' %}Here you can configure parameters for list views.{% endtrans %}</p>
                         
-                        {{ form_row(form.ratingEntriesPerPage) }}
-                        {{ form_row(form.linkOwnRatingsOnAccountPage) }}
-                        {{ form_row(form.showOnlyOwnEntries) }}
+                        {% if form.ratingEntriesPerPage is defined %}
+                            {{ form_row(form.ratingEntriesPerPage) }}
+                        {% endif %}
+                        {% if form.linkOwnRatingsOnAccountPage is defined %}
+                            {{ form_row(form.linkOwnRatingsOnAccountPage) }}
+                        {% endif %}
+                        {% if form.showOnlyOwnEntries is defined %}
+                            {{ form_row(form.showOnlyOwnEntries) }}
+                        {% endif %}
                     </fieldset>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab3" aria-labelledby="vars3Tab">
@@ -64,8 +84,12 @@
                         <legend>{{ tabTitle }}</legend>
                         <p class="alert alert-info">{% trans from 'config' %}Here you can define moderation-related settings.{% endtrans %}</p>
                         
-                        {{ form_row(form.allowModerationSpecificCreatorForRating) }}
-                        {{ form_row(form.allowModerationSpecificCreationDateForRating) }}
+                        {% if form.allowModerationSpecificCreatorForRating is defined %}
+                            {{ form_row(form.allowModerationSpecificCreatorForRating) }}
+                        {% endif %}
+                        {% if form.allowModerationSpecificCreationDateForRating is defined %}
+                            {{ form_row(form.allowModerationSpecificCreationDateForRating) }}
+                        {% endif %}
                     </fieldset>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tabWorkflows" aria-labelledby="workflowsTab">

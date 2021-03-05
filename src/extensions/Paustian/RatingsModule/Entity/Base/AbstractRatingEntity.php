@@ -133,11 +133,13 @@ abstract class AbstractRatingEntity extends EntityAccess
         return $this->_objectType;
     }
     
-    public function set_objectType(string $_objectType): void
+    public function set_objectType(string $_objectType): self
     {
         if ($this->_objectType !== $_objectType) {
             $this->_objectType = $_objectType ?? '';
         }
+    
+        return $this;
     }
     
     public function getId(): ?int
@@ -145,11 +147,13 @@ abstract class AbstractRatingEntity extends EntityAccess
         return $this->id;
     }
     
-    public function setId(?int $id = null): void
+    public function setId(?int $id = null): self
     {
         if ((int) $this->id !== $id) {
             $this->id = $id;
         }
+    
+        return $this;
     }
     
     public function getWorkflowState(): string
@@ -157,11 +161,13 @@ abstract class AbstractRatingEntity extends EntityAccess
         return $this->workflowState;
     }
     
-    public function setWorkflowState(string $workflowState): void
+    public function setWorkflowState(string $workflowState): self
     {
         if ($this->workflowState !== $workflowState) {
             $this->workflowState = $workflowState ?? '';
         }
+    
+        return $this;
     }
     
     public function getModuleName(): string
@@ -169,11 +175,13 @@ abstract class AbstractRatingEntity extends EntityAccess
         return $this->moduleName;
     }
     
-    public function setModuleName(string $moduleName): void
+    public function setModuleName(string $moduleName): self
     {
         if ($this->moduleName !== $moduleName) {
             $this->moduleName = $moduleName ?? '';
         }
+    
+        return $this;
     }
     
     public function getObjectId(): int
@@ -181,11 +189,13 @@ abstract class AbstractRatingEntity extends EntityAccess
         return $this->objectId;
     }
     
-    public function setObjectId(int $objectId): void
+    public function setObjectId(int $objectId): self
     {
         if ((int) $this->objectId !== $objectId) {
             $this->objectId = $objectId;
         }
+    
+        return $this;
     }
     
     public function getRating(): int
@@ -193,11 +203,13 @@ abstract class AbstractRatingEntity extends EntityAccess
         return $this->rating;
     }
     
-    public function setRating(int $rating): void
+    public function setRating(int $rating): self
     {
         if ((int) $this->rating !== $rating) {
             $this->rating = $rating;
         }
+    
+        return $this;
     }
     
     public function getUserId()/*: UserEntity*/
@@ -205,13 +217,15 @@ abstract class AbstractRatingEntity extends EntityAccess
         return $this->userId;
     }
     
-    public function setUserId(/*UserEntity */$userId): void
+    public function setUserId(/*UserEntity */$userId): self
     {
         if ($this->userId !== $userId) {
             if ($userId instanceof UserEntity) {
                 $this->userId = $userId;
             }
         }
+    
+        return $this;
     }
     
     /**

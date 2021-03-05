@@ -69,11 +69,13 @@ trait StandardFieldsTrait
         return $this->createdBy;
     }
     
-    public function setCreatedBy(?UserEntity $createdBy = null): void
+    public function setCreatedBy(?UserEntity $createdBy = null): self
     {
         if ($this->createdBy !== $createdBy) {
             $this->createdBy = $createdBy;
         }
+    
+        return $this;
     }
     
     public function getCreatedDate(): ?DateTimeInterface
@@ -81,11 +83,13 @@ trait StandardFieldsTrait
         return $this->createdDate;
     }
     
-    public function setCreatedDate(?DateTimeInterface $createdDate = null): void
+    public function setCreatedDate(?DateTimeInterface $createdDate = null): self
     {
         if ($this->createdDate !== $createdDate) {
             $this->createdDate = $createdDate;
         }
+    
+        return $this;
     }
     
     public function getUpdatedBy(): ?UserEntity
@@ -93,11 +97,13 @@ trait StandardFieldsTrait
         return $this->updatedBy;
     }
     
-    public function setUpdatedBy(?UserEntity $updatedBy = null): void
+    public function setUpdatedBy(?UserEntity $updatedBy = null): self
     {
         if ($this->updatedBy !== $updatedBy) {
             $this->updatedBy = $updatedBy;
         }
+    
+        return $this;
     }
     
     public function getUpdatedDate(): ?DateTimeInterface
@@ -105,10 +111,12 @@ trait StandardFieldsTrait
         return $this->updatedDate;
     }
     
-    public function setUpdatedDate(?DateTimeInterface $updatedDate = null): void
+    public function setUpdatedDate(?DateTimeInterface $updatedDate = null): self
     {
         if ($this->updatedDate !== $updatedDate) {
             $this->updatedDate = $updatedDate;
         }
+    
+        return $this;
     }
 }

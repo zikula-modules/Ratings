@@ -200,13 +200,15 @@ abstract class AbstractCollectionFilterHelper
             return $qb;
         }
     
-        $showOnlyOwnEntries = (bool) $request->query->getInt('own', (int) $this->showOnlyOwnEntries);
+        $routeName = $request->get('_route', '');
+        $isAdminArea = false !== mb_strpos($routeName, 'paustianratingsmodule_rating_admin');
+    
+        $showOnlyOwnDefault = $isAdminArea ? false : $this->showOnlyOwnEntries;
+        $showOnlyOwnEntries = (bool) $request->query->getInt('own', (int) $showOnlyOwnDefault);
         if ($showOnlyOwnEntries) {
             $qb = $this->addCreatorFilter($qb);
         }
     
-        $routeName = $request->get('_route', '');
-        $isAdminArea = false !== mb_strpos($routeName, 'paustianratingsmodule_rating_admin');
         if ($isAdminArea) {
             return $qb;
         }

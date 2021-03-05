@@ -503,7 +503,9 @@ abstract class AbstractEditHandler
             $this->repeatCreateAction = true;
         }
     
-        $this->fetchInputData();
+        if (false === $this->fetchInputData()) {
+            return false;
+        }
     
         $success = $this->applyAction($args);
         if (!$success) {

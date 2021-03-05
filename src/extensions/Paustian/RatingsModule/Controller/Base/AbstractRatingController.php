@@ -352,7 +352,7 @@ abstract class AbstractRatingController extends AbstractController
     /**
      * This method cares for a redirect within an inline frame.
      */
-    public function handleInlineRedirect(
+    public function handleInlineRedirectAction(
         EntityFactory $entityFactory,
         EntityDisplayHelper $entityDisplayHelper,
         string $idPrefix,

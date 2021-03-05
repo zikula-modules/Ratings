@@ -38,7 +38,7 @@ abstract class AbstractAjaxController extends AbstractController
     /**
      * Searches for entities for auto completion usage.
      */
-    public function getItemListAutoCompletion(
+    public function getItemListAutoCompletionAction(
         Request $request,
         CacheManager $imagineCacheManager,
         ControllerHelper $controllerHelper,
@@ -60,7 +60,7 @@ abstract class AbstractAjaxController extends AbstractController
         }
         
         $repository = $entityFactory->getRepository($objectType);
-        $fragment = $request->query->get('fragment');
+        $searchTerm = $request->query->get('q');
         $exclude = $request->query->get('exclude');
         $exclude = !empty($exclude) ? explode(',', str_replace(', ', ',', $exclude)) : [];
         
@@ -83,7 +83,7 @@ abstract class AbstractAjaxController extends AbstractController
         $resultsPerPage = 20;
         
         // get objects from database
-        $entities = $repository->selectSearch($fragment, $exclude, $sortParam, $currentPage, $resultsPerPage, false);
+        $entities = $repository->selectSearch($searchTerm, $exclude, $sortParam, $currentPage, $resultsPerPage, false);
         
         $resultItems = [];
         
@@ -91,10 +91,7 @@ abstract class AbstractAjaxController extends AbstractController
             $descriptionFieldName = $entityDisplayHelper->getDescriptionFieldName($objectType);
             foreach ($entities as $item) {
                 $itemTitle = $entityDisplayHelper->getFormattedTitle($item);
-                $itemDescription = isset($item[$descriptionFieldName]) && !empty($item[$descriptionFieldName])
-                    ? $item[$descriptionFieldName]
-                    : '' //$this->trans('No description yet.')
-                ;
+                $itemDescription = $entityDisplayHelper->getDescription($item);
                 if ($itemDescription === $itemTitle) {
                     $itemDescription = '';
                 }
@@ -128,7 +125,7 @@ abstract class AbstractAjaxController extends AbstractController
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function attachHookObject(
+    public function attachHookObjectAction(
         Request $request,
         EntityFactory $entityFactory
     ): JsonResponse {
@@ -177,7 +174,7 @@ abstract class AbstractAjaxController extends AbstractController
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
-    public function detachHookObject(
+    public function detachHookObjectAction(
         Request $request,
         EntityFactory $entityFactory
     ): JsonResponse {

@@ -164,7 +164,7 @@ function paustianRatingsInitAutoCompletion(objectType, alias, idPrefix, includeE
 
                 acUrlArgs = {
                     ot: objectType,
-                    fragment: request.term
+                    q: request.term
                 };
                 if (jQuery('#' + idPrefix).length > 0) {
                     acUrlArgs.exclude = jQuery('#' + idPrefix).val();

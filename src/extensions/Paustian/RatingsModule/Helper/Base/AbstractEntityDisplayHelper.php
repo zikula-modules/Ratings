@@ -58,7 +58,19 @@ abstract class AbstractEntityDisplayHelper
     }
     
     /**
-     * Returns the formatted title for a given entity.
+     * Returns an additional description for a given entity.
+     */
+    public function getDescription(EntityAccess $entity): string
+    {
+        if ($entity instanceof RatingEntity) {
+            return $this->getRatingDescription($entity);
+        }
+    
+        return '';
+    }
+    
+    /**
+     * Returns the formatted title for a given rating.
      */
     protected function formatRating(RatingEntity $entity): string
     {
@@ -72,6 +84,19 @@ abstract class AbstractEntityDisplayHelper
             ],
             'rating'
         );
+    }
+    
+    /**
+     * Returns an additional description for a given rating.
+     */
+    protected function getRatingDescription(RatingEntity $entity): string
+    {
+        $descriptionFieldName = $this->getDescriptionFieldName($entity->get_objectType());
+    
+        return isset($entity[$descriptionFieldName]) && !empty($entity[$descriptionFieldName])
+            ? $entity[$descriptionFieldName]
+            : ''
+        ;
     }
     
     /**

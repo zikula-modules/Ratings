@@ -113,11 +113,13 @@ abstract class AbstractHookAssignmentEntity extends EntityAccess
         return $this->id;
     }
     
-    public function setId(?int $id = null): void
+    public function setId(?int $id = null): self
     {
         if ((int) $this->id !== $id) {
             $this->id = $id;
         }
+    
+        return $this;
     }
     
     public function getSubscriberOwner(): string
@@ -125,11 +127,13 @@ abstract class AbstractHookAssignmentEntity extends EntityAccess
         return $this->subscriberOwner;
     }
     
-    public function setSubscriberOwner(string $subscriberOwner): void
+    public function setSubscriberOwner(string $subscriberOwner): self
     {
         if ($this->subscriberOwner !== $subscriberOwner) {
             $this->subscriberOwner = $subscriberOwner ?? '';
         }
+    
+        return $this;
     }
     
     public function getSubscriberAreaId(): string
@@ -137,11 +141,13 @@ abstract class AbstractHookAssignmentEntity extends EntityAccess
         return $this->subscriberAreaId;
     }
     
-    public function setSubscriberAreaId(string $subscriberAreaId): void
+    public function setSubscriberAreaId(string $subscriberAreaId): self
     {
         if ($this->subscriberAreaId !== $subscriberAreaId) {
             $this->subscriberAreaId = $subscriberAreaId ?? '';
         }
+    
+        return $this;
     }
     
     public function getSubscriberObjectId(): int
@@ -149,11 +155,13 @@ abstract class AbstractHookAssignmentEntity extends EntityAccess
         return $this->subscriberObjectId;
     }
     
-    public function setSubscriberObjectId(int $subscriberObjectId): void
+    public function setSubscriberObjectId(int $subscriberObjectId): self
     {
         if ((int) $this->subscriberObjectId !== $subscriberObjectId) {
             $this->subscriberObjectId = $subscriberObjectId;
         }
+    
+        return $this;
     }
     
     public function getSubscriberUrl(): array
@@ -161,11 +169,13 @@ abstract class AbstractHookAssignmentEntity extends EntityAccess
         return $this->subscriberUrl;
     }
     
-    public function setSubscriberUrl(array $subscriberUrl): void
+    public function setSubscriberUrl(array $subscriberUrl): self
     {
         if ($this->subscriberUrl !== $subscriberUrl) {
             $this->subscriberUrl = $subscriberUrl ?? [];
         }
+    
+        return $this;
     }
     
     public function getAssignedEntity(): string
@@ -173,11 +183,13 @@ abstract class AbstractHookAssignmentEntity extends EntityAccess
         return $this->assignedEntity;
     }
     
-    public function setAssignedEntity(string $assignedEntity): void
+    public function setAssignedEntity(string $assignedEntity): self
     {
         if ($this->assignedEntity !== $assignedEntity) {
             $this->assignedEntity = $assignedEntity ?? '';
         }
+    
+        return $this;
     }
     
     public function getAssignedId(): string
@@ -185,11 +197,13 @@ abstract class AbstractHookAssignmentEntity extends EntityAccess
         return $this->assignedId;
     }
     
-    public function setAssignedId(string $assignedId): void
+    public function setAssignedId(string $assignedId): self
     {
         if ($this->assignedId !== $assignedId) {
             $this->assignedId = $assignedId ?? '';
         }
+    
+        return $this;
     }
     
     public function getUpdatedDate(): \DateTimeInterface
@@ -197,7 +211,7 @@ abstract class AbstractHookAssignmentEntity extends EntityAccess
         return $this->updatedDate;
     }
     
-    public function setUpdatedDate(\DateTimeInterface $updatedDate): void
+    public function setUpdatedDate(\DateTimeInterface $updatedDate): self
     {
         if ($this->updatedDate !== $updatedDate) {
             if (
@@ -215,5 +229,7 @@ abstract class AbstractHookAssignmentEntity extends EntityAccess
                 $this->updatedDate = $updatedDate;
             }
         }
+    
+        return $this;
     }
 }
